@@ -35,7 +35,7 @@
     "path": "@PROJECT_PATH@",
     "versionFirst": "4.11.4",
     "siteFonts": [],
-    "favicon": "",
+    "favicon": "@PROJECT_PATH@/assets/images/aqua-128x123.png",
     "": "on",
     "robotsSwitcher": false,
     "sitemapSwitcher": false,
