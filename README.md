@@ -1,30 +1,36 @@
 # aqualocator.github.io
 
+# ReactApps
+
 INstall React
 
-Download and install https://nodejs.org/en/download/
-npm install -g create-react-app
-create-react-app
-create-react-app
+1) Download and install https://nodejs.org/en/download/
+2) npm install -g create-react-app
+3) create-react-app
+4) create-react-app <projectname>
+5) replace public and src files from github repo
+6) cd <projectname>
+7) npm install muicss
+8) npm run start
 
-replace public and src files from github repo
-cd
-npm install muicss
-npm run start
 Update local server
 
-replace public and src files from github repo
-Open admin cmd and open folder
-run command: npm run build
-run command: serve -s build
+1) replace public and src files from github repo
+2) Open admin cmd and open folder
+3) run command: npm run build
+4) run command: serve -s build
+
 Update GitHub Site Repo from React Studio
 
-React Studio: Export React Code
-Make sure website is in package.json
-Open admin cmd and open React folder
-run command: npm run build
-Upload to root of GitHub the contents of the build folder ("/ExportedProjects/[Name of React App]/build")
-Updates
+1) React Studio: Export React Code
+2) Make sure website is in package.json
+3) Open admin cmd and open React folder
+4) run command: npm run build
+5) Upload to root of GitHub the contents of the build folder ("/ExportedProjects/[Name of React App]/build")
 
-Serve npm i serve@latest -g -d
-NPM npm update
+Updates
+- Serve
+npm i serve@latest -g -d
+- NPM
+npm update
+
