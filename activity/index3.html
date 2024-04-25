@@ -1,0 +1,35 @@
+<html>
+<head>
+<title></title>
+</head>
+<body>
+
+<!-- start GateKeeper code -->
+<!-- http://www.HTMLisEasy.com/keeper/ -->
+<script type="text/javascript">
+var keeperaltpage = "denied.html";
+function keeperCheck(){
+   keeperpass = window.document.keeper.page.value;
+   keeperframe.location.href = keeperpass + "2.html";
+   timer = setTimeout("keeperTest(keeperpass)",2000); }
+function keeperTest(pass){
+   if(keeperframe.keeperpasscheck)
+   { location.href = pass + "/index.html"; }
+   else { location.href = keeperaltpage; } }
+</script>
+<form name="keeper" action="javascript:keeperCheck();"
+ style="margin:0;">
+<div style="display:inline;">
+<input type="text" name="page">
+<input type="submit" value="Go">
+<iframe src="" name="keeperframe" frameborder="0"
+ style="width:0px;height:0px;"></iframe>
+<noscript><div style="display:inline;color:#ff0000;
+ background-color:#ffff66; font:normal 11px tahoma,sans-serif;">
+ <br>Javascript is required to access this<br>
+ area. Yours seems to be disabled.</div></noscript>
+</div></form>
+<!-- end GateKeeper code -->
+
+</body>
+</html>

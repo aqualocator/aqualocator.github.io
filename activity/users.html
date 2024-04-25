@@ -1,0 +1,35 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AquaGuide App Activity</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />
+    <link href="aqua.css" rel="stylesheet" />
+    <link href="bootstrap.min.css" rel="stylesheet" />
+   <script src="sortbyphone.js"></script>
+</head>
+<body>
+  <div id="mocha"></div>
+  <small>
+  <div class="jumbotron">
+  <p class="lead">This is an live log of user activity (sorted by phonename).</p>
+  <hr class="my-4">
+  <p>Data collected:<br>Phone name, time stamp of visit, menu item visited.</p>
+  <p class="lead">
+     <div id="message"></div>
+  </p>
+</div>
+
+        </small>
+  <script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
+  <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+  <script>mocha.setup('bdd')</script>
+  <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-firestore.js"></script>
+  <script src="sortbyphone.js"></script>
+  <script>
+    mocha.run();
+  </script>
+</body>
+</html>
