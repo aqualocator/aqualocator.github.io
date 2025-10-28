@@ -8,61 +8,22 @@
   <!-- Prevent favicon 404 -->
   <link rel="icon" href="data:,">
 
-  <!-- Tailwind & Inter -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Inter font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter','sans-serif'] },
-          colors: {
-            brand: {
-              50: '#f4f8fc', 100:'#e9f1f8', 200:'#cfe0ef', 300:'#b3cee6',
-              400:'#7fb0d6', 500:'#3c8fc4', 600:'#2f78a8', 700:'#245d82',
-              800:'#1d4a68', 900:'#143449'
-            },
-            accent: { 500:'#7a3a8b' } /* Locate */
-          },
-          boxShadow: {
-            card:'0 8px 22px rgba(17, 24, 39, 0.08)'
-          },
-          borderRadius: { xl2: '1.25rem' },
-          keyframes: {
-            shimmer: { '0%':{backgroundPosition:'-1000px 0'}, '100%':{backgroundPosition:'1000px 0'} },
-            pop: { '0%':{opacity:0, transform:'scale(.98) translateY(10px)'}, '100%':{opacity:1, transform:'scale(1) translateY(0)'} }
-          },
-          animation: {
-            shimmer: 'shimmer 1.2s linear infinite',
-            pop: 'pop .18s ease-out'
-          }
-        }
-      }
-    }
-  </script>
+  <!-- External production-safe stylesheet (Tailwind compiled via @import + custom styles) -->
+  <link href="employee-directory.css" rel="stylesheet">
 
+  <!-- ========== SECTION: Inline Tailwind theme notes (colors used in classes) ========== -->
   <style>
-    body{ font-family:'Inter',sans-serif; }
-
-    /* Pretty select arrow */
-    .nice-select{
-      -webkit-appearance:none; -moz-appearance:none; appearance:none;
-      background-image:url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22292.4%22 height=%22292.4%22%3E%3Cpath fill=%22%236B7280%22 d=%22M287 69.4a17.6 17.6 0 0 0-13-5.4H18.4c-5 0-9.3 1.8-13 5.4A17.6 17.6 0 0 0 0 82.2c0 5 1.8 9.3 5.4 13l128 127.9c3.6 3.6 7.8 5.4 12.8 5.4s9.2-1.8 12.8-5.4L287 95c3.5-3.5 5.4-7.8 5.4-13 0-5-1.9-9.2-5.4-12.8z%22/%3E%3C/svg%3E');
-      background-repeat:no-repeat; background-position:right .65rem center; background-size:.8em auto;
-      padding-right:2rem; border:none; border-bottom:2px solid #3c8fc4; border-radius:0;
-    }
-    .nice-select:focus{ outline:none; box-shadow:none; border-bottom-color:#3c8fc4; }
-
-    /* Skeleton */
-    .skeleton{ background:linear-gradient(90deg,#eef2f7 25%,#f7f9fc 37%,#eef2f7 63%); background-size:1000px 100%; }
+    /* Utility shims for brand/accent not in default palette (used via inline style attr on elements) */
   </style>
 </head>
 <body class="bg-gray-50">
 
-  <!-- Header -->
+  <!-- ================= HEADER ================= -->
   <header class="sticky top-0 z-30 bg-white/80 backdrop-blur border-b border-gray-200">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
       <h1 class="text-lg sm:text-xl font-semibold text-gray-900">Employee Directory</h1>
@@ -70,34 +31,33 @@
     </div>
   </header>
 
-  <!-- Page -->
+  <!-- ================= PAGE ================= -->
   <main class="max-w-6xl mx-auto px-4 sm:px-6 py-6">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
 
-      <!-- Filters -->
+      <!-- ============== FILTERS ============== -->
       <aside class="md:col-span-4 lg:col-span-3">
         <div class="bg-white rounded-xl2 shadow-card p-4 sm:p-5 sticky top-20">
           <details class="md:open">
             <summary class="md:hidden cursor-pointer select-none font-medium text-gray-900 mb-2">Filters</summary>
 
             <form id="filter-form" class="space-y-5">
-              <!-- Search -->
+              <!-- SEARCH -->
               <div>
                 <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">
                   Search <span id="search-hint" class="text-gray-400 font-normal">(name, responsibilities, title, initials, dept)</span>
                 </label>
                 <div class="flex">
                   <input id="search-input" type="text"
-                         class="flex-grow w-full px-3 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                         class="flex-grow w-full px-3 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sky-500"
                          placeholder="e.g., Davis, Engineer, RAA, Filtration">
                   <button type="button" id="reset-button"
-                          class="px-3 sm:px-4 py-2 rounded-r-md bg-brand-500 hover:bg-brand-600 text-white font-medium">
-                    RESET
-                  </button>
+                          class="px-3 sm:px-4 py-2 rounded-r-md text-white font-medium"
+                          style="background-color:#3c8fc4">RESET</button>
                 </div>
               </div>
 
-              <!-- Dept Mode -->
+              <!-- MODE -->
               <div>
                 <label for="dept-mode" class="block text-sm font-medium text-gray-700 mb-1">Department View</label>
                 <select id="dept-mode" class="nice-select w-full bg-white py-2 px-2 text-[15px] font-medium">
@@ -107,7 +67,7 @@
                 </select>
               </div>
 
-              <!-- Specific Dept -->
+              <!-- SPECIFIC DEPT -->
               <div>
                 <label for="dept-select" class="block text-sm font-medium text-gray-700 mb-1">Specific Department</label>
                 <select id="dept-select" class="nice-select w-full bg-white py-2 px-2 text-[15px] font-medium">
@@ -121,12 +81,13 @@
         </div>
       </aside>
 
-      <!-- Results -->
+      <!-- ============== RESULTS ============== -->
       <section class="md:col-span-8 lg:col-span-9">
-        <!-- Initial Loading -->
+        <!-- Loader -->
         <div id="loading" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- TEMPLATE: Skeleton card -->
           <template id="skeleton-card">
-            <div class="bg-white rounded-xl2 shadow-card p-4 animate-pop">
+            <div class="bg-white rounded-xl2 shadow-card p-4">
               <div class="w-20 h-20 rounded-full skeleton animate-shimmer mx-auto mb-3"></div>
               <div class="h-4 skeleton animate-shimmer rounded mb-2"></div>
               <div class="h-3 skeleton animate-shimmer rounded w-2/3 mb-4"></div>
@@ -144,16 +105,16 @@
     </div>
   </main>
 
-  <!-- Locate Modal -->
+  <!-- ================= LOCATE MODAL ================= -->
   <div id="locate-modal" class="fixed inset-0 z-50 hidden">
     <div class="absolute inset-0 bg-black/50" data-close-overlay></div>
 
     <div class="relative mx-auto max-w-5xl h-[88vh] mt-6 sm:mt-10 px-4">
-      <div class="bg-white rounded-xl2 shadow-2xl h-full flex flex-col animate-pop">
+      <div class="bg-white rounded-xl2 shadow-2xl h-full flex flex-col">
         <!-- Header -->
         <div class="px-4 sm:px-6 py-3 border-b border-gray-200 flex items-center justify-between">
           <div class="flex items-center gap-3">
-            <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-accent-500 text-white">📍</span>
+            <span class="inline-flex h-9 w-9 items-center justify-center rounded-full text-white" style="background-color:#7a3a8b">📍</span>
             <h3 id="modal-title" class="text-lg sm:text-xl font-semibold text-gray-900">Locate</h3>
           </div>
           <button id="modal-close" class="rounded-md px-3 py-1.5 text-gray-600 hover:text-gray-900 hover:bg-gray-100">Close ✕</button>
@@ -162,7 +123,7 @@
         <!-- Body -->
         <div class="relative flex-1">
           <div id="modal-loader" class="absolute inset-0 flex items-center justify-center">
-            <div class="w-10 h-10 rounded-full border-2 border-brand-200 border-t-brand-600 animate-spin"></div>
+            <div class="w-10 h-10 rounded-full border-2 border-sky-200 border-t-sky-600 animate-spin"></div>
           </div>
           <iframe id="modal-iframe" class="w-full h-full rounded-b-xl2" src="about:blank" loading="eager"></iframe>
         </div>
@@ -170,16 +131,16 @@
     </div>
   </div>
 
-  <!-- App -->
+  <!-- ================= APP SCRIPT ================= -->
   <script type="module">
-    /***********************
-     *  Firebase (Hybrid)  *
-     ***********************/
+    /* =========================
+       FIREBASE (HYBRID MODE)
+       ========================= */
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // --- CONFIG ---
+    // --- Config (kept from your file) ---
     const MANUAL_FIREBASE_CONFIG = {
       apiKey: "AIzaSyABeCFheLuS08mxfWjCSS2ugXFbLDgnpIE",
       authDomain: "aqualocator-23714.firebaseapp.com",
@@ -189,8 +150,6 @@
       appId: "1:654848563347:web:4702a6f55ccbf7d5edd566",
       measurementId: "G-5R7XGHVDNH"
     };
-
-    // If your environment provides these globals, we’ll respect them:
     const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config !== '{}')
       ? JSON.parse(__firebase_config) : MANUAL_FIREBASE_CONFIG;
     const initialAuthToken = (typeof __initial_auth_token !== 'undefined') ? __initial_auth_token : null;
@@ -199,19 +158,15 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    /****************************
-     *  Data (Embedded Fallback) *
-     ****************************/
-    // Image base path (as in your current build)
+    /* =========================
+       DATA SOURCES
+       ========================= */
     const imageBaseUrl = "https://aqualocator.github.io/static/media/";
-
-    // Your existing embedded array should already be present in your file.
-    // If it isn't, leave a small sample to avoid empty screen:
     if (!window.employeesToUpload) window.employeesToUpload = [];
 
-    /****************
-     *   UI Hooks   *
-     ****************/
+    /* =========================
+       DOM HOOKS
+       ========================= */
     const resultsEl    = document.getElementById('results-container');
     const loadingEl    = document.getElementById('loading');
     const noResultsEl  = document.getElementById('no-results');
@@ -227,18 +182,17 @@
     const modalLoader = document.getElementById('modal-loader');
     const modalClose  = document.getElementById('modal-close');
 
-    /****************
-     *   State      *
-     ****************/
-    let allEmployees = [];   // current source of truth (embedded or Firestore)
-    let current = [];        // filtered view
+    /* =========================
+       STATE
+       ========================= */
+    let allEmployees = [];
+    let current = [];
 
-    /****************
-     *  Utilities   *
-     ****************/
+    /* =========================
+       UTILITIES
+       ========================= */
     const isEngDept = (d) => (d || '').toLowerCase().startsWith('eng -');
 
-    // Extract exact src="..." URL from the stored url string; load EXACT URL (no auto changes)
     function extractSrc(urlField) {
       if (!urlField) return null;
       const m = urlField.match(/src\s*=\s*"([^"]+)"/i);
@@ -259,7 +213,6 @@
       }
     }
 
-    // Build department dropdown from current list and mode
     function buildDeptOptions(list, mode) {
       const set = new Set();
       list.forEach(e => {
@@ -273,7 +226,9 @@
         sorted.map(d => `<option value="${d}">${d}</option>`).join('');
     }
 
-    // Cards
+    /* =========================
+       RENDERING
+       ========================= */
     function render(list) {
       resultsEl.innerHTML = '';
       if (!list.length) {
@@ -287,7 +242,7 @@
       const frag = document.createDocumentFragment();
       list.forEach(emp => {
         const card = document.createElement('article');
-        card.className = 'bg-white rounded-xl2 shadow-card p-4 flex flex-col gap-3 animate-pop';
+        card.className = 'bg-white rounded-xl2 shadow-card p-4 flex flex-col gap-3';
 
         const img = document.createElement('img');
         img.className = 'w-20 h-20 rounded-full object-cover mx-auto';
@@ -309,13 +264,15 @@
         row.className = 'mt-2 grid grid-cols-2 gap-2';
 
         const btnLocate = document.createElement('button');
-        btnLocate.className = 'px-3 py-2 rounded-md bg-accent-500 hover:bg-purple-700 text-white font-medium';
+        btnLocate.className = 'px-3 py-2 rounded-md text-white font-medium';
+        btnLocate.style.backgroundColor = '#7a3a8b';
         btnLocate.textContent = 'Locate';
         btnLocate.addEventListener('click', () => openLocate(emp));
         row.appendChild(btnLocate);
 
         const btnEmail = document.createElement('a');
-        btnEmail.className = 'px-3 py-2 rounded-md bg-brand-500 hover:bg-brand-600 text-white text-center font-medium';
+        btnEmail.className = 'px-3 py-2 rounded-md text-white text-center font-medium';
+        btnEmail.style.backgroundColor = '#3c8fc4';
         if (emp.email && emp.email.trim()) {
           btnEmail.href = `mailto:${emp.email.trim()}`;
           btnEmail.textContent = 'Email';
@@ -332,21 +289,30 @@
       resultsEl.appendChild(frag);
     }
 
-    // Modal
+    /* =========================
+       MODAL
+       ========================= */
     function openLocate(emp) {
       const src = extractSrc(emp.url);
       modalTitle.textContent = emp.name ? `Locate — ${emp.name}` : 'Locate';
+      document.body.classList.add('modal-open');
       modalLoader.classList.remove('hidden');
       modalIframe.src = 'about:blank';
       modalEl.classList.remove('hidden');
       setTimeout(()=> { modalIframe.src = src || 'about:blank'; }, 50);
     }
-    function closeModal(){ modalEl.classList.add('hidden'); modalIframe.src='about:blank'; }
+    function closeModal(){
+      modalEl.classList.add('hidden');
+      document.body.classList.remove('modal-open');
+      modalIframe.src='about:blank';
+    }
     modalClose.addEventListener('click', closeModal);
     modalEl.addEventListener('click', e => { if (e.target && e.target.hasAttribute('data-close-overlay')) closeModal(); });
     modalIframe.addEventListener('load', ()=> modalLoader.classList.add('hidden'));
 
-    // Filtering
+    /* =========================
+       FILTERING
+       ========================= */
     function applyFilters() {
       const mode = deptModeEl.value;            // all | eng-initials | eng-all
       const deptFilter = deptSelectEl.value;    // __any__ | department
@@ -387,18 +353,20 @@
       render(current);
     }
 
-    // Build skeletons
+    /* =========================
+       LOADING / INIT
+       ========================= */
     function showSkeletons(n=6){
+      const tpl = document.getElementById('skeleton-card');
       loadingEl.innerHTML = '';
-      for (let i=0;i<n;i++) loadingEl.appendChild(document.getElementById('skeleton-card').content.cloneNode(true));
+      for (let i=0;i<n;i++) loadingEl.appendChild(tpl.content.cloneNode(true));
     }
 
-    // Initialize with embedded then upgrade to Firestore
     function hydrateFromEmbedded(){
       allEmployees = Array.isArray(window.employeesToUpload) ? [...window.employeesToUpload] : [];
-      setHintForMode('all');
-      buildDeptOptions(allEmployees,'all');
-      applyFilters();
+      setHintForMode('all');                    // default mode
+      buildDeptOptions(allEmployees,'all');     // full dept list
+      applyFilters();                           // first render
       loadingEl.classList.add('hidden');
       resultsEl.classList.remove('hidden');
     }
@@ -413,9 +381,8 @@
       }catch(_){ /* ignore and still try to listen */ }
 
       onAuthStateChanged(auth, (user) => {
-        if (!user) return; // still anonymous init
-        // Firestore live collection (adjust collection name if different)
-        const colRef = collection(db, 'employees');
+        if (!user) return;
+        const colRef = collection(db, 'employees'); // confirmed name
         onSnapshot(colRef, (snap) => {
           const fresh = [];
           snap.forEach(doc => fresh.push(doc.data()));
@@ -427,6 +394,13 @@
         });
       });
     }
+
+    // Ensure DOM ready before touching templates
+    document.addEventListener('DOMContentLoaded', () => {
+      showSkeletons();
+      hydrateFromEmbedded();   // instant paint
+      authAndListen();         // live upgrade
+    });
 
     // Events
     searchEl.addEventListener('input', applyFilters);
@@ -447,20 +421,15 @@
       applyFilters();
     });
     deptSelectEl.addEventListener('change', applyFilters);
-
-    // Kickoff
-    showSkeletons();
-    hydrateFromEmbedded();  // instant paint from embedded array
-    authAndListen();        // then live-upgrade from Firestore
   </script>
 
   <!--
     NOTES:
-    • Modal loads the EXACT URL contained in each record’s `url` field (we only extract the src="…").
+    • Modal loads EXACT URL contained in each record’s `url` field (we only extract src="…").
     • All Departments loads by default.
     • Engineering Departments – Initials => limits to depts starting with "ENG -" and searches initials ONLY.
     • All Engineering Departments => limits to "ENG -" depts and searches name + responsibilities.
-    • Hybrid data: embedded array renders immediately; Firestore snapshot (if available) overrides when ready.
+    • Hybrid data: embedded array renders immediately; Firestore snapshot overrides when ready.
   -->
 </body>
 </html>
