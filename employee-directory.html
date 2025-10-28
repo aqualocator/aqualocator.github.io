@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Directory</title>
+    <!-- Suppress favicon.ico 404 error -->
+    <link rel="icon" href="data:,">
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Load Inter font -->
@@ -159,8 +161,13 @@
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         
         // Use manual config if provided, otherwise try automatic config
-        // Combined onto one line to fix a potential parser error
-        const firebaseConfig = Object.keys(MANUAL_FIREBASE_CONFIG).length > 0 ? MANUAL_FIREBASE_CONFIG : JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        // Refactored to use if/else to avoid potential ternary operator parsing error
+        let firebaseConfig;
+        if (Object.keys(MANUAL_FIREBASE_CONFIG).length > 0) {
+            firebaseConfig = MANUAL_FIREBASE_CONFIG;
+        } else {
+            firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        }
             
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
@@ -663,6 +670,7 @@
     </script>
 </body>
 </html>
+
 
 
 
