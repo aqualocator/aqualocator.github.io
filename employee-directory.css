@@ -1,0 +1,46 @@
+/* employee-directory.css
+   Purged-style external stylesheet for Employee Directory
+   Note: This file imports a production-compiled Tailwind CSS bundle from a CDN,
+   then applies small custom styles. This avoids using the Tailwind CDN *script*,
+   which triggers the production warning, while still delivering all utilities.
+   You can later replace the @import with a locally hosted compiled Tailwind file if desired.
+*/
+
+/* ========= TAILWIND CORE (compiled) ========= */
+/* Using a stable versioned CDN build to provide all utilities used by the page.
+   This is a stylesheet import (not the runtime CDN script), so it's production-safe. */
+@import url('https://cdn.jsdelivr.net/npm/tailwindcss@3.4.12/dist/tailwind.min.css');
+
+/* ========= CUSTOM THEME EXTENSIONS ========= */
+/* Fonts */
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji','Segoe UI Emoji', sans-serif; }
+
+/* Brand palette (used in inline classes; here for reference) */
+/* brand: 500 #3c8fc4; accent: 500 #7a3a8b */
+
+/* Pretty select arrow (matches Option A styling) */
+.nice-select{
+  -webkit-appearance:none; -moz-appearance:none; appearance:none;
+  background-image:url('data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22292.4%22 height=%22292.4%22%3E%3Cpath fill=%22%236B7280%22 d=%22M287 69.4a17.6 17.6 0 0 0-13-5.4H18.4c-5 0-9.3 1.8-13 5.4A17.6 17.6 0 0 0 0 82.2c0 5 1.8 9.3 5.4 13l128 127.9c3.6 3.6 7.8 5.4 12.8 5.4s9.2-1.8 12.8-5.4L287 95c3.5-3.5 5.4-7.8 5.4-13 0-5-1.9-9.2-5.4-12.8z%22/%3E%3C/svg%3E');
+  background-repeat:no-repeat; background-position:right .65rem center; background-size:.8em auto;
+  padding-right:2rem; border:none; border-bottom:2px solid #3c8fc4; border-radius:0;
+}
+.nice-select:focus{ outline:none; box-shadow:none; border-bottom-color:#3c8fc4; }
+
+/* Skeleton shimmer */
+.skeleton{
+  background:linear-gradient(90deg,#eef2f7 25%,#f7f9fc 37%,#eef2f7 63%);
+  background-size:1000px 100%;
+}
+.animate-shimmer{ animation: shimmer 1.2s linear infinite; }
+@keyframes shimmer{
+  0%{ background-position:-1000px 0; }
+  100%{ background-position:1000px 0; }
+}
+
+/* Card shadow and rounded helpers (in case of non-tailwind contexts) */
+.shadow-card{ box-shadow:0 8px 22px rgba(17,24,39,.08); }
+.rounded-xl2{ border-radius:1.25rem; }
+
+/* Modal helper to prevent background scroll when open (toggle via JS if desired) */
+body.modal-open { overflow: hidden; }
