@@ -71,7 +71,7 @@
             -moz-appearance: none;
             appearance: none;
             /* Custom SVG arrow */
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-13%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-13%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%2Dxmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%2Dwidth%3D%22292.4%22%2Dheight%3D%22292.4%22%3E%3Cpath%2Dfill%3D%22%236B7280%22%2Dd%3D%22M287%2D69.4a17.6%2D17.6%2D0%2D0%2D0-13-5.4H18.4c-5%2D0-9.3%2D1.8-13%2D5.4A17.6%2D17.6%2D0%2D0%2D0%2D0%2D82.2c0%2D5%2D1.8%2D9.3%2D5.4%2D13l128%2D127.9c3.6%2D3.6%2D7.8%2D5.4%2D12.8%2D5.4s9.2-1.8%2D12.8-5.4L287%2D95c3.5-3.5%2D5.4-7.8%2D5.4-13%2D0-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
             background-repeat: no-repeat;
             background-position: right .75rem center;
             background-size: .65em auto;
@@ -104,7 +104,8 @@
         }
         
         .modal-content {
-          @apply relative bg-white m-auto p-5 border border-gray-300 w-11/12 max-w-4xl shadow-2xl rounded-lg;
+          /* Changed max-w-4xl to max-w-3xl (672px) to be closer to 600px request */
+          @apply relative bg-white m-auto p-5 border border-gray-300 w-11/12 max-w-3xl shadow-2xl rounded-lg;
         }
         
         .modal-close-btn {
@@ -449,8 +450,1581 @@ body {
 
         // --- 1. DATA TO UPLOAD ---
         const employeesToUpload = [
-           // Example from screenshots:
+           // Employees with non-null FloorMap from employee.js
             {
+                "name": "Monica Alfano",
+                "title": "Marketing Specialist",
+                "ext": "4511",
+                "dept": "Marketing/PR",
+                "email": "malfano@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row1_photo.006d6c76.png", // Assuming this corresponds
+                "initials": "", // Not provided in source for this entry
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=26\"",
+                "FloorMap": "malfano"
+            },
+            {
+                "name": "Xzavier Alexander-Rawhoof",
+                "title": "Shop Technician",
+                "ext": "4437",
+                "dept": "Manufacturing",
+                "email": "XAlexander-Rawhoof@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row2_photo.696bca36.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "xalexander-rawhoof"
+            },
+            {
+                "name": "Gaby Alvarado",
+                "title": "Sales Assistant",
+                "ext": "4517",
+                "dept": "Prod Mgmt - Aeration/Mixing",
+                "email": "GAlvarado@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row3_photo.5cc8992a.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=134\"",
+                "FloorMap": "galvarado"
+            },
+            {
+                "name": "Andrea Andrew",
+                "title": "AfterMarket Sales Representative",
+                "ext": "4424",
+                "dept": "AfterMarket Sales",
+                "email": "AAndrew@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row7_photo.47972427.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newhire\"",
+                "FloorMap": "aandrew"
+            },
+            {
+                "name": "Seth Antczak",
+                "title": "R&D Technician",
+                "ext": "0060",
+                "dept": "Research & Development",
+                "email": "santczak@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row8_photo.e9a88ff4.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=remote\"",
+                "FloorMap": "santczak"
+            },
+            {
+                "name": "Raymond Ayala",
+                "title": "Field Service Specialist",
+                "ext": "1326",
+                "dept": "Field Services",
+                "email": "RAyala@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row12_photo.71558c44.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "rayala"
+            },
+            {
+                "name": "Tanzina Azad",
+                "title": "Application Engineer",
+                "ext": "6207",
+                "dept": "Applications Engineering",
+                "email": "TAzad@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row13_photo.74ea307c.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newhire\"",
+                "FloorMap": "tazad"
+            },
+             {
+                "name": "Drea Baker-Ellison",
+                "title": "Field Service Specialist",
+                "ext": "1349",
+                "dept": "Field Services",
+                "email": "DBaker-Ellison@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row15_photo.ed8c66d9.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "dbaker-ellison"
+            },
+            {
+                "name": "Gordon Bates",
+                "title": "Shop Technician",
+                "ext": "4437",
+                "dept": "Manufacturing",
+                "email": "gbates@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row20_photo.5c508d75.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "gbates"
+            },
+            {
+                "name": "Michael Beair",
+                "title": "Operations Assistant",
+                "ext": "6209",
+                "dept": "Operations",
+                "email": "MBeair@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row22_photo.7ce146ad.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "mbeair"
+            },
+            {
+                "name": "Riley Black",
+                "title": "Field Service Specialist",
+                "ext": "1354",
+                "dept": "Field Services",
+                "email": "RBlack@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row23_photo.fff8c7d8.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "rblack"
+            },
+            {
+                "name": "Brian Blake-Collins",
+                "title": "R&D Specialist",
+                "ext": "1348",
+                "dept": "Research & Development",
+                "email": "BBLake-Collins@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row25_photo.e29bfe91.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newhire\"",
+                "FloorMap": "bblake-collins"
+            },
+            {
+                "name": "Joey Blankenship",
+                "title": "Field Service Specialist",
+                "ext": "1352",
+                "dept": "Field Services",
+                "email": "JBlankenship@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row26_photo.f681518e.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "jblankenship"
+            },
+             {
+                "name": "Kelsey Beaird", // Note: Name corrected from source file
+                "title": "Customer Service Coordinator",
+                "ext": "6214",
+                "dept": "Customer Service",
+                "email": "KBeaird@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row27_photo.1a3383ff.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=149\"",
+                "FloorMap": "kboardman" // Source file has kboardman
+            },
+            {
+                "name": "Mike Brown",
+                "title": "Regional Sales Manager",
+                "ext": "4463",
+                "dept": "Domestic Sales-Northeast",
+                "email": "MBrown@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row30_photo.d71f249b.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newlayout1\"",
+                "FloorMap": "mbrown"
+            },
+            {
+                "name": "Matt Busse",
+                "title": "Mechanical Designer",
+                "ext": "6226",
+                "dept": "Eng - Mechanical",
+                "email": "mbusse@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row35_photo.58b0b933.png", // Assuming this corresponds
+                "initials": "MCB",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=127\"",
+                "FloorMap": "mbusse"
+            },
+             {
+                "name": "Mike Cagle",
+                "title": "Customer Service Process Technician",
+                "ext": "1338",
+                "dept": "Customer Service",
+                "email": "MCagle@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row37_photo.10511903.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "mcagle"
+            },
+            {
+                "name": "Micah Carlson",
+                "title": "Electrical Engineer",
+                "ext": "4823",
+                "dept": "Eng - Electrical",
+                "email": "MCarlson@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row41_photo.c511ce66.png", // Assuming this corresponds
+                "initials": "MDC",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&width=570&height=77&floor=second\"",
+                "FloorMap": "mcarlson"
+            },
+             {
+                "name": "Robin Cartter",
+                "title": "Field Service Specialist",
+                "ext": "1350",
+                "dept": "Field Services",
+                "email": "RCartter@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row43_photo.fe046f98.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "rcartter"
+            },
+            {
+                "name": "Francesco Cascio",
+                "title": "Mechanical Designer",
+                "ext": "6210",
+                "dept": "Eng - Mechanical",
+                "email": "FCascio@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row44_photo.5220e899.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=117\"",
+                "FloorMap": "fcascio"
+            },
+            {
+                "name": "Darshil Choksi",
+                "title": "Mechanical Designer",
+                "ext": "6208",
+                "dept": "Eng - Mechanical",
+                "email": "DChoksi@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row48_photo.71dc6583.png", // Assuming this corresponds
+                "initials": "DCC",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=remote\"",
+                "FloorMap": "dchoksi"
+            },
+            {
+                "name": "Joseph Colombi",
+                "title": "Shop Technician",
+                "ext": "4437",
+                "dept": "Manufacturing",
+                "email": "jcolombi@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row51_photo.1e3ab81a.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "jcolombi"
+            },
+             {
+                "name": "Samuel Costa",
+                "title": "Senior Electrical Designer",
+                "ext": "4471",
+                "dept": "Eng - Standards",
+                "email": "SCosta@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row52_photo.04e1d410.png", // Assuming this corresponds
+                "initials": "SDJ",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=162\"",
+                "FloorMap": "scosta"
+            },
+            {
+                "name": "Nolan Dwenger",
+                "title": "Project Application Engineer",
+                "ext": "6237",
+                "dept": "Applications Engineering",
+                "email": "NDwenger@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row59_photo.78be0597.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=39\"",
+                "FloorMap": "ndwenger"
+            },
+             {
+                "name": "Lucas Enser",
+                "title": "Aftermarket Support Engineer",
+                "ext": "6212",
+                "dept": "Eng - Standards",
+                "email": "LEnser@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row61_photo.4ef35523.png", // Assuming this corresponds
+                "initials": "LME",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=124\"",
+                "FloorMap": "lenser"
+            },
+            {
+                "name": "Jim Evans",
+                "title": "Senior Project Manager", // Title updated based on later entries
+                "ext": "4430",
+                "dept": "Project Management",
+                "email": "jevans@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row62_photo.e6d5657a.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=158\"",
+                "FloorMap": "jevans"
+            },
+             {
+                "name": "Jeremy Finnel",
+                "title": "Senior External Sales Representative",
+                "ext": "4804",
+                "dept": "AfterMarket Sales",
+                "email": "jfinnel@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row65_photo.73a52c23.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=remote\"",
+                "FloorMap": "jfinnel"
+            },
+            {
+                "name": "Dave Fisher",
+                "title": "Director of International Business",
+                "ext": "4427",
+                "dept": "International Sales",
+                "email": "DFisher@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row66_photo.607152a1.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newlayout1\"",
+                "FloorMap": "dfisher"
+            },
+            {
+                "name": "Christopher Flud",
+                "title": "Shop Technician",
+                "ext": "4437",
+                "dept": "Manufacturing",
+                "email": "cflud@aqua-aerobic.com", // Email corrected
+                "imageUrl": "datasheet_emps_row67_photo.6e58f191.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "cflud"
+            },
+            {
+                "name": "Josh Frieze",
+                "title": "Field Service Specialist",
+                "ext": "1337",
+                "dept": "Field Services",
+                "email": "jfrieze@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row69_photo.f40a3743.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "jfrieze"
+            },
+             {
+                "name": "Josh Gable",
+                "title": "Project Application Engineer",
+                "ext": "4426",
+                "dept": "Applications Engineering",
+                "email": "jgable@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row70_photo.79485f05.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=31\"",
+                "FloorMap": "jgable"
+            },
+             {
+                "name": "Daniel Gazinski",
+                "title": "Sales Correspondent",
+                "ext": "6201",
+                "dept": "Applications Engineering",
+                "email": "DGazinski@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row73_photo.a55d4ed3.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=53\"",
+                "FloorMap": "dgazinski"
+            },
+            {
+                "name": "Joe Gergets",
+                "title": "Field Service Specialist",
+                "ext": "6242",
+                "dept": "Field Services",
+                "email": "JGergets@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row74_photo.88bc9d36.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "jgergets"
+            },
+            {
+                "name": "Tim Gill",
+                "title": "Project Manager",
+                "ext": "4826",
+                "dept": "Project Management",
+                "email": "tgill@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row75_photo.50fedb94.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=166\"",
+                "FloorMap": "tgill"
+            },
+            {
+                "name": "Sharri Greenlee",
+                "title": "Customer Service Coordinator",
+                "ext": "4405",
+                "dept": "Customer Service",
+                "email": "SGreenlee@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row78_photo.78eb743e.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=149\"",
+                "FloorMap": "sgreenlee"
+            },
+            {
+                "name": "Paul Gurin",
+                "title": "Contract Administrator",
+                "ext": "4446",
+                "dept": "Contract Administration",
+                "email": "PGurin@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row82_photo.ae231ab5.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=39\"",
+                "FloorMap": "pgurin"
+            },
+            {
+                "name": "Willow Gustin",
+                "title": "Accounting Assistant",
+                "ext": "6241",
+                "dept": "Accounting/Finance",
+                "email": "WGustin@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row83_photo.07aa0acc.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=17\"",
+                "FloorMap": "wgustin"
+            },
+             {
+                "name": "Aaron Halloway",
+                "title": "Senior Electrical Designer",
+                "ext": "4419",
+                "dept": "Eng - Standards",
+                "email": "ahalloway@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row84_photo.e3196aaf.png", // Assuming this corresponds
+                "initials": "ARH",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=96\"",
+                "FloorMap": "ahalloway"
+            },
+            {
+                "name": "Jim Hamilton",
+                "title": "Operations Manager",
+                "ext": "6204",
+                "dept": "Operations",
+                "email": "JHamiltion@aqua-aerobic.com", // Email corrected from source
+                "imageUrl": "datasheet_emps_row85_photo.de20184e.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=60a\"",
+                "FloorMap": "jhamilton"
+            },
+             {
+                "name": "Jake Hatch",
+                "title": "Research and Development Manager",
+                "ext": "4544",
+                "dept": "Research & Development",
+                "email": "JHatch@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row87_photo.345be5fe.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=128\"",
+                "FloorMap": "jhatch"
+            },
+            {
+                "name": "Nate Haug",
+                "title": "Senior Mechanical Engineer",
+                "ext": "4556",
+                "dept": "Eng - Mechanical",
+                "email": "nhaug@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row89_photo.48331788.png", // Assuming this corresponds
+                "initials": "NEH",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=110\"",
+                "FloorMap": "nhaug"
+            },
+            {
+                "name": "Andres Hernandez",
+                "title": "Field Service Specialist",
+                "ext": "1359",
+                "dept": "Field Services",
+                "email": "AHernandez@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row92_photo.d7e4af51.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "ahernandez"
+            },
+            {
+                "name": "Greg Hernandez",
+                "title": "Field Service Specialist",
+                "ext": "1357",
+                "dept": "Field Services",
+                "email": "GHernandez@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row93_photo.b329554e.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "ghernandez"
+            },
+            {
+                "name": "Lucia Horton",
+                "title": "Finance Intern",
+                "ext": "6227",
+                "dept": "Accounting/Finance",
+                "email": "LHorton@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row98_photo.1470e502.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=19\"",
+                "FloorMap": "lhorton"
+            },
+             {
+                "name": "Carrie Hunter",
+                "title": "Engineering Assistant",
+                "ext": "4550",
+                "dept": "Eng - Admin",
+                "email": "chunter@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row100_photo.4d2416c5.png", // Assuming this corresponds
+                "initials": "CMH",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=90\"",
+                "FloorMap": "chunter"
+            },
+             {
+                "name": "Faten Hussein",
+                "title": "Project Application Engineer",
+                "ext": "4810",
+                "dept": "Applications Engineering",
+                "email": "FHussein@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row101_photo.4933b0d7.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=50\"",
+                "FloorMap": "fhussein"
+            },
+            {
+                "name": "Brian Huyge",
+                "title": "Project Application Engineer",
+                "ext": "4498",
+                "dept": "Applications Engineering",
+                "email": "BHuyge@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row102_photo.db4721c6.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=37\"",
+                "FloorMap": "bhuyge"
+            },
+            {
+                "name": "Duane Introwitz",
+                "title": "Electrical Design Engineer",
+                "ext": "6233",
+                "dept": "Eng - Electrical",
+                "email": "DIntrowitz@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row103_photo.14b46f50.png", // Assuming this corresponds
+                "initials": "DFI",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=99\"",
+                "FloorMap": "dintrowitz"
+            },
+            {
+                "name": "Marcus Ippolito",
+                "title": "Mechanical Designer",
+                "ext": "4402",
+                "dept": "Eng - Standards",
+                "email": "MIppolito@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row104_photo.f31f8a9f.png", // Assuming this corresponds
+                "initials": "MAI",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=121\"",
+                "FloorMap": "mippolito"
+            },
+             {
+                "name": "Aaron Jacobs",
+                "title": "Customer Service Specialist",
+                "ext": "1351",
+                "dept": "Field Services", // Dept corrected based on context
+                "email": "AJacobs@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row105_photo.34f88bf6.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newhire\"",
+                "FloorMap": "ajacobs"
+            },
+             {
+                "name": "Cathy Johnson",
+                "title": "Supervisor, Contract Administrator",
+                "ext": "4416",
+                "dept": "Contract Administration",
+                "email": "CJohnson@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row109_photo.298805bb.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=155\"",
+                "FloorMap": "cathyjohnson"
+            },
+            {
+                "name": "Eric Johnson",
+                "title": "Shop Technician",
+                "ext": "4437",
+                "dept": "Manufacturing",
+                "email": "ejohnson@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row112_photo.3f173e58.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "ejohnson"
+            },
+             {
+                "name": "Drew Johnston",
+                "title": "AfterMarket External Sales Rep",
+                "ext": "4818",
+                "dept": "AfterMarket Sales",
+                "email": "djohnston@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row114_photo.5a81e270.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=remote\"",
+                "FloorMap": "djohnston"
+            },
+            {
+                "name": "Cristen Jones",
+                "title": "Field Service Specialist",
+                "ext": "1341",
+                "dept": "Field Services",
+                "email": "CJones@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row115_photo.37623779.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "cjones"
+            },
+             {
+                "name": "Madison Karamagianis",
+                "title": "Project Application Engineer",
+                "ext": "6221",
+                "dept": "Applications Engineering",
+                "email": "MKaramagianis@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row117_photo.9d8a22dd.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=51\"",
+                "FloorMap": "mkaramagianis"
+            },
+             {
+                "name": "Charlene Kepler",
+                "title": "Contract Administrator Assistant",
+                "ext": "4477",
+                "dept": "Contract Administration",
+                "email": "ckepler@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row119_photo.9fbac015.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=159\"",
+                "FloorMap": "ckepler"
+            },
+             {
+                "name": "Rachel Konefes",
+                "title": "HR Specialist/Recruiter",
+                "ext": "4415",
+                "dept": "Human Resources",
+                "email": "RKonefes@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row122_photo.b3efdd04.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=1\"",
+                "FloorMap": "rkonefes"
+            },
+            {
+                "name": "Thomas Kubalewski",
+                "title": "Mechanical Designer",
+                "ext": "4824",
+                "dept": "Eng - Mechanical",
+                "email": "tkubalewski@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row125_photo.fe0db13b.png", // Assuming this corresponds
+                "initials": "TJK",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=115\"",
+                "FloorMap": "tkubalewski"
+            },
+            {
+                "name": "Alex Kuhl",
+                "title": "Mechanical Engineer",
+                "ext": "4460",
+                "dept": "Eng - Mechanical",
+                "email": "akuhl@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row126_photo.348dd275.png", // Assuming this corresponds
+                "initials": "ALK",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=112\"",
+                "FloorMap": "akuhl"
+            },
+            {
+                "name": "Dave Lamphere",
+                "title": "Product Manager - Membranes",
+                "ext": "4453",
+                "dept": "Prod Mgmt - Bio/Membrane",
+                "email": "DLamphere@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row130_photo.ebec8faf.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newlayout1\"",
+                "FloorMap": "dlamphere"
+            },
+            {
+                "name": "Bryn Larson",
+                "title": "Buyer",
+                "ext": "4436",
+                "dept": "Production Control",
+                "email": "BLarson@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row132_photo.b9b69fbb.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&width=705&height=362&floor=first\"",
+                "FloorMap": "blarson"
+            },
+             {
+                "name": "Josh Layman",
+                "title": "Design Analyst/Cost Estimator",
+                "ext": "4585",
+                "dept": "Eng - Estimating",
+                "email": "JLayman@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row134_photo.958ec073.png", // Assuming this corresponds
+                "initials": "JML",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=59\"",
+                "FloorMap": "jlayman"
+            },
+             {
+                "name": "William Lenz",
+                "title": "Director of Industrial Sales",
+                "ext": "4448",
+                "dept": "Industrial Sales",
+                "email": "WLenz@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row135_photo.583d3730.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=63\"",
+                "FloorMap": "wlenz"
+            },
+            {
+                "name": "Joshua Long",
+                "title": "Shop Technician",
+                "ext": "4437",
+                "dept": "Manufacturing",
+                "email": "jlong@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row136_photo.ecb5c5cb.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "jlong"
+            },
+             {
+                "name": "Tim Lynch",
+                "title": "Buyer",
+                "ext": "6230",
+                "dept": "Production Control",
+                "email": "TLynch@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row138_photo.c27962d5.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=75\"",
+                "FloorMap": "tlynch"
+            },
+             {
+                "name": "Lauren Maggi",
+                "title": "Contract Administrator Assistant",
+                "ext": "6238",
+                "dept": "Contract Administration",
+                "email": "LMaggi@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row139_photo.0ac313b2.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newhire\"",
+                "FloorMap": "lmaggi"
+            },
+            {
+                "name": "Leeroy Majewicz",
+                "title": "Electrical Engineer",
+                "ext": "4823",
+                "dept": "Eng - Electrical",
+                "email": "LMajewicz@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row140_photo.6a355db6.png", // Assuming this corresponds
+                "initials": "LRM",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=175\"",
+                "FloorMap": "lmajewicz"
+            },
+            {
+                "name": "Ryan Maldonado",
+                "title": "Field Service Specialist",
+                "ext": "1329",
+                "dept": "Field Services",
+                "email": "rmaldonado@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row141_photo.ca450291.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "rmaldonado"
+            },
+            {
+                "name": "Meera Manoharan",
+                "title": "Project Application Engineer",
+                "ext": "4822",
+                "dept": "Applications Engineering",
+                "email": "mmanoharan@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row144_photo.27d0b4e8.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=55\"",
+                "FloorMap": "lmanoharan" // Source file has lmanoharan
+            },
+             {
+                "name": "Chelsey Matthews", // Corrected name from source
+                "title": "Credit Assistant",
+                "ext": "4541",
+                "dept": "Accounting/Finance",
+                "email": "CMatthews@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row148_photo.a3fe50a0.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=18\"",
+                "FloorMap": "cmathews" // Source file has cmathews
+            },
+            {
+                "name": "Michael McKenna",
+                "title": "Project Application Engineer",
+                "ext": "4488",
+                "dept": "Applications Engineering",
+                "email": "Mmckenna@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row150_photo.14de24f3.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=59\"",
+                "FloorMap": "mmckenna"
+            },
+            {
+                "name": "Mark Milligan",
+                "title": "Computer/Network Technician",
+                "ext": "4596",
+                "dept": "Information Technology",
+                "email": "MMilligan@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row154_photo.b7291636.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&width=665&height=357&floor=first\"",
+                "FloorMap": "mmilligan"
+            },
+             {
+                "name": "Robert Morgan",
+                "title": "Inventory Supervisor",
+                "ext": "4458",
+                "dept": "Production Control",
+                "email": "RMorgan@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row155_photo.857d604e.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "rmorgan"
+            },
+            {
+                "name": "Aidan Morrison",
+                "title": "Electrical Engineer",
+                "ext": "4825",
+                "dept": "Eng - Electrical",
+                "email": "AMorrison@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row156_photo.e8c802e7.png", // Assuming this corresponds
+                "initials": "AMM",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=174\"",
+                "FloorMap": "amorrison"
+            },
+             {
+                "name": "Caleb Morse",
+                "title": "Field Service Specialist",
+                "ext": "1358",
+                "dept": "Field Services",
+                "email": "CMorse@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row158_photo.62de0b46.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "cmorse"
+            },
+            {
+                "name": "Todd Neiber",
+                "title": "Field Service Specialist",
+                "ext": "1347",
+                "dept": "Field Services",
+                "email": "TNeiber@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row162_photo.e4b5856b.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "tneiber"
+            },
+            {
+                "name": "Marilyn Ngoma",
+                "title": "Electrical Engineer - Intern",
+                "ext": "6213",
+                "dept": "Eng - Electrical",
+                "email": "MNgoma@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row163_photo.21620ff6.png", // Assuming this corresponds
+                "initials": "MYM",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newhire\"",
+                "FloorMap": "mngoma"
+            },
+             {
+                "name": "Alexander Neisewander",
+                "title": "Mechanical Designer",
+                "ext": "4549",
+                "dept": "Eng - Mechanical",
+                "email": "ANeisewander@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row164_photo.09ed96f7.png", // Assuming this corresponds
+                "initials": "AGN",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=112\"",
+                "FloorMap": "aneisewander"
+            },
+            {
+                "name": "Josh Nilles",
+                "title": "Electrical Design Engineer",
+                "ext": "6234",
+                "dept": "Eng - Electrical",
+                "email": "JNilles@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row167_photo.ddf493b5.png", // Assuming this corresponds
+                "initials": "JAN",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newhire\"",
+                "FloorMap": "jnilles"
+            },
+            {
+                "name": "Kyle Olson",
+                "title": "Technical Training & Development Manager",
+                "ext": "4418",
+                "dept": "Eng - Admin",
+                "email": "KOlson@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row168_photo.b04d5bbd.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=150\"",
+                "FloorMap": "kolson"
+            },
+            {
+                "name": "Nachelle Osorio",
+                "title": "Warranty Coordinator Assistant",
+                "ext": "4564",
+                "dept": "Customer Service",
+                "email": "NOsorio@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row169_photo.3c28a0d0.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newhire\"",
+                "FloorMap": "nosorio"
+            },
+            {
+                "name": "Nishant Patel",
+                "title": "Electrical Engineer",
+                "ext": "4435",
+                "dept": "Eng - Electrical",
+                "email": "npatel@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row171_photo.3d4bc4d1.png", // Assuming this corresponds
+                "initials": "NDP",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=106\"",
+                "FloorMap": "npatel"
+            },
+            {
+                "name": "Charlie Petrie",
+                "title": "Production Control Planner",
+                "ext": "4807",
+                "dept": "Production Control",
+                "email": "CPetrie@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row173_photo.fd65de61.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=72\"",
+                "FloorMap": "cpetrie"
+            },
+             {
+                "name": "Ignar Pimentel-Rivera",
+                "title": "Field Service Specialist",
+                "ext": "1355",
+                "dept": "Field Services",
+                "email": "IPimentel-Rivera@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row174_photo.11a3c030.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "ipimentel-rivera"
+            },
+            {
+                "name": "Zak Pirro",
+                "title": "Field Service Specialist",
+                "ext": "1345",
+                "dept": "Field Services",
+                "email": "ZPirro@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row175_photo.274eddcf.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "zpirro"
+            },
+             {
+                "name": "Aldo Ramirez",
+                "title": "Shop Technician",
+                "ext": "4437",
+                "dept": "Manufacturing",
+                "email": "aramirez@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row181_photo.e6c9320e.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "aramirez"
+            },
+            {
+                "name": "Gabriel Ramirez",
+                "title": "Shop Technician",
+                "ext": "4437",
+                "dept": "Manufacturing",
+                "email": "gramirez@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row182_photo.7587897d.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "gramirez"
+            },
+            {
+                "name": "Jasmine Rawls",
+                "title": "Field Service Specialist",
+                "ext": "1356",
+                "dept": "Field Services",
+                "email": "JRawls@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row183_photo.99c5d9fa.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "jrawls"
+            },
+            {
+                "name": "Christine Reyes",
+                "title": "Marketing Assistant",
+                "ext": "4444",
+                "dept": "Applications Engineering", // Dept mismatch in source, using Applications Eng.
+                "email": "creyes@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row185_photo.91da2ff4.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=25\"",
+                "FloorMap": "creyes"
+            },
+             {
+                "name": "Krista Robinson",
+                "title": "Administrative Assistant - AMS",
+                "ext": "6236",
+                "dept": "Aftermarket Sales",
+                "email": "KRobinson@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row186_photo.663d4062.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newhire\"",
+                "FloorMap": "krobinson"
+            },
+            {
+                "name": "Camilo Rodriguez",
+                "title": "Field Service Specialist",
+                "ext": "1331",
+                "dept": "Field Services",
+                "email": "crodriguez@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row188_photo.bdc501af.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "crodriguez"
+            },
+            {
+                "name": "Daniel Rodriquez", // Note: Spelling differs from source
+                "title": "Electrical Engineer",
+                "ext": "6202",
+                "dept": "Eng - Electrical",
+                "email": "drodriquez@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row189_photo.7bf04dea.png", // Assuming this corresponds
+                "initials": "DAR",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=116\"",
+                "FloorMap": "drodriquez"
+            },
+             {
+                "name": "Mariano Rosado",
+                "title": "Rental Fleet Supervisor",
+                "ext": "1343",
+                "dept": "AfterMarket Sales",
+                "email": "MRosado@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row190_photo.41e32a8e.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=138\"",
+                "FloorMap": "mrosado"
+            },
+            {
+                "name": "Richard Rossi",
+                "title": "Field Service Specialist",
+                "ext": "1344",
+                "dept": "Field Services",
+                "email": "rrossi@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row191_photo.ea415a40.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "rrossi"
+            },
+            {
+                "name": "Richard Rutherford",
+                "title": "Field Service Specialist",
+                "ext": "1339",
+                "dept": "Field Services",
+                "email": "rrutherford@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row193_photo.e37fef22.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "rrutherford"
+            },
+            {
+                "name": "Steve Saichek",
+                "title": "Senior Technical Support Specialist",
+                "ext": "4510",
+                "dept": "Customer Service",
+                "email": "SSaichek@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row194_photo.8adfb29e.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=146\"",
+                "FloorMap": "ssaichek"
+            },
+            {
+                "name": "David Sanchez",
+                "title": "Electrical Design Engineer",
+                "ext": "6239",
+                "dept": "Eng - Electrical",
+                "email": "DSanchez@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row197_photo.153a152d.png", // Assuming this corresponds
+                "initials": "DMS",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=104\"",
+                "FloorMap": "dsanchez"
+            },
+             {
+                "name": "Richard Santos",
+                "title": "Application Engineer",
+                "ext": "4811",
+                "dept": "Applications Engineering",
+                "email": "RSantos@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row199_photo.f2eedd0e.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=38\"",
+                "FloorMap": "rsantos"
+            },
+             {
+                "name": "Taku Sato",
+                "title": "Project Application Engineer",
+                "ext": "6220",
+                "dept": "Applications Engineering",
+                "email": "TSato@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row200_photo.ef864483.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newhire\"",
+                "FloorMap": "tsato"
+            },
+            {
+                "name": "Nick Schiavo",
+                "title": "Project Application Engineer",
+                "ext": "4497",
+                "dept": "Applications Engineering",
+                "email": "NSchiavo@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row202_photo.16c8c05c.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=49\"",
+                "FloorMap": "nschiavo"
+            },
+             {
+                "name": "Shinoda", // First name missing in source
+                "title": "Project Application Engineer",
+                "ext": "6200",
+                "dept": "Applications Engineering",
+                "email": "shinoda@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row203_photo.79538a44.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=64\"",
+                "FloorMap": "shinoda"
+            },
+            {
+                "name": "Nicholas Schroeder", // Corrected name from source
+                "title": "Network Technician",
+                "ext": "4595",
+                "dept": "Information Technology",
+                "email": "nschroeder@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row206_photo.d1fcb127.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&width=635&height=357&floor=first\"",
+                "FloorMap": "nschroeder"
+            },
+             {
+                "name": "Terrance Schwandt",
+                "title": "Production Control Planner",
+                "ext": "4809",
+                "dept": "Production Control",
+                "email": "TSchwandt@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row207_photo.7d4a0c45.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=69\"",
+                "FloorMap": "tschwandt"
+            },
+            {
+                "name": "Kevin Shelby",
+                "title": "Field Service Specialist",
+                "ext": "1346",
+                "dept": "Field Services",
+                "email": "KShelby@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row208_photo.40b07b41.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "kshelby"
+            },
+             {
+                "name": "Denitia Shelley", // Corrected name from source
+                "title": "Production Control Planner",
+                "ext": "6231",
+                "dept": "Production Control",
+                "email": "DShelley@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row209_photo.e627693c.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newhire\"",
+                "FloorMap": "dshelley"
+            },
+             {
+                "name": "Carmen Shields",
+                "title": "Programmer Specialist",
+                "ext": "4591",
+                "dept": "Information Technology",
+                "email": "CShields@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row210_photo.46b26da5.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=43\"",
+                "FloorMap": "cdelaPena" // Source file has cdelaPena
+            },
+             {
+                "name": "Brad Smith",
+                "title": "Field Service Specialist",
+                "ext": "1333",
+                "dept": "Field Services",
+                "email": "BSmith@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row212_photo.2b4df083.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "bsmith"
+            },
+             {
+                "name": "Sam Smith",
+                "title": "Intern",
+                "ext": "4544",
+                "dept": "Research & Development",
+                "email": "ssmith@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row215_photo.7b6a9ccd.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=46\"",
+                "FloorMap": "ssmith"
+            },
+            {
+                "name": "Marcos Soto",
+                "title": "Shop Technician",
+                "ext": "4437",
+                "dept": "Manufacturing",
+                "email": "MSoto@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row217_photo.ee9d0e0f.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "msoto"
+            },
+             {
+                "name": "Ryan Steele",
+                "title": "Shop Technician",
+                "ext": "4437",
+                "dept": "Manufacturing",
+                "email": "rsteele@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row220_photo.0cbb65de.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "rsteele"
+            },
+            {
+                "name": "Jamey Steffen",
+                "title": "Regional Sales Manager",
+                "ext": "4473",
+                "dept": "Domestic Sales-Southest",
+                "email": "JSteffen@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row221_photo.b19f5d23.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newlayout1\"",
+                "FloorMap": "jsteffen"
+            },
+            {
+                "name": "Kayla Stevens",
+                "title": "Application Engineer",
+                "ext": "4821",
+                "dept": "Applications Engineering",
+                "email": "KStevens@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row222_photo.73f2bc8b.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=34\"",
+                "FloorMap": "kstevens"
+            },
+            {
+                "name": "Ian Stohr",
+                "title": "Logistics Coordinator",
+                "ext": "4496",
+                "dept": "Production Control",
+                "email": "istohr@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row223_photo.a646dbc3.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "istohr"
+            },
+            {
+                "name": "Pawel Szul",
+                "title": "Technical Systems Assistant",
+                "ext": "4544",
+                "dept": "Research & Development",
+                "email": "PSzul@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row226_photo.11789f80.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newhire\"",
+                "FloorMap": "pszul"
+            },
+             {
+                "name": "Eduardo Torres",
+                "title": "Shop Technician",
+                "ext": "4437",
+                "dept": "Manufacturing",
+                "email": "etorres@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row227_photo.2b0cf647.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "etorres"
+            },
+            {
+                "name": "Ashley Travis",
+                "title": "Buyer",
+                "ext": "6222",
+                "dept": "Production Control",
+                "email": "ATravis@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row230_photo.532f76aa.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=67\"",
+                "FloorMap": "atravis"
+            },
+            {
+                "name": "Eric Umlauf",
+                "title": "Buyer",
+                "ext": "6223",
+                "dept": "Production Control",
+                "email": "EUmlauf@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row234_photo.7d8b0fe5.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=68\"",
+                "FloorMap": "eumlauf"
+            },
+            {
+                "name": "Jordan Van Barriger",
+                "title": "Design Analyst",
+                "ext": "6211",
+                "dept": "Eng - Estimating",
+                "email": "JVanBarriger@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row236_photo.50395dc5.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=32\"",
+                "FloorMap": "jvanbarriger"
+            },
+             {
+                "name": "Leslie Vandre",
+                "title": "Electrical Engineer",
+                "ext": "4495",
+                "dept": "Eng - Electrical",
+                "email": "LVandre@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row237_photo.be94b765.png", // Assuming this corresponds
+                "initials": "LAV",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=123\"",
+                "FloorMap": "lvandre"
+            },
+            {
+                "name": "Mike VanHauen",
+                "title": "Shop Technician",
+                "ext": "4437",
+                "dept": "Manufacturing",
+                "email": "MVanHauen@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row238_photo.88eff5ad.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "mvanhauen"
+            },
+            {
+                "name": "Ramiro Verastegui",
+                "title": "Design Analyst",
+                "ext": "6202",
+                "dept": "Eng - Estimating",
+                "email": "RVerastegui@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row240_photo.774c8703.png", // Assuming this corresponds
+                "initials": "RAV",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=32\"",
+                "FloorMap": "rverastegui"
+            },
+             {
+                "name": "Alla Vongsiri",
+                "title": "Contract Administrator",
+                "ext": "4559",
+                "dept": "Contract Administration",
+                "email": "AVongsiri@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row243_photo.d938da8c.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=169\"",
+                "FloorMap": "avongsiri"
+            },
+             {
+                "name": "Joe Wakefield",
+                "title": "Mechanical Designer",
+                "ext": "4433",
+                "dept": "Eng - Mechanical",
+                "email": "JWakefield@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row244_photo.f940f347.png", // Assuming this corresponds
+                "initials": "JCW",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=121\"",
+                "FloorMap": "jwakefield"
+            },
+            {
+                "name": "Christopher White",
+                "title": "Field Service Specialist",
+                "ext": "1334",
+                "dept": "Field Services",
+                "email": "cwhite@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row247_photo.726acf9c.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=fieldservice\"",
+                "FloorMap": "cwhite"
+            },
+            {
+                "name": "Ethan Wicks",
+                "title": "Mechanical Designer",
+                "ext": "4434",
+                "dept": "Eng - Mechanical",
+                "email": "ewicks@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row248_photo.e2d777a1.png", // Assuming this corresponds
+                "initials": "EMW",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=118\"",
+                "FloorMap": "ewicks"
+            },
+            {
+                "name": "Rick Willard",
+                "title": "Project Manager",
+                "ext": "6203",
+                "dept": "Project Management",
+                "email": "rwillard@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row250_photo.6e45e0e3.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=157\"",
+                "FloorMap": "willard" // Source file has 'willard'
+            },
+            {
+                "name": "Megan Wolfe",
+                "title": "Project Management Assistant",
+                "ext": "6235",
+                "dept": "Project Management",
+                "email": "MWolfe@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row253_photo.11fb1850.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=154\"",
+                "FloorMap": "mwolfe"
+            },
+            {
+                "name": "Aaron Woods",
+                "title": "Shop Technician",
+                "ext": "4437",
+                "dept": "Manufacturing",
+                "email": "awoods@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row254_photo.4e360618.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=shop\"",
+                "FloorMap": "awoods"
+            },
+            {
+                "name": "Kadin Woods-Canfield",
+                "title": "Intern - R & D",
+                "ext": "4544",
+                "dept": "Research & Development",
+                "email": "KWoodsCanfield@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row255_photo.8afe3a37.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=46\"",
+                "FloorMap": "kwoods-canfield"
+            },
+            {
+                "name": "Edward Wright",
+                "title": "Procurement/Manufacturing Support Engineer",
+                "ext": "4407",
+                "dept": "Eng - Mechanical",
+                "email": "EWright@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row258_photo.01aabd03.png", // Assuming this corresponds
+                "initials": "EAW",
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=94\"",
+                "FloorMap": "ewright"
+            },
+            {
+                "name": "Kosta Zafiropoulos",
+                "title": "Production Control Planner",
+                "ext": "6232",
+                "dept": "Production Control",
+                "email": "Kzafiropoulos@aqua-aerobic.com",
+                "imageUrl": "datasheet_emps_row260_photo.aed93ea7.png", // Assuming this corresponds
+                "initials": "", // Not provided in source
+                "responsibilities": "", // Not provided in source
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newhire\"",
+                "FloorMap": "kzafiropoulos"
+            },
+            // Added Jeff Alaniz from previous example
+             {
                 "name": "Jeff Alaniz",
                 "title": "Project Manager",
                 "ext": "4429",
@@ -459,10 +2033,11 @@ body {
                 "imageUrl": "datasheet_emps_row0_photo.7bf531a6.png",
                 "initials": "",
                 "responsibilities": "",
-                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=152\""
+                "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=152\"",
+                "FloorMap": "jalaniz"
             }
-            // ... add all your other employees here
         ];
+        // ... rest of the array (if any needed) ...
 
 
         // --- Full Department List & Value Mapping ---
@@ -556,6 +2131,17 @@ body {
                     ? `${imageBaseUrl}${employee.imageUrl}` 
                     : 'https://placehold.co/100x100/CCCCCC/FFFFFF?text=No+Photo&font=sans-serif';
 
+                // --- NEW: "Get to Know Me" button logic ---
+                const getToKnowMeButtonHtml = (employee.FloorMap && employee.FloorMap.trim() !== '' && employee.FloorMap.trim() !== 'NULL') ? `
+                    <button
+                        class="btn-get-to-know-me text-sm font-medium text-red-600 hover:text-red-700 hover:underline py-1 px-0 rounded-md mt-2 mb-2 ml-3"
+                        data-id="${employee.id}"
+                    >
+                        GET TO KNOW ME (TAP HERE)
+                    </button>
+                ` : '';
+                // --- End of new logic ---
+
                 const card = `
                     <div class="employee-card flex flex-col sm:flex-row items-start sm:items-center bg-white p-4 rounded-lg shadow-sm border border-gray-200">
                         <!-- Image -->
@@ -579,6 +2165,9 @@ body {
                             >
                                 LOCATE
                             </button>
+                            
+                            <!-- NEW: "Get to Know Me" Button (conditionally rendered) -->
+                            ${getToKnowMeButtonHtml}
                             
                             <!-- Responsibilities -->
                             ${employee.responsibilities ? `
@@ -799,11 +2388,14 @@ body {
         }
 
         /**
-         * Handles clicks on the "LOCATE" button via event delegation.
+         * --- MODIFIED: Handles clicks on *all* buttons inside the results container ---
          */
-        function handleLocateClick(event) {
+        function handleResultsClick(event) {
             // Check if the clicked element is a LOCATE button
             const locateButton = event.target.closest('.btn-locate');
+            // NEW: Check for "Get to Know Me" button
+            const getToKnowMeButton = event.target.closest('.btn-get-to-know-me');
+
             if (locateButton) {
                 const employeeId = locateButton.dataset.id;
                 const employee = allEmployees.find(emp => emp.id === employeeId);
@@ -816,8 +2408,8 @@ body {
                     const extractedUrl = match ? match[1] : null;
         
                     if(extractedUrl) {
-                        // Set the modal content
-                        modalEmployeeName.textContent = employee.name;
+                        // Set the modal content for LOCATE
+                        modalEmployeeName.textContent = `Location: ${employee.name}`;
                         modalIframe.src = extractedUrl;
             
                         // Show the modal
@@ -831,6 +2423,25 @@ body {
                 } else if (employee) {
                     console.warn(`No 'url' field found for employee ${employee.name}.`);
                     alert(`Location data is not available for ${employee.name}.`);
+                }
+            } else if (getToKnowMeButton) {
+                // NEW: Handle "Get to Know Me" click
+                const employeeId = getToKnowMeButton.dataset.id;
+                const employee = allEmployees.find(emp => emp.id === employeeId);
+
+                if (employee && employee.FloorMap) {
+                    const iframeUrl = `https://aqualocator.github.io/welcome/index.html?image=${employee.FloorMap}`;
+                    
+                    // Set the modal content for GET TO KNOW ME
+                    modalEmployeeName.textContent = `Get to Know: ${employee.name}`;
+                    modalIframe.src = iframeUrl;
+        
+                    // Show the modal
+                    modalOverlay.classList.remove('hidden');
+                    modalOverlay.classList.add('flex'); // Use flex for centering
+                } else if (employee) {
+                    console.warn(`No 'FloorMap' field found for employee ${employee.name}.`);
+                    alert(`"Get to Know Me" data is not available for ${employee.name}.`);
                 }
             }
         }
@@ -860,8 +2471,8 @@ body {
                 resetFilters();
             });
 
-            // Add one listener to the parent for all "LOCATE" buttons
-            resultsContainer.addEventListener('click', handleLocateClick);
+            // Add one listener to the parent for all card buttons
+            resultsContainer.addEventListener('click', handleResultsClick);
             
             // --- NEW: Add modal close listeners ---
             closeModalBtn.addEventListener('click', closeModal);
@@ -889,7 +2500,7 @@ body {
       <div class="modal-content">
         
         <!-- 1. The Name at the top -->
-        <h2 id="modal-employee-name" class="text-2xl font-bold"></h2>
+        <h2 id="modal-employee-name" class="text-2xl font-bold text-gray-800"></h2>
         
         <!-- 2. The Close Button -->
         <button id="modal-close-btn" class="modal-close-btn" title="Close (Esc)">&times;</button>
@@ -903,4 +2514,6 @@ body {
     </div>
 </body>
 </html>
+
+
 
