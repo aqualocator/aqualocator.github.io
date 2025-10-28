@@ -26,22 +26,6 @@
                         'brand-purple-dark': '#6a2e7a',
                         'brand-blue': '#35a2c4', // Original blue
                         'brand-blue-dark': '#2a8faf',
-                        'tech-bg-start': '#1A202C',
-                        'tech-bg-end': '#2D3748',
-                        'tech-card': 'rgba(45, 55, 72, 0.9)',
-                        'tech-border': '#4A5568',
-                        'tech-text-light': '#E2E8F0',
-                        'tech-text-medium': '#CBD5E0',
-                        'tech-text-dark': '#A0AEC0',
-                        'tech-accent-blue': '#63B3ED',
-                        'tech-accent-blue-light': '#90CDF4',
-                        'tech-accent-cyan': '#00BFFF',
-                    },
-                    boxShadow: {
-                        'tech-glow': '0 5px 15px rgba(0, 191, 255, 0.4)',
-                        'tech-glow-hover': '0 8px 20px rgba(0, 191, 255, 0.6)',
-                        'tech-card': '0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(71, 85, 105, 0.5)',
-                        'tech-img-glow': '0 0 15px rgba(99, 179, 237, 0.4)',
                     },
                     animation: {
                         'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
@@ -53,209 +37,105 @@
 
     <!-- Custom styles -->
     <style>
-        /* Tech theme styles */
+        /* Set default font for the page */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, theme('colors.tech-bg-start') 0%, theme('colors.tech-bg-end') 100%);
-            color: theme('colors.tech-text-light');
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Use a slightly cooler gray */
         }
 
-        /* Header Adjustment */
-        header {
-            background-color: theme('colors.tech-card');
-            border-bottom: 1px solid theme('colors.tech-border');
-            position: sticky; /* Keep header sticky */
-            top: 0;
-            z-index: 50;
+        /* Custom button base styles */
+        .btn {
+            @apply font-medium py-2 px-4 rounded-md transition-all duration-200 ease-in-out shadow-sm;
         }
-        header h1 {
-           color: theme('colors.tech-accent-blue');
-           text-shadow: 0 0 5px theme('colors.tech-accent-blue/50');
+        .btn:hover {
+            @apply shadow-md transform -translate-y-px;
         }
 
-        /* Filter Section Styling */
-        .filter-card {
-            background-color: theme('colors.tech-card');
-            border: 1px solid theme('colors.tech-border');
-            box-shadow: theme('boxShadow.tech-card');
-            position: sticky;
-             top: 80px; /* Adjust based on actual header height */
-            backdrop-filter: blur(4px);
-            @apply p-5 rounded-lg;
+        /* Custom button colors */
+        .btn-locate {
+            @apply btn bg-brand-purple text-white text-sm py-1 px-3; /* Adjusted size */
         }
-        .filter-card label {
-            color: theme('colors.tech-text-medium');
+        .btn-locate:hover {
+            @apply bg-brand-purple-dark;
         }
-        .filter-card input[type="text"] {
-            background-color: theme('colors.tech-bg-end');
-            border: 1px solid theme('colors.tech-border');
-            color: theme('colors.tech-text-light');
-            @apply ring-offset-0 focus:ring-2 focus:ring-tech-accent-blue focus:border-transparent;
+        .btn-reset {
+            @apply btn bg-brand-blue text-white;
         }
-        .filter-card input[type="text"]::placeholder {
-             color: theme('colors.tech-text-dark');
+        .btn-reset:hover {
+            @apply bg-brand-blue-dark;
         }
-         /* Custom styling for the select dropdown */
-        .filter-card select {
-            background-color: theme('colors.tech-bg-end');
-            border: 1px solid theme('colors.tech-border');
-            color: theme('colors.tech-text-light');
+
+        /* Custom styling for the select dropdown */
+        select {
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23CBD5E0%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-13%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-13%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            /* Custom SVG arrow */
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-13%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-13%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
             background-repeat: no-repeat;
             background-position: right .75rem center;
             background-size: .65em auto;
-            padding-right: 2.5rem;
-            @apply ring-offset-0 focus:ring-2 focus:ring-tech-accent-blue focus:border-transparent rounded-md;
+            padding-right: 2.5rem; /* Make space for arrow */
+
+            /* Blue bottom border style */
+             border: 1px solid #d1d5db; /* Default border */
+             border-radius: 0.375rem; /* rounded-md */
+             padding-left: 0.75rem; /* px-3 */
+             padding-top: 0.5rem; /* py-2 */
+             padding-bottom: 0.5rem; /* py-2 */
+        }
+        select:focus {
+             outline: 2px solid transparent;
+             outline-offset: 2px;
+             --tw-ring-color: theme('colors.brand-blue');
+             box-shadow: 0 0 0 2px var(--tw-ring-color);
+             border-color: theme('colors.brand-blue');
         }
 
-
-        /* Tech Buttons Base */
-         .btn-tech {
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-            letter-spacing: 0.5px;
-        }
-        .btn-tech:hover {
-            transform: translateY(-2px) scale(1.01);
-        }
-
-        /* Tech Locate Button */
-        .btn-tech-locate {
-             @apply btn-tech;
-             background: linear-gradient(90deg, theme('colors.tech-accent-blue') 0%, theme('colors.tech-accent-cyan') 100%);
-             color: theme('colors.tech-bg-start');
-             box-shadow: theme('boxShadow.tech-glow');
-        }
-        .btn-tech-locate:hover {
-            background: linear-gradient(90deg, theme('colors.tech-accent-cyan') 0%, theme('colors.tech-accent-blue') 100%);
-            box-shadow: theme('boxShadow.tech-glow-hover');
-        }
-
-        /* Tech Reset Button */
-        .btn-tech-reset {
-            @apply btn-tech;
-            background-color: theme('colors.tech-accent-blue');
-            color: theme('colors.tech-bg-start');
-            box-shadow: 0 4px 8px rgba(99, 179, 237, 0.3);
-        }
-         .btn-tech-reset:hover {
-             background-color: theme('colors.tech-accent-blue-light');
-             box-shadow: 0 6px 12px rgba(99, 179, 237, 0.4);
-        }
-
-        /* Employee Card Styling */
+        /* Employee Card Hover Effect */
         .employee-card {
-            background-color: theme('colors.tech-card');
-            border: 1px solid theme('colors.tech-border');
-            box-shadow: theme('boxShadow.tech-card');
-            transition: all 0.3s ease-in-out;
-            @apply p-5 rounded-lg flex flex-col sm:flex-row items-start sm:items-center;
+            @apply transition-all duration-200 ease-in-out;
         }
         .employee-card:hover {
-            transform: translateY(-4px) scale(1.01);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px theme('colors.tech-accent-blue/70');
-            border-color: theme('colors.tech-accent-blue/50');
-        }
-        .employee-card img {
-            border: 3px solid theme('colors.tech-accent-blue');
-            box-shadow: theme('boxShadow.tech-img-glow');
-            @apply w-24 h-24 rounded-full mr-0 sm:mr-6 mb-4 sm:mb-0 flex-shrink-0 object-cover;
-        }
-        .employee-card h3 {
-             color: theme('colors.tech-accent-blue');
-             text-shadow: 0 0 8px theme('colors.tech-accent-blue/60');
-             @apply text-xl font-bold mb-1;
-        }
-        .employee-card .title-text {
-             color: theme('colors.tech-text-dark');
-             @apply text-base mb-1;
-        }
-         .employee-card .initials-text {
-             color: theme('colors.tech-text-medium');
-             @apply text-sm mb-3;
-        }
-        .employee-card .contact-details {
-             color: theme('colors.tech-text-medium');
-             @apply text-sm space-y-1 mt-3;
-        }
-        .employee-card .contact-details strong {
-             color: theme('colors.tech-text-light');
-        }
-         .employee-card .contact-details a {
-            color: theme('colors.tech-accent-blue');
-            transition: color 0.3s ease;
-            @apply hover:text-tech-accent-blue-light hover:underline break-all;
-        }
-        .employee-card .responsibilities {
-            border-top: 1px solid theme('colors.tech-border');
-            color: theme('colors.tech-text-medium');
-            @apply text-xs mt-3 pt-3;
-        }
-        /* Style for the "Get to Know Me" link */
-        .know-me-link {
-            color: #ee2741; /* Red color like the image */
-            text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: color 0.2s ease;
-            display: inline-block; /* Or block if needed */
-            margin-top: 8px; /* Add some space */
-        }
-        .know-me-link:hover {
-            color: #c51f33; /* Darker red on hover */
-            text-decoration: underline;
+            @apply shadow-lg transform -translate-y-1;
         }
 
         /* --- Modal Styles --- */
         .modal-overlay {
-          @apply fixed z-[1000] inset-0 w-full h-full overflow-auto bg-black/70 backdrop-blur-md items-center justify-center; /* Darker overlay, more blur */
+          /* Uses 'hidden' and 'flex' from Tailwind */
+          @apply fixed z-[1000] inset-0 w-full h-full overflow-auto bg-black/50 backdrop-blur-sm items-center justify-center;
         }
 
         .modal-content {
-          background-color: theme('colors.tech-bg-end');
-          border: 1px solid theme('colors.tech-accent-blue');
-          box-shadow: 0 0 25px theme('colors.tech-accent-blue/50');
-          max-width: 600px; /* Limit width */
-          @apply relative m-auto p-6 w-11/12 shadow-2xl rounded-lg;
+           max-width: 900px; /* Wider modal */
+          @apply relative bg-white m-auto p-5 border border-gray-300 w-11/12 shadow-2xl rounded-lg;
         }
 
         .modal-close-btn {
-          color: theme('colors.tech-text-dark');
-          @apply absolute top-3 right-5 text-4xl font-light bg-transparent border-none cursor-pointer transition-colors duration-200;
+          @apply text-gray-400 absolute top-2 right-4 text-3xl font-bold bg-transparent border-none cursor-pointer transition-colors duration-200;
         }
 
         .modal-close-btn:hover,
         .modal-close-btn:focus {
-          color: theme('colors.tech-accent-blue');
+          color: black;
+          text-decoration: none;
         }
 
-        #modal-employee-name, #know-me-modal-employee-name { /* Target both modal titles */
-          color: theme('colors.tech-accent-blue');
-          text-shadow: 0 0 8px theme('colors.tech-accent-blue/60');
-          @apply mt-0 pb-4 mb-4 border-b border-tech-border text-2xl font-bold;
+        #modal-employee-name { /* Only target the location modal title */
+          @apply mt-0 pb-3 border-b border-gray-200 text-gray-900 text-2xl font-bold;
         }
 
+        /* Responsive iframe container */
         .iframe-container {
           position: relative;
           overflow: hidden;
           width: 100%;
-          height: 65vh; /* Adjusted height */
-          border: 1px solid theme('colors.tech-border');
+          height: 75vh; /* Increased height */
+           border: 1px solid #e5e7eb; /* Add a subtle border */
            @apply rounded-md;
         }
 
-        #modal-iframe, #know-me-modal-iframe { /* Target both iframes */
+        #modal-iframe { /* Only target the location iframe */
           position: absolute;
           top: 0;
           left: 0;
@@ -264,39 +144,39 @@
           width: 100%;
           height: 100%;
           border: none;
-          background-color: theme('colors.tech-bg-start'); /* Loading background */
-           @apply rounded-md;
+          background-color: #f3f4f6; /* Light gray background while loading */
+          @apply rounded-md;
         }
 
-        /* Loading Skeletons */
-        #loading-skeletons .skeleton-card {
-            background-color: theme('colors.tech-card');
-             border: 1px solid theme('colors.tech-border');
-             @apply flex items-center p-5 rounded-lg shadow-sm animate-pulse-fast;
-        }
-         #loading-skeletons .skeleton-img {
-              background-color: theme('colors.tech-bg-end');
-              @apply w-24 h-24 rounded-full mr-6 flex-shrink-0;
+         /* Loading Skeletons */
+         #loading-skeletons .skeleton-card {
+             background-color: white;
+             border: 1px solid #e5e7eb; /* border-gray-200 */
+             @apply flex items-center p-4 rounded-lg shadow-sm animate-pulse-fast;
          }
-         #loading-skeletons .skeleton-line {
-              background-color: theme('colors.tech-bg-end');
+          #loading-skeletons .skeleton-img {
+              background-color: #e5e7eb; /* bg-gray-200 */
+              @apply w-20 h-20 rounded-full mr-4 flex-shrink-0;
+          }
+          #loading-skeletons .skeleton-line {
+              background-color: #e5e7eb; /* bg-gray-200 */
               @apply rounded;
-         }
+          }
 
-         /* No results */
-         #no-results {
-             color: theme('colors.tech-text-dark');
-         }
+          /* No results */
+          #no-results {
+              color: #6b7280; /* text-gray-500 */
+          }
 
     </style>
 </head>
 
-<body class="pt-4 pb-12"> <!-- Add padding top/bottom -->
+<body class="bg-gray-100 pt-4 pb-12">
 
     <!-- Header -->
-    <header>
+    <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="container mx-auto p-4 max-w-7xl">
-            <h1 class="text-2xl sm:text-3xl font-bold">
+            <h1 class="text-2xl sm:text-3xl font-bold text-brand-purple">
                 Employee Directory
             </h1>
         </div>
@@ -309,25 +189,25 @@
 
             <!-- Left Column: Filters -->
             <aside class="md:col-span-4 lg:col-span-3">
-                <div class="filter-card"> <!-- Use new class -->
+                 <div class="bg-white/70 backdrop-blur-sm p-4 rounded-lg shadow-md sticky top-[80px]"> {/* Adjust top offset if header height changes */}
                     <form id="filter-form">
                         <!-- Search Input -->
                         <div class="mb-5">
-                            <label for="search-input" class="block text-sm font-medium mb-1">
+                            <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">
                                 Search
                             </label>
                             <div class="flex">
-                                <input type="text" id="search-input" class="flex-grow w-full px-3 py-2 rounded-l-md focus:outline-none" placeholder="Name, initials, role...">
-                                <button type="button" id="reset-button" class="btn-tech btn-tech-reset font-medium px-4 py-2 rounded-r-md rounded-l-none">RESET</button> <!-- Use new classes -->
+                                <input type="text" id="search-input" class="flex-grow w-full px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent" placeholder="Name, initials, role...">
+                                <button type="button" id="reset-button" class="btn-reset font-medium px-4 py-2 rounded-r-md rounded-l-none">RESET</button>
                             </div>
                         </div>
 
                         <!-- Department Select -->
                         <div>
-                            <label for="dept-select" class="block text-sm font-medium mb-1">
+                            <label for="dept-select" class="block text-sm font-medium text-gray-700 mb-1">
                                 Department
                             </label>
-                            <select id="dept-select" class="w-full text-base py-2 px-3 focus:outline-none"> <!-- Adjusted styling -->
+                             <select id="dept-select" class="w-full text-base focus:outline-none"> {/* Adjusted styling */}
                                 <!-- Options will be populated by JavaScript -->
                             </select>
                         </div>
@@ -395,17 +275,7 @@
         </div>
       </div>
     </div>
-
-    <!-- --- MODAL HTML (Get to Know Me) --- -->
-    <div id="know-me-modal" class="modal-overlay hidden">
-      <div class="modal-content">
-        <h2 id="know-me-modal-employee-name"></h2>
-        <button id="know-me-modal-close-btn" class="modal-close-btn" title="Close (Esc)">&times;</button>
-        <div class="iframe-container mt-4">
-          <iframe id="know-me-modal-iframe" src="" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
+    <!-- No "Get to Know Me" Modal in this version -->
 
 
     <!-- JavaScript Logic -->
@@ -413,7 +283,7 @@
         // --- Firebase SDK Imports ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, onSnapshot, setLogLevel, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; // Removed addDoc
 
         // --- Global Variables ---
         let allEmployees = [];
@@ -487,13 +357,7 @@
         const locationModalEmployeeName = document.getElementById('modal-employee-name');
         const locationModalIframe = document.getElementById('modal-iframe');
         const locationCloseModalBtn = document.getElementById('modal-close-btn');
-
-        // --- Know Me Modal Elements ---
-        const knowMeModalOverlay = document.getElementById('know-me-modal');
-        const knowMeModalEmployeeName = document.getElementById('know-me-modal-employee-name');
-        const knowMeModalIframe = document.getElementById('know-me-modal-iframe');
-        const knowMeCloseModalBtn = document.getElementById('know-me-modal-close-btn');
-
+        // --- No "Know Me" Modal Elements ---
 
         // --- FUNCTIONS ---
 
@@ -513,120 +377,106 @@
 
             filteredEmployees.forEach(employee => {
                 const fullImageUrl = employee.imageUrl
-                    ? (employee.imageUrl.startsWith('http') ? employee.imageUrl : `${imageBaseUrl}${employee.imageUrl}`) // Handle potential full URLs if they exist
+                    ? (employee.imageUrl.startsWith('http') ? employee.imageUrl : `${imageBaseUrl}${employee.imageUrl}`)
                     : 'https://placehold.co/100x100/CCCCCC/FFFFFF?text=No+Photo&font=sans-serif';
 
-                // --- Generate "Get to Know Me" Link ---
-                let knowMeLinkHTML = '';
-                if (employee.FloorMap && employee.FloorMap !== 'NULL') {
-                     knowMeLinkHTML = `
-                        <a href="#" class="know-me-link" data-know-me-id="${employee.id}" data-floor-map="${employee.FloorMap}" data-name="${employee.name}">
-                            GET TO KNOW ME (TAP HERE)
-                        </a>`;
-                }
-
+                // --- REMOVED "Get to Know Me" Link Generation ---
 
                 const card = `
-                    <div class="employee-card">
+                    <div class="employee-card flex flex-col sm:flex-row items-start sm:items-center bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        {/* Image */}
                         <img
                             src="${fullImageUrl}"
                             alt="Profile photo of ${employee.name}"
+                            class="w-20 h-20 rounded-full mr-0 sm:mr-4 mb-3 sm:mb-0 flex-shrink-0 object-cover border-2 border-gray-200"
                             onerror="this.onerror=null; this.src='https://placehold.co/100x100/CCCCCC/FFFFFF?text=No+Img&font=sans-serif';"
                         >
+                        {/* Info */}
                         <div class="flex-1">
-                            <h3>${employee.name}</h3>
-                            <p class="title-text">${employee.title}</p>
-                            <p class="initials-text"><strong class="font-medium">Initials:</strong> ${employee.initials || 'N/A'}</p>
+                            <h3 class="text-xl font-bold text-gray-900 mb-1">${employee.name}</h3>
+                            <p class="text-gray-600 text-base mb-1">${employee.title}</p>
+                            <p class="text-sm text-gray-500 mb-2"><strong class="font-medium text-gray-600">Initials:</strong> ${employee.initials || 'N/A'}</p>
 
-                             <!-- Locate Button -->
+                            {/* Locate Button */}
                              <button
-                                class="btn-tech btn-tech-locate text-sm mb-2"
+                                class="btn-locate" {/* Reverted class */}
                                 data-locate-id="${employee.id}"
                              >
                                 LOCATE
                              </button>
 
-                             <!-- Get to Know Me Link -->
-                             ${knowMeLinkHTML}
+                             {/* --- REMOVED Get to Know Me Link --- */}
 
-
-                            <!-- Responsibilities -->
+                            {/* Responsibilities */}
                             ${employee.responsibilities ? `
-                            <div class="responsibilities">
+                            <div class="text-sm text-gray-700 mt-3 pt-3 border-t border-gray-200">
                                 <p><strong class="font-medium">Responsibilities:</strong> ${employee.responsibilities}</p>
                             </div>
                             ` : ''}
 
-                            <!-- Contact Details -->
-                            <div class="contact-details">
+                            {/* Contact Details */}
+                            <div class="text-sm text-gray-700 space-y-1 mt-3">
                                 <p><strong class="font-medium">Ext:</strong> ${employee.ext || 'N/A'}</p>
                                 <p><strong class="font-medium">Dept:</strong> ${employee.dept}</p>
-                                <a href="mailto:${employee.email}">
+                                <a
+                                    href="mailto:${employee.email}"
+                                    class="text-brand-blue hover:text-brand-blue-dark hover:underline break-all"
+                                >
                                     ${employee.email}
                                 </a>
                             </div>
                         </div>
                     </div>
                 `;
-                resultsContainer.insertAdjacentHTML('beforeend', card); // Use insertAdjacentHTML for better performance
+                resultsContainer.insertAdjacentHTML('beforeend', card);
             });
         }
 
         function filterAndRender() {
              const searchText = searchInput.value.toLowerCase().trim();
              const selectedDept = deptSelect.value;
-
-             // Split search text into words for multi-word matching
-             const searchTerms = searchText.split(/\s+/).filter(Boolean); // Removes empty strings
+             const searchTerms = searchText.split(/\s+/).filter(Boolean);
 
              const filteredEmployees = allEmployees.filter(employee => {
                 let matchesDept = false;
                 let matchesSearch = false;
 
-                // --- Text fields to search ---
                 const nameLower = (employee.name || "").toLowerCase();
                 const titleLower = (employee.title || "").toLowerCase();
                 const emailLower = (employee.email || "").toLowerCase();
                 const responsibilitiesLower = (employee.responsibilities || "").toLowerCase();
                 const initialsLower = (employee.initials || "").toLowerCase();
-                const deptLower = (employee.dept || "").toLowerCase(); // Also search dept name
+                const deptLower = (employee.dept || "").toLowerCase();
 
-                // --- Check Department Match ---
+                // Check Department Match
                 if (selectedDept === 'all') {
                     matchesDept = true;
                 } else if (selectedDept === 'eng-initials' || selectedDept === 'eng-all') {
                     matchesDept = deptLower.startsWith('eng -');
                 } else {
-                    matchesDept = deptLower === selectedDept.toLowerCase(); // Compare lowercase dept names
+                    matchesDept = deptLower === selectedDept.toLowerCase();
                 }
-
-                // If department doesn't match, no need to check search
                 if (!matchesDept) return false;
 
-                // --- Check Search Text Match ---
+                // Check Search Text Match
                  if (searchTerms.length === 0) {
-                     matchesSearch = true; // No search term means it matches
+                     matchesSearch = true;
                  } else {
-                     // Check if *all* search terms are found somewhere in the combined text
                      matchesSearch = searchTerms.every(term => {
                          if (selectedDept === 'eng-initials') {
-                             // Only search initials if 'Eng - Initials' is selected
                              return initialsLower.includes(term);
                          } else {
-                             // Search all relevant fields
                              return (
                                  nameLower.includes(term) ||
                                  titleLower.includes(term) ||
                                  emailLower.includes(term) ||
                                  responsibilitiesLower.includes(term) ||
                                  initialsLower.includes(term) ||
-                                 deptLower.includes(term) // Include dept name in general search
+                                 deptLower.includes(term)
                              );
                          }
                      });
                  }
-
-
                 return matchesDept && matchesSearch;
             });
 
@@ -650,7 +500,7 @@
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-                setLogLevel('error'); // Set to 'error' in production, 'debug' for dev
+                setLogLevel('error');
 
                 if (usingManualConfig || !initialAuthToken) {
                     console.log("Signing in anonymously.");
@@ -679,7 +529,6 @@
         function setupFirebaseListener() {
             const userId = auth.currentUser?.uid;
             if (!userId) {
-                console.error("Cannot set up listener: User is not authenticated.");
                  showError("Authentication error. Cannot load data.");
                 return;
             }
@@ -708,7 +557,7 @@
          // --- Error Display ---
          function showError(message) {
             loadingSkeletons.classList.add('hidden');
-            resultsContainer.innerHTML = `<div class="text-red-400 text-center p-4">${message}</div>`;
+            resultsContainer.innerHTML = `<div class="text-red-500 text-center p-4">${message}</div>`;
             resultsContainer.classList.remove('hidden');
             noResultsMessage.classList.add('hidden');
          }
@@ -718,7 +567,7 @@
         function openLocationModal(employee) {
             if (employee && employee.url) {
                 const urlString = employee.url;
-                const match = urlString.match(/src="([^"]+)"/); // Extract URL from src attribute
+                const match = urlString.match(/src="([^"]+)"/);
                 const extractedUrl = match ? match[1] : null;
 
                 if (extractedUrl) {
@@ -735,74 +584,54 @@
             }
         }
 
-        function openKnowMeModal(employeeName, floorMapValue) {
-            const knowMeUrl = `https://aqualocator.github.io/welcome/index.html?image=${encodeURIComponent(floorMapValue)}`;
-            knowMeModalEmployeeName.textContent = `Get to Know: ${employeeName}`;
-            knowMeModalIframe.src = knowMeUrl;
-            knowMeModalOverlay.classList.remove('hidden');
-            knowMeModalOverlay.classList.add('flex');
-        }
-
+        // --- REMOVED openKnowMeModal ---
 
         function closeModal(modalOverlay, modalIframe, modalNameElement) {
             modalOverlay.classList.add('hidden');
             modalOverlay.classList.remove('flex');
-            modalIframe.src = ''; // Clear iframe
-            modalNameElement.textContent = ''; // Clear name
+            modalIframe.src = '';
+            modalNameElement.textContent = '';
         }
 
         // --- Event Delegation Handler ---
         function handleCardClick(event) {
-            const locateButton = event.target.closest('.btn-tech-locate[data-locate-id]');
-            const knowMeLink = event.target.closest('.know-me-link[data-know-me-id]');
+            const locateButton = event.target.closest('.btn-locate[data-locate-id]'); // Use original class
+            // --- REMOVED knowMeLink check ---
 
             if (locateButton) {
                 const employeeId = locateButton.dataset.locateId;
                 const employee = allEmployees.find(emp => emp.id === employeeId);
                 openLocationModal(employee);
-            } else if (knowMeLink) {
-                 event.preventDefault(); // Prevent default link behavior
-                const employeeId = knowMeLink.dataset.knowMeId;
-                const floorMap = knowMeLink.dataset.floorMap;
-                const employeeName = knowMeLink.dataset.name; // Get name from data attribute
-                openKnowMeModal(employeeName, floorMap);
             }
+            // --- REMOVED else if for knowMeLink ---
         }
 
 
         // --- INITIALIZATION & EVENT LISTENERS ---
         document.addEventListener('DOMContentLoaded', () => {
             populateDepartments();
-            initializeFirebaseApp(); // Start Firebase
+            initializeFirebaseApp();
 
             searchInput.addEventListener('input', filterAndRender);
             deptSelect.addEventListener('change', filterAndRender);
             resetButton.addEventListener('click', (e) => { e.preventDefault(); resetFilters(); });
 
-            // Delegated click listener for buttons/links inside cards
             resultsContainer.addEventListener('click', handleCardClick);
 
-            // Location Modal Close Listeners
+            // Location Modal Close Listeners (Only these are needed now)
             locationCloseModalBtn.addEventListener('click', () => closeModal(locationModalOverlay, locationModalIframe, locationModalEmployeeName));
             locationModalOverlay.addEventListener('click', (event) => {
                 if (event.target === locationModalOverlay) closeModal(locationModalOverlay, locationModalIframe, locationModalEmployeeName);
             });
+            // --- REMOVED Know Me Modal Close Listeners ---
 
-             // Know Me Modal Close Listeners
-            knowMeCloseModalBtn.addEventListener('click', () => closeModal(knowMeModalOverlay, knowMeModalIframe, knowMeModalEmployeeName));
-            knowMeModalOverlay.addEventListener('click', (event) => {
-                 if (event.target === knowMeModalOverlay) closeModal(knowMeModalOverlay, knowMeModalIframe, knowMeModalEmployeeName);
-            });
-
-            // Generic Escape key listener
+            // Generic Escape key listener (Now only closes location modal)
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape') {
                     if (!locationModalOverlay.classList.contains('hidden')) {
                          closeModal(locationModalOverlay, locationModalIframe, locationModalEmployeeName);
                     }
-                    if (!knowMeModalOverlay.classList.contains('hidden')) {
-                         closeModal(knowMeModalOverlay, knowMeModalIframe, knowMeModalEmployeeName);
-                    }
+                     // --- REMOVED check for knowMeModalOverlay ---
                 }
             });
         });
