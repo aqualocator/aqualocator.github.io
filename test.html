@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaLocator</title>
+    <link rel="icon" href="data:,">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles from the original look */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f6f6f6; /* Matching background color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px; /* Constrain content width */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Top-left link style */
+        .profile-link {
+            color: #0093d5; /* Blue color */
+            text-align: left;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        /* Logo and Company Name block */
+        .logo-block {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            /* Center the text/logo block */
+            flex-direction: column;
+        }
+
+        /* Replicating the logo image (using a placeholder since the image is a local resource) */
+        .logo-placeholder {
+            width: 150px;
+            height: 50px;
+            /* Placeholder styles based on the screenshot image */
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAABIBAMAAABN98WCAAAAGFBMVEX/uQD/uQD/uQD/uQCQpDqgskn/uAD////8n5pE160VAAAAA3RSTlMAAQIDBAUGVp6bOAAAAdtJREFUWMO1lEtuwzAMRD33z31S945DkiOklJ/S8gIUkDgg6yQ7tWlFzY7j6dJ3qY98eLz+q+XlG7E7G38+4Xm/7qK8e6F0XhGgN3Vp2o3dGl2x1fO2W3G7q03vHh2Qz+3V/f/9/t4R5/2bV+UaAXdnE4/7r0iO2W3W+7h2iL5o0d19D98z3d22b2/1Q8h+k/E92W/uH8O+h/H9o883Ync3YnfvYnc3YvduJ/Z3/T/k7q7X8V0v359Qn8/1k/F/gA/fEABF+IAGP4iAO78QANP8wAF/FADg/v89+k8y7z8l/z/m/wDkP3j+D/sT9H/A/uQ//wE68D9bH6xXF/jX7h/e0j9l7d82531+o/1e0X+O/R36W+zf2J/2W9z9G/0T+1vtn9K/5/+T/0z/k/v+b/hT+2eY/R/5X+z/0X/uP8P8x/tP8//f9k/d3/N/iP/X+b/07/N/7/8P/e/f//B/6//v8D/l/+/wf/gH8+/6+xT/l/iX/O/1X2K/9v4/97/q/A/7v4/wP+n/y/w/93/v8A/v/7/wP/AHz8//8D/l8O/gP+Xw4AAAAASUVORK5CYII=');
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-right: 0;
+        }
+
+        .company-info {
+            text-align: center;
+            font-size: 14px;
+            color: #444;
+            line-height: 1.2;
+            margin-top: 10px;
+        }
+
+        .company-name {
+            font-weight: bold;
+            color: #000;
+        }
+
+        /* AQUALocator Heading */
+        .app-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: 38px;
+            color: #1436ff; /* Blue for the text */
+            text-align: center;
+            text-shadow: rgba(255, 255, 255, 0.75) 0px 2.3px 0px;
+            margin-bottom: 5px;
+        }
+
+        .app-subtitle {
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.85);
+            text-align: center;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        /* ENTER Button (Matching style of the original blue block) */
+        .enter-button {
+            display: block;
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            text-decoration: none; /* Make it look like a button, but use an <a> for navigation */
+            background-color: #0093d5; /* Bright blue color */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 30px;
+        }
+
+        .enter-button:hover {
+            background-color: #007bb6;
+        }
+
+        /* Full-width image */
+        .main-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Question mark icon at the bottom */
+        .help-icon {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .help-icon svg {
+            width: 30px;
+            height: 30px;
+            color: #0093d5; /* Blue color */
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="https://form.jotform.com/193454652984168" class="profile-link">Update Your Profile</a>
+
+        <div class="logo-block">
+            <div class="logo-placeholder"></div>
+            <div class="company-info">
+                <span class="company-name">AQUA-AEROBIC SYSTEMS, INC.</span><br>
+                A Metawater Company
+            </div>
+        </div>
+
+        <div class="app-title">AQUALocator</div>
+        <div class="app-subtitle">An Aqua employee office locator</div>
+
+        <a href="aqualocator.html" class="enter-button">ENTER</a>
+
+        <div class="main-image">
+            <img src="placeholder_for_group_photo.jpg" alt="Aqua-Aerobic Systems team group photo in front of the building.">
+        </div>
+
+        <div class="help-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.15-1.04 3.018-1.04 4.168 0A1.882 1.882 0 0 1 16 9.351v4.846A1.882 1.882 0 0 1 14.12 16c-1.15 1.04-3.018 1.04-4.168 0A1.882 1.882 0 0 1 8 14.197v-4.846c0-.528.21-.937.549-1.258a2.536 2.536 0 0 1 1.33-.424m2.593 11.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+            </svg>
+        </div>
+    </div>
+</body>
+</html>
