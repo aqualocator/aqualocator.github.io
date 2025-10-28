@@ -130,7 +130,7 @@
         // --- Firebase SDK Imports ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, onSnapshot, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, setLogLevel, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; // <-- Import addDoc
 
         // --- Global Variables ---
         let allEmployees = []; // This will hold our data from Firebase
@@ -143,6 +143,115 @@
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // --- 1. DATA TO UPLOAD ---
+        // Fill this array with all your employees from your datasheet.
+        // This is the data that will be bulk-uploaded to Firebase.
+        const employeesToUpload = [
+           // Paste your employee data here, following this format:
+           // {
+           //     name: "Full Name",
+           //     title: "Job Title",
+           //     ext: "1234",
+           //     dept: "Department Name",
+           //     email: "user@aqua-aerobic.com",
+           //     imageUrl: "UserPhoto.jpg", // Just the filename
+           //     initials: "FNL",
+           //     responsibilities: "Job responsibilities here.",
+           //     url: "showLocation('cubicle-A1')" // The code string for LOCATE
+           // },
+           // Example from screenshots:
+           {
+                name: "Thea Davis",
+                title: "Senior Process Engineer - Biological",
+                ext: "4568",
+                dept: "Prod Mgmt - Bio/Membrane",
+                email: "TDavis@aqua-aerobic.com",
+                imageUrl: "TDavis.jpg", // Just the filename
+                initials: "TD",
+                responsibilities: "Biological process design and support.",
+                url: "showLocation('TD-001')" // Example URL code
+            },
+            {
+                name: "Manuel De Los Santos",
+                title: "Product Manager - Biological Processes",
+                ext: "4459",
+                dept: "Prod Mgmt - Bio/Membrane",
+                email: "mdelossantos@aqua-aerobic.com",
+                imageUrl: "MDeLosSantos.jpg",
+                initials: "MDS",
+                responsibilities: "Manages biological process products.",
+                url: "showLocation('MDS-002')" // Example URL code
+            },
+            {
+                name: "Paula Dorn",
+                title: "Senior Process Engineer - AquaNereda",
+                ext: "4528",
+                dept: "Prod Mgmt - Bio/Membrane",
+                email: "PDorn@aqua-aerobic.com",
+                imageUrl: "PDorn.jpg",
+                initials: "PD",
+                responsibilities: "AquaNereda process design.",
+                url: "showLocation('PD-003')" // Example URL code
+            },
+            {
+                name: "Mike Schmitz",
+                title: "Principal Engineer",
+                ext: "4573",
+                dept: "Eng - Standards",
+                email: "MSchmitz@aqua-aerobic.com",
+                imageUrl: "MSchmitz.jpg",
+                initials: "MAS",
+                responsibilities: "Filtration standards lead, backup for AquaNereda and Membrane.",
+                url: "showLocation('MS-004')" // Example URL code
+            },
+            {
+                name: "Gerald Schneider, P.E.",
+                title: "Electrical Standards Supervisor",
+                ext: "4492",
+                dept: "Eng - Standards",
+                email: "GSchneider@aqua-aerobic.com",
+                imageUrl: "GSchneider.jpg",
+                initials: "GSS",
+                responsibilities: "",
+                url: "showLocation('GS-005')" // Example URL code
+            },
+            {
+                name: "David Smith",
+                title: "Manager, Mechanical Engineering",
+                ext: "4421",
+                dept: "Eng - Standards",
+                email: "DSmith@aqua-aerobic.com",
+                imageUrl: "DSmith.jpg",
+                initials: "DAS",
+                responsibilities: "",
+                url: "showLocation('DS-006')" // Example URL code
+            },
+            {
+                name: "Scott Tripp",
+                title: "Senior Designer Analyst",
+                ext: "4469",
+                dept: "Eng - Estimating",
+                email: "STripp@aqua-aerobic.com",
+                imageUrl: "STripp.jpg",
+                initials: "SLT",
+                responsibilities: "",
+                url: "showLocation('ST-007')" // Example URL code
+            },
+            {
+                name: "Jeremy Try",
+                title: "Senior Electrical Engineer - Group Lead",
+                ext: "4440",
+                dept: "Eng - Electrical",
+                email: "JTry@aqua-aerobic.com",
+                imageUrl: "JTry.jpg",
+                initials: "JJT",
+                responsibilities: "",
+                url: "showLocation('JT-008')" // Example URL code
+            }
+            // ... add all your other employees here
+        ];
+
 
         // --- MOCK EMPLOYEE DATABASE ---
         // In a real Node.js app, this data would come from an API
@@ -340,7 +449,48 @@
         // --- NEW FIREBASE FUNCTIONS ---
 
         /**
-         * Initializes the Firebase app and authentication.
+         * 2. --- BULK UPLOAD FUNCTION ---
+         * A one-time utility to upload all employees from the 'employeesToUpload' array.
+         * To use this:
+         * 1. Fill in the 'employeesToUpload' array above with your data.
+         * 2. Open the browser's developer console (F12 or Ctrl+Shift+I).
+         * 3. Type `uploadAllEmployees()` and press Enter.
+         * 4. Check the console logs for progress.
+         * 5. !! ONLY RUN THIS ONCE, or you will get duplicate entries !!
+         */
+        async function uploadAllEmployees() {
+            if (!db || !auth.currentUser) {
+                console.error("Firebase is not ready. Please wait a moment and try again.");
+                return;
+            }
+
+            // Make sure you have created the 'employees' collection in Firestore
+            const collectionPath = `artifacts/${appId}/public/data/employees`;
+            console.log(`Starting bulk upload of ${employeesToUpload.length} employees to ${collectionPath}...`);
+
+            const promises = [];
+            for (const employee of employeesToUpload) {
+                // 'addDoc' automatically creates a unique document ID
+                promises.push(addDoc(collection(db, collectionPath), employee));
+            }
+
+            try {
+                await Promise.all(promises);
+                const successMsg = `SUCCESS: Successfully uploaded ${employeesToUpload.length} employees!`;
+                console.log(successMsg);
+                // We'll use a simple modal box instead of alert()
+                showModal(successMsg + " You can remove the 'employeesToUpload' array and 'uploadAllEmployees' function from the code now.");
+            } catch (error) {
+                console.error("Error during bulk upload:", error);
+                showModal(`ERROR: There was an error during the upload. Check the console (F12) for details.`);
+            }
+        }
+        // Make the upload function accessible from the console
+        window.uploadAllEmployees = uploadAllEmployees;
+
+
+        /**
+         * NEWLY ADDED: Initializes the Firebase app and authentication.
          */
         async function initializeFirebaseApp() {
             if (Object.keys(firebaseConfig).length === 0) {
@@ -437,6 +587,40 @@
             }
         }
 
+        /**
+         * NEW: Shows a simple modal message instead of alert().
+         */
+        function showModal(message) {
+            // Check if a modal already exists
+            let modal = document.getElementById('simple-modal');
+            if (modal) {
+                modal.remove(); // Remove old modal if present
+            }
+
+            // Create modal elements
+            modal = document.createElement('div');
+            modal.id = 'simple-modal';
+            modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center z-50';
+            
+            const modalContent = document.createElement('div');
+            modalContent.className = 'relative p-5 border w-11/12 md:max-w-md mx-auto rounded-md shadow-lg bg-white';
+
+            const text = document.createElement('p');
+            text.className = 'text-base text-gray-700 mb-4';
+            text.textContent = message;
+
+            const closeButton = document.createElement('button');
+            closeButton.className = 'px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300';
+            closeButton.textContent = 'OK';
+            closeButton.onclick = () => modal.remove();
+
+            // Assemble modal
+            modalContent.appendChild(text);
+            modalContent.appendChild(closeButton);
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+        }
+
         // --- INITIALIZATION & EVENT LISTENERS ---
 
         // Wait for the DOM to be fully loaded
@@ -459,5 +643,7 @@
     </script>
 </body>
 </html>
+
+
 
 
