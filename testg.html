@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Directory</title>
+    <link rel="icon" href="data:,">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Set default font for the page */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom button colors from screenshot */
+        .btn-locate {
+            background-color: #7a3a8b; /* Eyedropped purple */
+            color: white;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-locate:hover {
+            background-color: #6a2e7a;
+        }
+        .btn-reset {
+            background-color: #35a2c4; /* Eyedropped blue */
+            color: white;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-reset:hover {
+            background-color: #2a8faf;
+        }
+
+        /* Custom styling for the select dropdown to match screenshot */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            /* Custom SVG arrow */
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-13%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-13%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right .5rem center;
+            background-size: .65em auto;
+            padding-right: 2.5rem; /* Make space for arrow */
+            
+            /* Blue bottom border style */
+            border: none;
+            border-bottom: 2px solid #35a2c4;
+            border-radius: 0;
+            padding-left: 0;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        /* Remove default focus ring and keep border */
+        select:focus {
+            box-shadow: none;
+            border-bottom: 2px solid #35a2c4;
+            outline: none;
+        }
+
+        /* --- Modal Styles --- */
+        .modal-overlay {
+          /* Uses 'hidden' and 'flex' from Tailwind */
+          position: fixed;
+          z-index: 1000;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0, 0, 0, 0.5);
+          align-items: center;
+          justify-content: center;
+        }
+        
+        .modal-content {
+          position: relative;
+          background-color: #fefefe;
+          margin: auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 90%; /* More responsive */
+          max-width: 900px;
+          box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+          border-radius: 8px;
+        }
+        
+        .modal-close-btn {
+          color: #aaa;
+          position: absolute;
+          top: 10px;
+          right: 20px;
+          font-size: 28px;
+          font-weight: bold;
+          background: none;
+          border: none;
+          cursor: pointer;
+        }
+        
+        .modal-close-btn:hover,
+        .modal-close-btn:focus {
+          color: black;
+          text-decoration: none;
+        }
+        
+        #modal-employee-name {
+          margin-top: 0;
+          padding-bottom: 10px;
+          border-bottom: 1px solid #eee;
+        }
+        
+        /* Responsive iframe container */
+        .iframe-container {
+          position: relative;
+          overflow: hidden;
+          width: 100%;
+          padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+        
+        #modal-iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl">
+        
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+
+            <aside class="md:col-span-4 lg:col-span-3">
+                <div class="bg-white p-4 rounded-lg shadow-sm sticky top-8">
+                    <form id="filter-form">
+                        <div class="mb-4">
+                            <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">
+                                Search by last/first name, responsibilities
+                            </label>
+                            <div class="flex">
+                                <input type="text" id="search-input" class="flex-grow w-full px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g., Davis or Engineer">
+                                <button type="button" id="reset-button" class="btn-reset font-medium px-4 py-2 rounded-r-md">RESET</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="dept-select" class="block text-sm font-medium text-gray-700 mb-1">
+                                Select Department or Engineering
+                            </label>
+                            <select id="dept-select" class="w-full text-lg font-medium text-gray-800 bg-white focus:outline-none">
+                                </select>
+                        </div>
+                    </form>
+                </div>
+            </aside>
+
+            <main class="md:col-span-8 lg:col-span-9">
+                <div id="results-container" class="space-y-4">
+                    </div>
+                <div id="no-results" class="hidden text-center text-gray-500 p-8">
+                    No employees found matching your criteria.
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script type="module">
+        // --- Firebase SDK Imports ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, setLogLevel, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; // <-- Import addDoc
+
+        // --- Global Variables ---
+        let allEmployees = []; // This will hold our data from Firebase
+        let db, auth;
+        
+        // --- NEW: Image Base URL ---
+        const imageBaseUrl = "https://aqualocator.github.io/static/media/";
+        
+        // --- App/Firebase Config ---
+        
+        // --- !! MANUAL FIREBASE CONFIG !! ---
+        // If the automatic config linking isn't working,
+        // you can paste your Firebase config object here.
+        // 1. Get your config from Firebase Console > Project Settings > General > Your apps.
+        // 2. Paste it *inside* the curly braces {}.
+        // Example: { apiKey: "AIza...", authDomain: "...", ... }
+        const MANUAL_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyABeCFheLuS08mxfWjCSS2ugXFbLDgnpIE",
+  authDomain: "aqualocator-23714.firebaseapp.com",
+  projectId: "aqualocator-23714",
+  storageBucket: "aqualocator-23714.firebasestorage.app",
+  messagingSenderId: "654848563347",
+  appId: "1:654848563347:web:4702a6f55ccbf7d5edd566",
+  measurementId: "G-5R7XGHVDNH"
+        };
+        // -------------------------------------
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        
+        // Use manual config if provided, otherwise try automatic config
+        // Refactored to use if/else to avoid potential ternary operator parsing error
+        let firebaseConfig;
+        if (Object.keys(MANUAL_FIREBASE_CONFIG).length > 0) {
+            firebaseConfig = MANUAL_FIREBASE_CONFIG;
+        } else {
+            firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        }
+            
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // --- 1. DATA TO UPLOAD ---
+        // Fill this array with all your employees from your datasheet.
+        // This is the data that will be bulk-uploaded to Firebase.
+        const employeesToUpload = [
+           // Paste your employee data here, following this format:
+           // {
+           //     name: "Full Name",
+           //     title: "Job Title",
+           //     ext: "1234",
+           //     dept: "Department Name",
+           //     email: "user@aqua-aerobic.com",
+           //     imageUrl: "UserPhoto.jpg", // Just the filename
+           //     initials: "FNL",
+           //     responsibilities: "Job responsibilities here.",
+           //     url: "showLocation('cubicle-A1')" // The code string for LOCATE
+           // },
+           // Example from screenshots:
+    {
+        "name": "Jeff Alaniz",
+        "title": "Project Manager",
+        "ext": "4429",
+        "dept": "Project Management",
+        "email": "jalaniz@aqua-aerobic.com",
+        "imageUrl": "datasheet_emps_row0_photo.7bf531a6.png",
+        "initials": "",
+        "responsibilities": "",
+        "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=152\""
+    }
+            // ... add all your other employees here
+        ];
+
+
+        // --- MOCK EMPLOYEE DATABASE ---
+        // In a real Node.js app, this data would come from an API
+        // --- THIS MOCK DATA IS NOW REMOVED ---
+        // const employees = [ ... ];
+
+        // --- Full Department List ---
+        const departmentList = [
+            "All Departments",
+            "Engineering Departments - Initials!",
+            "All Engineering Departments",
+            "Accounting/Finance",
+            "Administration",
+            "AfterMarket Sales",
+            "Applications Engineering",
+            "Contract Administration",
+            "Customer Service",
+            "Domestic Sales-Midwest",
+            "Domestic Sales-Northeast",
+            "Domestic Sales-Southest",
+            "Domestic Sales-West",
+            "Eng - Admin",
+            "Eng - Electrical",
+            "Eng - Estimating",
+            "Eng - Mechanical",
+            "Eng - Standards",
+            "All Engineers",
+            "Field Services",
+            "Human Resources",
+            "Industrial Sales",
+            "Information Technology",
+            "International Sales",
+            "Manufacturing",
+            "Marketing/PR",
+            "Operations",
+            "Prod Mgmt - Aeration/Mixing",
+            "Prod Mgmt - Bio/Membrane",
+            "Prod Mgmt - Filtration",
+            "Production Control",
+            "Project Management",
+            "Research & Development",
+            "Sales and Marketing"
+        ];
+
+        // --- DOM Elements ---
+        const searchInput = document.getElementById('search-input');
+        const deptSelect = document.getElementById('dept-select');
+        const resetButton = document.getElementById('reset-button');
+        const resultsContainer = document.getElementById('results-container');
+        const noResultsMessage = document.getElementById('no-results');
+        
+        // --- NEW: Modal DOM Elements ---
+        const modalOverlay = document.getElementById('location-modal');
+        const modalEmployeeName = document.getElementById('modal-employee-name');
+        const modalIframe = document.getElementById('modal-iframe');
+        const closeModalBtn = document.getElementById('modal-close-btn');
+
+        // --- FUNCTIONS ---
+
+        /**
+         * Populates the department dropdown with unique departments from the employee list.
+         */
+        function populateDepartments() {
+            // Get unique department names
+            // const departments = [...new Set(employees.map(emp => emp.dept))];
+            // departments.sort(); // Sort alphabetically
+
+            // // Add "All Departments" option
+            // const allOption = document.createElement('option');
+            // allOption.value = 'all';
+            // allOption.textContent = 'All Departments';
+            // deptSelect.appendChild(allOption);
+
+            // Add each department from the provided list
+            departmentList.forEach(dept => {
+                const option = document.createElement('option');
+                // Use "all" as the value for "All Departments"
+                option.value = (dept === "All Departments") ? "all" : dept;
+                option.textContent = dept;
+                deptSelect.appendChild(option);
+            });
+            
+            // Set initial value from screenshot
+            deptSelect.value = "Engineering Departments - Initials!";
+        }
+
+        /**
+         * Renders the list of filtered employees to the page.
+         * @param {Array} filteredEmployees - The array of
+         employees to display.
+         */
+        function renderResults(filteredEmployees) {
+            // Clear previous results
+            resultsContainer.innerHTML = '';
+
+            // Show or hide the "no results" message
+            if (filteredEmployees.length === 0) {
+                noResultsMessage.classList.remove('hidden');
+            } else {
+                noResultsMessage.classList.add('hidden');
+            }
+
+            // Create and append a card for each employee
+            filteredEmployees.forEach(employee => {
+                
+                // NEW: Construct the full image URL from the base URL and the filename in Firestore
+                // We assume `employee.imageUrl` in Firestore holds just the filename (e.g., "TDavis.jpg")
+                const fullImageUrl = employee.imageUrl 
+                    ? `${imageBaseUrl}${employee.imageUrl}` 
+                    : 'https://placehold.co/100x100/CCCCCC/FFFFFF?text=No+Photo&font=sans-serif';
+
+                const card = `
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center bg-white p-4 rounded-lg shadow-sm border border-Tcomposergray-200">
+                        <img 
+                            src="${fullImageUrl}" 
+                            alt="Profile photo of ${employee.name}" 
+                            class="w-20 h-20 rounded-full mr-0 sm:mr-4 mb-3 sm:mb-0 flex-shrink-0 object-cover"
+                            onerror="this.src='https://placehold.co/100x100/CCCCCC/FFFFFF?text=Error&font=sans-serif'"
+                        >
+                        
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-gray-800">${employee.name}</h3>
+                            <p class="text-gray-600">${employee.title}</p>
+                            <p class="text-sm text-gray-500"><strong class="font-medium">Initials:</strong> ${employee.initials}</p>
+                            
+                            <button 
+                                class="btn-locate text-sm font-medium py-1 px-3 rounded-md mt-2 mb-2"
+                                data-id="${employee.id}"
+                            >
+                                LOCATE
+                            </button>
+                            
+                            ${employee.responsibilities ? `
+                            <div class="text-sm text-gray-700 mt-2 mb-2">
+                                <p><strong class="font-medium">Responsibilities:</strong> ${employee.responsibilities}</p>
+                            </div>
+                            ` : ''}
+
+                            <div class="text-sm text-gray-700 space-y-1 mt-2">
+                                <p><strong class="font-medium">Ext:</strong> ${employee.ext}</p>
+                                <p><strong class="font-medium">Dept:</strong> ${employee.dept}</p>
+                                <a 
+                                    href="mailto:${employee.email}" 
+                                    class="text-blue-600 hover:underline break-all"
+                                >
+                                    ${employee.email}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                resultsContainer.innerHTML += card;
+            });
+        }
+
+        /**
+         * Gets filter values, filters the employee list, and calls renderResults.
+         */
+        function filterAndRender() {
+            const searchText = searchInput.value.toLowerCase();
+            const selectedDept = deptSelect.value;
+
+            // --- Use allEmployees from Firebase ---
+            const filteredEmployees = allEmployees.filter(employee => {
+                // Check department filter
+                const matchesDept = (selectedDept === 'all') || (employee.dept === selectedDept);
+
+                // Check search text filter
+                // Ensure responsibilities is a string before calling toLowerCase
+                const responsibilitiesText = (employee.responsibilities || "").toLowerCase();
+                const initialsText = (employee.initials || "").toLowerCase();
+                
+                const matchesSearch = (
+                    employee.name.toLowerCase().includes(searchText) ||
+                    employee.title.toLowerCase().includes(searchText) ||
+                    employee.email.toLowerCase().includes(searchText) ||
+                    initialsText.includes(searchText) ||
+                    responsibilitiesText.includes(searchText)
+                );
+
+                return matchesDept && matchesSearch;
+            });
+
+            renderResults(filteredEmployees);
+        }
+
+        /**
+         * Resets all filters to their default state and re-renders the list.
+         */
+        function resetFilters() {
+            searchInput.value = '';
+            deptSelect.value = 'all';
+            filterAndRender();
+        }
+
+        // --- NEW FIREBASE FUNCTIONS ---
+
+        /**
+         * 2. --- BULK UPLOAD FUNCTION ---
+         * A one-time utility to upload all employees from the 'employeesToUpload' array.
+         * To use this:
+         * 1. Fill in the 'employeesToUpload' array above with your data.
+         * 2. Open the browser's developer console (F12 or Ctrl+Shift+I).
+         * 3. Type `uploadAllEmployees()` and press Enter.
+         * 4. Check the console logs for progress.
+         * 5. !! ONLY RUN THIS ONCE, or you will get duplicate entries !!
+         */
+        async function uploadAllEmployees() {
+            if (!db || !auth.currentUser) {
+                console.error("Firebase is not ready. Please wait a moment and try again.");
+                return;
+            }
+
+            // Make sure you have created the 'employees' collection in Firestore
+            const collectionPath = `artifacts/${appId}/public/data/employees`;
+            console.log(`Starting bulk upload of ${employeesToUpload.length} employees to ${collectionPath}...`);
+
+            const promises = [];
+            for (const employee of employeesToUpload) {
+                // 'addDoc' automatically creates a unique document ID
+                promises.push(addDoc(collection(db, collectionPath), employee));
+            }
+
+            try {
+                await Promise.all(promises);
+                const successMsg = `SUCCESS: Successfully uploaded ${employeesToUpload.length} employees!`;
+                console.log(successMsg);
+                // We'll use a simple alert box instead
+                alert(successMsg + " You can remove the 'employeesToUpload' array and 'uploadAllEmployees' function from the code now.");
+            } catch (error) {
+                console.error("Error during bulk upload:", error);
+                alert(`ERROR: There was an error during the upload. Check the console (F12) for details.`);
+            }
+        }
+        // Make the upload function accessible from the console
+        window.uploadAllEmployees = uploadAllEmployees;
+
+
+        /**
+         * NEWLY ADDED: Initializes the Firebase app and authentication.
+         */
+        async function initializeFirebaseApp() {
+            if (Object.keys(firebaseConfig).length === 0) {
+                console.error("Firebase config is missing!");
+                resultsContainer.innerHTML = `<div class="text-red-500 text-center p-4">Error: Firebase configuration is missing.</div>`;
+                return;
+            }
+
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                setLogLevel('Debug'); // Enable Firestore logging
+
+                // Sign in
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                // Listen for auth changes
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        console.log("Firebase Auth Ready. User:", user.uid);
+                        // User is signed in, now we can fetch data.
+                        setupFirebaseListener();
+                    } else {
+                        console.log("User is signed out.");
+                        allEmployees = [];
+                        filterAndRender();
+                    }
+                });
+
+            } catch (error) {
+                console.error("Firebase Initialization Error:", error);
+                resultsContainer.innerHTML = `<div class="text-red-500 text-center p-4">Error: Could not initialize Firebase.</div>`;
+            }
+        }
+
+        /**
+         * Sets up the real-time listener on the 'employees' collection.
+         */
+        function setupFirebaseListener() {
+            const userId = auth.currentUser?.uid;
+            if (!userId) {
+                console.error("Cannot set up listener: User is not authenticated.");
+                return;
+            }
+            
+            // This path points to a public collection for your app
+            const collectionPath = `artifacts/${appId}/public/data/employees`;
+            console.log(`Listening for changes on: ${collectionPath}`);
+
+            const q = collection(db, collectionPath);
+
+            onSnapshot(q, (snapshot) => {
+                allEmployees = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                
+                console.log(`Fetched ${allEmployees.length} employees from Firestore.`);
+                // Re-render the list with the new data
+                filterAndRender();
+
+            }, (error) => {
+                console.error("Error fetching data from Firestore:", error);
+                resultsContainer.innerHTML = `<div class="text-red-500 text-center p-4">Error: Could not fetch employee data.</div>`;
+            });
+        }
+
+        /**
+         * Handles clicks on the "LOCATE" button via event delegation.
+         * Opens a modal with the employee's location iframe.
+         */
+        function handleLocateClick(event) {
+            // Check if the clicked element is a LOCATE button
+            if (event.target.classList.contains('btn-locate')) {
+                const employeeId = event.target.dataset.id;
+                const employee = allEmployees.find(emp => emp.id === employeeId);
+        
+                if (employee && employee.url) {
+                    // Extract the URL from the 'src="..."' string
+                    const urlString = employee.url;
+                    const extractedUrl = urlString.replace('src="', '').replace('"', '');
+        
+                    // Set the modal content
+                    modalEmployeeName.textContent = employee.name;
+                    modalIframe.src = extractedUrl;
+        
+                    // Show the modal
+                    modalOverlay.classList.remove('hidden');
+                    modalOverlay.classList.add('flex'); // Use flex for centering
+        
+                } else if (employee) {
+                    console.warn(`No 'url' field found for employee ${employee.name}.`);
+                    // Optionally, show a simple alert if there's no URL
+                    alert(`Location data is not available for ${employee.name}.`);
+                }
+            }
+        }
+
+        /**
+         * NEW: Function to close the modal
+         */
+        function closeModal() {
+            modalOverlay.classList.add('hidden');
+            modalOverlay.classList.remove('flex');
+            // Important: Clear the iframe src to stop any videos/maps
+            modalIframe.src = '';
+        }
+
+        // --- INITIALIZATION & EVENT LISTENERS ---
+
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            populateDepartments();
+            initializeFirebaseApp(); // Start Firebase
+
+            // Add filter event listeners
+            searchInput.addEventListener('input', filterAndRender);
+            deptSelect.addEventListener('change', filterAndRender);
+            resetButton.addEventListener('click', (e) => {
+                e.preventDefault(); // Stop form submission
+                resetFilters();
+            });
+
+            // Add one listener to the parent for all "LOCATE" buttons
+            resultsContainer.addEventListener('click', handleLocateClick);
+            
+            // --- NEW: Add modal close listeners ---
+            closeModalBtn.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', (event) => {
+                // Check if the click was on the overlay itself, not the content
+                if (event.target === modalOverlay) {
+                    closeModal();
+                }
+            });
+        });
+
+    </script>
+
+    <div id="location-modal" class="modal-overlay hidden">
+      <div class="modal-content">
+        
+        <h2 id="modal-employee-name" class="text-2xl font-bold text-gray-800"></h2>
+        
+        <button id="modal-close-btn" class="modal-close-btn">×</button>
+        
+        <div class="iframe-container mt-4">
+          <iframe id="modal-iframe" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+        
+      </div>
+    </div>
+</body>
+</html>
