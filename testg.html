@@ -129,7 +129,8 @@
           position: relative;
           overflow: hidden;
           width: 100%;
-          padding-top: 56.25%; /* 16:9 Aspect Ratio */
+          /* padding-top: 56.25%; /* 16:9 Aspect Ratio - REPLACED */
+          height: 65vh; /* UPDATED: Set height to 65% of viewport height */
         }
         
         #modal-iframe {
@@ -563,7 +564,19 @@
                     ...doc.data()
                 }));
                 
-                console.log(`Fetched ${allEmployees.length} employees from Firestore.`);
+                // --- UPDATED: Sort by Last Name, then First Name ---
+                allEmployees.sort((a, b) => {
+                    const lastNameA = a.name.split(' ').pop();
+                    const lastNameB = b.name.split(' ').pop();
+                    
+                    if (lastNameA !== lastNameB) {
+                        return lastNameA.localeCompare(lastNameB);
+                    }
+                    // If last names are the same, sort by full name (which covers first name)
+                    return a.name.localeCompare(b.name);
+                });
+                
+                console.log(`Fetched and sorted ${allEmployees.length} employees from Firestore.`);
                 // Re-render the list with the new data
                 filterAndRender();
 
