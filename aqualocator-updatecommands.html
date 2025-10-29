@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!version 3.0>
+    <!version 2.8>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AQUALocator - Employee Office Locator</title>
     <link rel="icon" href="data:,">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-   
-	<style type="text/tailwindcss">
-    @theme {
-      --font-sans: system-ui, sans-serif;
-      --font-display: Inter, sans-serif;
-    }
-  </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
 
     <style>
         /* Set default font for the page */
@@ -278,7 +282,7 @@
         const usingManualConfig = Object.keys(MANUAL_FIREBASE_CONFIG).length > 0 && MANUAL_FIREBASE_CONFIG.apiKey; // Check if manual config is provided AND has apiKey
 
         if (usingManualConfig) {
-            //console.log("Using MANUAL Firebase Config.");
+            console.log("Using MANUAL Firebase Config.");
             firebaseConfig = MANUAL_FIREBASE_CONFIG;
         } else {
             console.log("Attempting to use AUTOMATIC Firebase Config.");
@@ -301,6 +305,160 @@
          const employeesToUpload = [
              /* PASTE NEW EMPLOYEE JSON OBJECTS HERE FOR BULK INSERT */
          ];
+
+
+         /**
+          * 2. --- BULK INSERT FUNCTION (Creates new documents) ---
+          * KEPT AS REQUESTED. This function inserts new documents.
+          * Use window.updateFirstAndLastFields() to calculate First/Last names on existing data.
+          */
+         window.uploadAllEmployees = async function() {
+            if (!db) {
+                 console.error("Firestore DB instance is not available.");
+                 alert("ERROR: Firestore is not initialized. Cannot upload.");
+                 return;
+            }
+             if (!auth || !auth.currentUser) {
+                console.warn("User not authenticated. Please wait for auth listener to complete.");
+                return;
+            }
+            if (employeesToUpload.length === 0) {
+                 console.warn("The 'employeesToUpload' array is empty. Nothing to insert.");
+                 alert("Upload array is empty. Paste data into the 'employeesToUpload' variable first.");
+                 return;
+            }
+
+
+            const collectionPath = `artifacts/${appId}/public/data/employees`;
+            console.log(`Starting bulk INSERT of ${employeesToUpload.length} employees to ${collectionPath}...`);
+
+            const promises = [];
+            let uploadCount = 0;
+            const batchSize = 10; 
+
+            for (let i = 0; i < employeesToUpload.length; i += batchSize) {
+                const batch = employeesToUpload.slice(i, i + batchSize);
+                
+                const batchPromises = batch.map(employee => {
+                    if (!employee.name || !employee.dept) {
+                        console.warn("Skipping employee due to missing name or dept:", employee);
+                        return Promise.resolve();
+                    }
+                    // Uses addDoc: creates a NEW document with a new ID
+                    return addDoc(collection(db, collectionPath), employee)
+                        .then(() => {
+                             uploadCount++;
+                             console.log(`Inserted ${employee.name} (${uploadCount}/${employeesToUpload.length}).`);
+                        })
+                        .catch(err => {
+                             console.error(`Error inserting ${employee.name}:`, err);
+                        });
+                });
+                 promises.push(...batchPromises);
+            }
+
+
+            try {
+                await Promise.all(promises);
+                const successMsg = `SUCCESS: Finished inserting ${uploadCount} new employee documents.`;
+                console.log(successMsg);
+                alert(successMsg);
+            } catch (error) {
+                console.error("Error during bulk insertion finalization:", error);
+                alert(`ERROR: There was an error during the insertion process. Check the console (F12) for details.`);
+            }
+        };
+
+        
+        /**
+         * 3. ✅ BULK FIELD CREATION/UPDATE FUNCTION (One-Time Execution)
+         * This function safely retrieves all documents, calculates First and Last names, and then 
+         * writes these two fields back to the *existing* documents using updateDoc.
+         * * To run this:
+         * 1. Ensure Firebase is initialized (App is loaded).
+         * 2. Open console and type `updateFirstAndLastFields()`
+         */
+        window.updateFirstAndLastFields = async function() {
+            if (!db || !auth.currentUser) {
+                console.error("ERROR: Firestore DB or User is not initialized/authenticated.");
+                alert("ERROR: Firestore not ready. Check console (F12).");
+                return;
+            }
+            
+            const collectionPath = `artifacts/${appId}/public/data/employees`;
+            console.log(`Starting bulk field creation/update on collection: ${collectionPath}`);
+            
+            try {
+                // STEP 1: Show loader and perform one-time read
+                loadingOverlay.classList.remove('hidden');
+                loadingOverlay.classList.add('flex');
+
+                const q = query(collection(db, collectionPath));
+                const snapshot = await getDocs(q);
+                
+                if (snapshot.empty) {
+                    console.log("No documents found in the collection to update.");
+                    loadingOverlay.classList.add('hidden');
+                    loadingOverlay.classList.remove('flex');
+                    return;
+                }
+
+                const documentsToProcess = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+
+                let updateCount = 0;
+                const promises = [];
+                
+                // STEP 2: Process each document and create update promises
+                documentsToProcess.forEach(employee => {
+                    const name = (employee.name || '').trim();
+                    const nameParts = name.split(/\s+/).filter(Boolean);
+                    
+                    // Calculate First and Last names
+                    let firstName = nameParts.length > 0 ? nameParts[0] : '';
+                    let lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
+                    
+                    // Only process update if calculated fields are new or different
+                    if (employee.First !== firstName || employee.Last !== lastName) {
+                        const docRef = doc(db, collectionPath, employee.id);
+                        
+                        // Use updateDoc to write ONLY the new First/Last fields
+                        const updatePromise = updateDoc(docRef, {
+                            First: firstName,
+                            Last: lastName,
+                        }).then(() => {
+                            updateCount++;
+                        }).catch(error => {
+                            console.error(`Error updating document ${employee.id} (${name}):`, error);
+                        });
+
+                        promises.push(updatePromise);
+                    }
+                });
+
+                // STEP 3: Await all updates
+                await Promise.all(promises);
+                
+                const successMsg = `SUCCESS: Finished processing ${documentsToProcess.length} documents. ${updateCount} documents were explicitly updated with First/Last names.`;
+                console.log(successMsg);
+                alert(successMsg);
+
+                // Hide loader (listener will auto-refresh the view with new data)
+                loadingOverlay.classList.add('hidden');
+                loadingOverlay.classList.remove('flex');
+
+            } catch (error) {
+                console.error("CRITICAL ERROR during bulk field creation:", error);
+                alert("A critical error occurred. Check the console for details.");
+                
+                // Ensure loader is hidden on error
+                loadingOverlay.classList.add('hidden');
+                loadingOverlay.classList.remove('flex');
+            }
+        };
+
 
         // --- Full Department List ---
         const departmentList = [
@@ -581,16 +739,16 @@
             }
 
             try {
-              // console.log("Initializing Firebase app...");
+                console.log("Initializing Firebase app...");
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
                 setLogLevel('error'); // Set log level (e.g., 'debug', 'error')
 
-                //console.log("Setting up Auth state listener...");
+                console.log("Setting up Auth state listener...");
                 onAuthStateChanged(auth, async (user) => { // Make listener async
                     if (user) {
-                      //  console.log("Firebase Auth Ready. User:", user.uid);
+                        console.log("Firebase Auth Ready. User:", user.uid);
                         // User is signed in, now we can fetch data.
                         setupFirebaseListener();
                     } else {
@@ -645,6 +803,9 @@
 
             // This path points to a public collection for your app
             const collectionPath = `artifacts/${appId}/public/data/employees`;
+            console.log(`Setting up real-time listener for: ${collectionPath}`);
+
+            const employeeIdToRemove = "D2GRWoOwvZziRRd47C8J";
 
             try {
                 const q = collection(db, collectionPath);
@@ -655,8 +816,10 @@
                         ...doc.data()
                     }));
 
-                    // --- FILTER 1: Remove employee  ---
+                    // --- FILTER 1: Remove the unwanted employee ID explicitly ---
+                    allEmployees = rawEmployees.filter(emp => emp.id !== employeeIdToRemove);
 					allEmployees = rawEmployees.filter(emp => 
+                        //emp.id !== employeeIdToRemove &&
                         emp.responsibilities !== "XXX"
                     );
 
@@ -670,6 +833,8 @@
                          // NEW: Handle comma suffixes (e.g., "Baumann, P.E." -> "Baumann")
                          lastNameA = lastNameA.split(',')[0].trim();
                          lastNameB = lastNameB.split(',')[0].trim();
+						  console.log(`lastNameA: ${lastNameA} `);
+						   console.log(`lastNameB: ${lastNameB} `);
                          
                          const sortResult = lastNameA.toLowerCase().localeCompare(lastNameB.toLowerCase());
                          if (sortResult !== 0) {
@@ -684,7 +849,7 @@
                     // --- END MODIFIED SORT LOGIC ---
 
 
-                    //console.log(`Firestore update: Fetched and sorted ${allEmployees.length} employees (one record filtered by ID).`);
+                    console.log(`Firestore update: Fetched and sorted ${allEmployees.length} employees (one record filtered by ID).`);
                     
                     // Re-render the list with the new data
                     filterAndRender(); // Calls renderResults, which handles hiding loader and showing results
@@ -794,7 +959,7 @@
 
         // Wait for the DOM to be fully loaded
         document.addEventListener('DOMContentLoaded', () => {
-            //console.log("DOM Loaded. Initializing app...");
+            console.log("DOM Loaded. Initializing app...");
             populateDepartments();
             initializeFirebaseApp(); // Start Firebase initialization and auth
 
@@ -822,7 +987,7 @@
             });
 
              // Initial render call removed - will be triggered by onSnapshot
-             //console.log("App initialization complete. Waiting for Firebase data...");
+             console.log("App initialization complete. Waiting for Firebase data...");
 
         });
 
