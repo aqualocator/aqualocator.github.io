@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!version 2.3>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AQUALocator - Employee Office Locator</title>
@@ -26,20 +27,21 @@
         /* Set default font for the page */
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #fafafa; /* Cleaner background */
         }
 
-        /* Custom button colors from screenshot */
+        /* Custom button colors (Updated Theme) */
         .btn-locate {
-            background-color: #7a3a8b; /* Eyedropped purple */
+            background-color: #5d3587; /* Richer Indigo/Violet */
             color: white;
             transition: background-color 0.2s ease-in-out;
         }
         .btn-locate:hover {
-            background-color: #6a2e7a;
+            background-color: #4a2d6b;
         }
-         /* NEW: Know Me Button Style */
+         
          .btn-know-me {
-            background-color: #ee2741; /* Red color from image */
+            background-color: #ee2741; /* Red color */
             color: white;
             text-transform: uppercase;
             transition: background-color 0.2s ease-in-out;
@@ -48,7 +50,7 @@
             background-color: #d41f35;
         }
         .btn-reset {
-            background-color: #35a2c4; /* Eyedropped blue */
+            background-color: #35a2c4; /* Blue */
             color: white;
             transition: background-color 0.2s ease-in-out;
         }
@@ -56,7 +58,7 @@
             background-color: #2a8faf;
         }
 
-        /* Custom styling for the select dropdown to match screenshot */
+        /* Custom styling for the select dropdown */
         select {
             -webkit-appearance: none;
             -moz-appearance: none;
@@ -93,22 +95,79 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
-        /* --- CUSTOM SPACING CLASS --- */
+        /* --- CUSTOM CLASSES --- */
         .custom-top-32 {
             top: 8rem; /* 8rem = 128px */
         }
+		
+		.custom-max-h-600 {
+         max-height: 600px;
+         min-height: 600px;
+        }
+		
+		.custom-max-h-800 {
+         max-height: 800px;
+         min-height: 800px;
+        }
+		
+		.custom-color-blue{
+		  color: #29aae2;
+		}
+        /* --- LOADER STYLES --- */
+        main {
+            position: relative; 
+        }
+        
+        #loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 200px;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e0e0e0;
+            border-top: 4px solid #5d3587;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+		
+		
         /* ------------------------ */
     </style>
 </head>
 
 <body class="bg-gray-100">
 
+    <div class="container mx-auto p-4 max-w-6xl">
+        <div class="w-full text-left text-sm">
+            <a 
+                href="https://form.jotform.com/193454652984168" 
+                target="_blank" 
+                class="text-blue-600 hover:text-blue-800 hover:underline font-medium">
+                Update Profile
+            </a>
+        </div>
+    </div>
     <header class="bg-white shadow-md mb-6 sticky top-0 z-10">
         <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl flex items-center justify-between">
             <div class="flex items-center space-x-4">
                 <img src="aqua-aerobics-logo.png" alt="Aqua-Aerobic Systems Logo" class="h-10 sm:h-12">
                 <div>
-                    <h1 class="text-2xl sm:text-3xl font-bold text-purple-700">AQUALocator</h1>
+                    <h1 class="text-2xl sm:text-3xl font-bold custom-color-blue">AQUALocator</h1>
                     <p class="text-sm text-gray-500 hidden sm:block">An Aqua employee office locator</p>
                 </div>
             </div>
@@ -144,6 +203,11 @@
             </aside>
 
             <main class="md:col-span-7 lg:col-span-8">
+                
+                <div id="loading-overlay" class="hidden">
+                    <div class="loader"></div>
+                </div>
+
                 <div id="results-container" class="space-y-4">
                     </div>
                 <div id="no-results" class="hidden text-center text-gray-500 p-8">
@@ -154,7 +218,7 @@
     </div>
 
     <div id="locate-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl h-3/4 flex flex-col">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl h-full custom-max-h-600 flex flex-col">
             <div class="flex justify-between items-center p-3 border-b">
                 <h3 id="locate-modal-title" class="text-lg font-semibold text-gray-900">Location Viewer</h3>
                 <button id="locate-modal-close-btn" class="text-gray-400 hover:text-gray-600">
@@ -168,7 +232,7 @@
     </div>
 
     <div id="know-me-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
-                                <div class="bg-white rounded-lg shadow-2xl w-full max-w-xl h-[85vh] flex flex-col">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-xl h-full custom-max-h-800 flex flex-col">
             <div class="flex justify-between items-center p-3 border-b">
                 <h3 id="know-me-modal-title" class="text-lg font-semibold text-gray-900">Get to Know Me</h3>
                 <button id="know-me-modal-close-btn" class="text-gray-400 hover:text-gray-600">
@@ -185,7 +249,8 @@
         // --- Firebase SDK Imports ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, onSnapshot, setLogLevel, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; // <-- Import addDoc
+        // IMPORT NEW MODULES for update functions
+        import { getFirestore, collection, onSnapshot, setLogLevel, addDoc, getDocs, query, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; 
 
         // --- Global Variables ---
         let allEmployees = []; // This will hold our data from Firebase
@@ -199,9 +264,6 @@
         // --- !! MANUAL FIREBASE CONFIG !! ---
         // If the automatic config linking isn't working,
         // you can paste your Firebase config object here.
-        // 1. Get your config from Firebase Console > Project Settings > General > Your apps.
-        // 2. Paste it *inside* the curly braces {}.
-        // Example: { apiKey: "AIza...", authDomain: "...", ... }
         const MANUAL_FIREBASE_CONFIG = {
             apiKey: "AIzaSyABeCFheLuS08mxfWjCSS2ugXFbLDgnpIE",
             authDomain: "aqualocator-23714.firebaseapp.com",
@@ -239,126 +301,169 @@
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
 
-         // --- 1. DATA TO UPLOAD ---
-         // Fill this array with all your employees from your datasheet.
-         // This is the data that will be bulk-uploaded to Firebase.
-         // ** PASTE YOUR JSON DATA (like from filtered_employees.json) BETWEEN THE BRACKETS [] **
+         // --- 1. DATA FOR BULK INSERT (Add data here and run uploadAllEmployees()) ---
          const employeesToUpload = [
-             /* Example Format:
-               {
-    "name": "Jeff Alaniz",
-    "title": "Project Manager",
-    "ext": "4429",
-    "dept": "Project Management",
-    "email": "jalaniz@aqua-aerobic.com",
-    "imageUrl": "datasheet_emps_row0_photo.7bf531a6.png",
-    "initials": "",
-    "responsibilities": "",
-    "url": "src=\"https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=152\"",
-    "FloorMap": "jalaniz"
-  }
-             */
-
+             /* PASTE NEW EMPLOYEE JSON OBJECTS HERE FOR BULK INSERT */
          ];
 
 
          /**
-          * 2. --- BULK UPLOAD FUNCTION ---
-          * A one-time utility to upload all employees from the 'employeesToUpload' array.
-          * To use this:
-          * 1. Fill in the 'employeesToUpload' array above with your data.
-          * 2. Open the browser's developer console (F12 or Ctrl+Shift+I).
-          * 3. Type `uploadAllEmployees()` and press Enter.
-          * 4. Check the console logs for progress.
-          * 5. !! ONLY RUN THIS ONCE per data set, or you will get duplicate entries !!
+          * 2. --- BULK INSERT FUNCTION (Creates new documents) ---
+          * KEPT AS REQUESTED. This function inserts new documents.
+          * Use window.updateFirstAndLastFields() to calculate First/Last names on existing data.
           */
-         async function uploadAllEmployees() {
+         window.uploadAllEmployees = async function() {
             if (!db) {
                  console.error("Firestore DB instance is not available.");
                  alert("ERROR: Firestore is not initialized. Cannot upload.");
                  return;
             }
              if (!auth || !auth.currentUser) {
-                console.warn("User not authenticated yet. Trying to authenticate...");
-                 try {
-                     // Attempt sign-in again, maybe it failed initially
-                    if (initialAuthToken && !usingManualConfig) { // Only use initial token if not using manual config
-                        await signInWithCustomToken(auth, initialAuthToken);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                     console.log("Authentication successful, proceeding with upload.");
-                } catch (error) {
-                    console.error("Authentication failed during upload attempt:", error);
-                    alert("ERROR: Authentication failed. Cannot upload data. Check console (F12).");
-                    return;
-                }
+                console.warn("User not authenticated. Please wait for auth listener to complete.");
+                return;
             }
-            if (!auth.currentUser) {
-                 console.error("User is still not authenticated after retry.");
-                 alert("ERROR: Authentication failed. Cannot upload data.");
-                 return;
-            }
-
-
-            // Make sure you have created the collection path in Firestore first
-            const collectionPath = `artifacts/${appId}/public/data/employees`;
-            console.log(`Starting bulk upload of ${employeesToUpload.length} employees to ${collectionPath}...`);
-
             if (employeesToUpload.length === 0) {
-                 console.warn("The 'employeesToUpload' array is empty. Nothing to upload.");
-                 alert("Upload array is empty. Paste employee data into the 'employeesToUpload' variable in the code.");
+                 console.warn("The 'employeesToUpload' array is empty. Nothing to insert.");
+                 alert("Upload array is empty. Paste data into the 'employeesToUpload' variable first.");
                  return;
             }
 
+
+            const collectionPath = `artifacts/${appId}/public/data/employees`;
+            console.log(`Starting bulk INSERT of ${employeesToUpload.length} employees to ${collectionPath}...`);
 
             const promises = [];
             let uploadCount = 0;
-            const batchSize = 10; // Process in batches to avoid overwhelming Firestore (optional)
+            const batchSize = 10; 
 
             for (let i = 0; i < employeesToUpload.length; i += batchSize) {
                 const batch = employeesToUpload.slice(i, i + batchSize);
+                
                 const batchPromises = batch.map(employee => {
-                     // Check for essential fields (optional but good practice)
                     if (!employee.name || !employee.dept) {
                         console.warn("Skipping employee due to missing name or dept:", employee);
-                        return Promise.resolve(); // Skip this employee
+                        return Promise.resolve();
                     }
-                    // 'addDoc' automatically creates a unique document ID
+                    // Uses addDoc: creates a NEW document with a new ID
                     return addDoc(collection(db, collectionPath), employee)
                         .then(() => {
                              uploadCount++;
-                             console.log(`Uploaded ${employee.name} (${uploadCount}/${employeesToUpload.length})`);
+                             console.log(`Inserted ${employee.name} (${uploadCount}/${employeesToUpload.length}).`);
                         })
                         .catch(err => {
-                             console.error(`Error uploading ${employee.name}:`, err);
-                             // Decide if you want to stop on error or continue
+                             console.error(`Error inserting ${employee.name}:`, err);
                         });
                 });
                  promises.push(...batchPromises);
-                // Optional: add a small delay between batches if needed
-                // await new Promise(resolve => setTimeout(resolve, 500));
             }
 
 
             try {
                 await Promise.all(promises);
-                const successMsg = `SUCCESS: Finished uploading ${uploadCount} employees!`;
+                const successMsg = `SUCCESS: Finished inserting ${uploadCount} new employee documents.`;
                 console.log(successMsg);
-                alert(successMsg + "\n\nYou can keep the upload code if you anticipate needing it again, or remove it to clean up the file.");
+                alert(successMsg);
             } catch (error) {
-                console.error("Error during bulk upload finalization:", error);
-                alert(`ERROR: There was an error during the upload process. ${uploadCount} employees might have been uploaded. Check the console (F12) for details.`);
+                console.error("Error during bulk insertion finalization:", error);
+                alert(`ERROR: There was an error during the insertion process. Check the console (F12) for details.`);
             }
-        }
-        // Make the upload function accessible from the console
-        window.uploadAllEmployees = uploadAllEmployees;
+        };
+
+        
+        /**
+         * 3. ✅ BULK FIELD CREATION/UPDATE FUNCTION (One-Time Execution)
+         * This function safely retrieves all documents, calculates First and Last names, and then 
+         * writes these two fields back to the *existing* documents using updateDoc.
+         * * To run this:
+         * 1. Ensure Firebase is initialized (App is loaded).
+         * 2. Open console and type `updateFirstAndLastFields()`
+         */
+        window.updateFirstAndLastFields = async function() {
+            if (!db || !auth.currentUser) {
+                console.error("ERROR: Firestore DB or User is not initialized/authenticated.");
+                alert("ERROR: Firestore not ready. Check console (F12).");
+                return;
+            }
+            
+            const collectionPath = `artifacts/${appId}/public/data/employees`;
+            console.log(`Starting bulk field creation/update on collection: ${collectionPath}`);
+            
+            try {
+                // STEP 1: Show loader and perform one-time read
+                loadingOverlay.classList.remove('hidden');
+                loadingOverlay.classList.add('flex');
+
+                const q = query(collection(db, collectionPath));
+                const snapshot = await getDocs(q);
+                
+                if (snapshot.empty) {
+                    console.log("No documents found in the collection to update.");
+                    loadingOverlay.classList.add('hidden');
+                    loadingOverlay.classList.remove('flex');
+                    return;
+                }
+
+                const documentsToProcess = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+
+                let updateCount = 0;
+                const promises = [];
+                
+                // STEP 2: Process each document and create update promises
+                documentsToProcess.forEach(employee => {
+                    const name = (employee.name || '').trim();
+                    const nameParts = name.split(/\s+/).filter(Boolean);
+                    
+                    // Calculate First and Last names
+                    let firstName = nameParts.length > 0 ? nameParts[0] : '';
+                    let lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
+                    
+                    // Only process update if calculated fields are new or different
+                    if (employee.First !== firstName || employee.Last !== lastName) {
+                        const docRef = doc(db, collectionPath, employee.id);
+                        
+                        // Use updateDoc to write ONLY the new First/Last fields
+                        const updatePromise = updateDoc(docRef, {
+                            First: firstName,
+                            Last: lastName,
+                        }).then(() => {
+                            updateCount++;
+                        }).catch(error => {
+                            console.error(`Error updating document ${employee.id} (${name}):`, error);
+                        });
+
+                        promises.push(updatePromise);
+                    }
+                });
+
+                // STEP 3: Await all updates
+                await Promise.all(promises);
+                
+                const successMsg = `SUCCESS: Finished processing ${documentsToProcess.length} documents. ${updateCount} documents were explicitly updated with First/Last names.`;
+                console.log(successMsg);
+                alert(successMsg);
+
+                // Hide loader (listener will auto-refresh the view with new data)
+                loadingOverlay.classList.add('hidden');
+                loadingOverlay.classList.remove('flex');
+
+            } catch (error) {
+                console.error("CRITICAL ERROR during bulk field creation:", error);
+                alert("A critical error occurred. Check the console for details.");
+                
+                // Ensure loader is hidden on error
+                loadingOverlay.classList.add('hidden');
+                loadingOverlay.classList.remove('flex');
+            }
+        };
 
 
         // --- Full Department List ---
         const departmentList = [
             "All Departments",
-            "Engineering Departments - Initials!",
+            "Engineering Depts,Search Initials",
             "All Engineering Departments",
             "Accounting/Finance",
             "Administration",
@@ -375,7 +480,7 @@
             "Eng - Estimating",
             "Eng - Mechanical",
             "Eng - Standards",
-            "All Engineers", // Added this based on filter logic
+            //"All Engineers", // Added this based on filter logic
             "Field Services",
             "Human Resources",
             "Industrial Sales",
@@ -399,6 +504,7 @@
         const resetButton = document.getElementById('reset-button');
         const resultsContainer = document.getElementById('results-container');
         const noResultsMessage = document.getElementById('no-results');
+        const loadingOverlay = document.getElementById('loading-overlay'); 
 
         // --- Locate Modal Elements ---
         const locateModalOverlay = document.getElementById('locate-modal');
@@ -446,7 +552,6 @@
 
                 // --- CHECK 1: Skip rendering if employee name is N/A or empty/missing ---
                 if (!employee.name || employee.name.trim() === '' || employee.name.trim().toLowerCase() === 'n/a') {
-                     // console.log("Skipping employee card due to missing/invalid name:", employee);
                      return; // Skip to the next employee in the loop
                 }
                 // --- END CHECK 1 ---
@@ -527,6 +632,11 @@
                 `;
                 resultsContainer.insertAdjacentHTML('beforeend', card);
             });
+
+            // Hide loading overlay and show results container after filtering/rendering
+            loadingOverlay.classList.add('hidden');
+            loadingOverlay.classList.remove('flex');
+            resultsContainer.classList.remove('hidden');
         }
 
 
@@ -534,51 +644,58 @@
          * Gets filter values, filters the employee list, and calls renderResults.
          */
          function filterAndRender() {
-            const searchText = searchInput.value.toLowerCase().trim();
-            const searchTerms = searchText.split(' ').filter(Boolean); // Split search into terms
-            const selectedDept = deptSelect.value;
-            let filtered = [...allEmployees]; // Start with all employees
+            // Show loader and hide results before processing new filters
+            resultsContainer.classList.add('hidden');
+            loadingOverlay.classList.remove('hidden');
+            loadingOverlay.classList.add('flex');
 
-            // --- Department Filtering ---
-            if (selectedDept && selectedDept !== "All Departments") {
-                // console.log("Filtering by Dept:", selectedDept);
-                if (selectedDept === "Engineering Departments - Initials!" || selectedDept === "All Engineering Departments") {
-                    filtered = filtered.filter(emp => emp.dept && emp.dept.startsWith("Eng -"));
-                } else if (selectedDept === "All Engineers") {
-                     filtered = filtered.filter(emp => emp.dept && (emp.dept.startsWith("Eng -") || emp.dept.startsWith("Prod Mgmt")));
-                }
-                 else {
-                    filtered = filtered.filter(emp => emp.dept === selectedDept);
-                }
-            }
+            // Defer the filtering to allow the UI to update with the loader immediately
+            setTimeout(() => {
+                const searchText = searchInput.value.toLowerCase().trim();
+                const searchTerms = searchText.split(' ').filter(Boolean); // Split search into terms
+                const selectedDept = deptSelect.value;
+                let filtered = [...allEmployees]; // Start with all employees
 
-            // --- Text Search Filtering ---
-            if (searchTerms.length > 0) {
-                 // console.log("Filtering by Text:", searchTerms);
-                 // Determine which fields to search based on selectedDept
-                let fieldsToSearch = ['name', 'title', 'email', 'responsibilities', 'dept']; // Default fields
-                if (selectedDept === "Engineering Departments - Initials!") {
-                    fieldsToSearch = ['initials']; // Only search initials
-                    // console.log("Searching ONLY Initials field");
-                } else {
-                     fieldsToSearch.push('initials'); // Add initials to default search
+                // --- Department Filtering ---
+                if (selectedDept && selectedDept !== "All Departments") {
+                    // console.log("Filtering by Dept:", selectedDept);
+                    if (selectedDept === "Engineering Depts,Search Initials" || selectedDept === "All Engineering Departments") {
+                        filtered = filtered.filter(emp => emp.dept && emp.dept.startsWith("Eng -"));
+                    } else if (selectedDept === "All Engineers") {
+                         filtered = filtered.filter(emp => emp.dept && (emp.dept.startsWith("Eng -") || emp.dept.startsWith("Prod Mgmt")));
+                    }
+                     else {
+                        filtered = filtered.filter(emp => emp.dept === selectedDept);
+                    }
                 }
 
-                filtered = filtered.filter(employee => {
-                    // Check if *all* search terms are found somewhere in the allowed fields
-                    return searchTerms.every(term => {
-                        // Check each specified field for the current term
-                        return fieldsToSearch.some(field => {
-                            const value = employee[field];
-                            // Ensure value is a string and perform case-insensitive search
-                            return typeof value === 'string' && value.toLowerCase().includes(term);
+                // --- Text Search Filtering ---
+                if (searchTerms.length > 0) {
+                     // Determine which fields to search based on selectedDept
+                    let fieldsToSearch = ['name', 'title', 'email', 'responsibilities', 'dept']; // Default fields
+                    if (selectedDept === "Engineering Depts,Search Initials") {
+                        fieldsToSearch = ['initials']; // Only search initials
+                    } else {
+                         // Added First and Last to search
+                         fieldsToSearch.push('initials', 'First', 'Last'); 
+                    }
+
+                    filtered = filtered.filter(employee => {
+                        // Check if *all* search terms are found somewhere in the allowed fields
+                        return searchTerms.every(term => {
+                            // Check each specified field for the current term
+                            return fieldsToSearch.some(field => {
+                                const value = employee[field];
+                                // Ensure value is a string and perform case-insensitive search
+                                return typeof value === 'string' && value.toLowerCase().includes(term);
+                            });
                         });
                     });
-                });
-            }
+                }
 
 
-            renderResults(filtered);
+                renderResults(filtered);
+            }, 100); // Small delay to show loader effect
         }
 
 
@@ -634,20 +751,9 @@
                         } catch (signInError) {
                              console.error("Firebase Sign-In Error:", signInError);
                              resultsContainer.innerHTML = `<div class="text-red-600 text-center p-4 font-semibold">Error: Could not sign in to Firebase. ${signInError.message}</div>`;
-                             // Handle specific errors like auth/custom-token-mismatch if needed
-                             if (signInError.code === 'auth/custom-token-mismatch' && initialAuthToken && !usingManualConfig) {
-                                console.warn("Custom token mismatch. Attempting anonymous sign-in as fallback...");
-                                 try {
-                                    await signInAnonymously(auth);
-                                } catch (anonError) {
-                                    console.error("Anonymous sign-in fallback failed:", anonError);
-                                }
-                             } else if (signInError.code === 'auth/network-request-failed') {
-                                 alert("Network error during sign-in. Please check your internet connection.");
-                             }
                              // Clear potentially stale data if sign-in fails
                              allEmployees = [];
-                             renderResults([]); // Render empty results
+                             // No explicit call to renderResults here, as setupFirebaseListener is not running yet.
                         }
                     }
                 });
@@ -662,7 +768,7 @@
         /**
          * Sets up the real-time listener on the 'employees' collection.
          */
-        function setupFirebaseListener() {
+           function setupFirebaseListener() {
             if (!auth.currentUser) {
                 console.error("Cannot set up listener: User is not authenticated.");
                 return;
@@ -671,6 +777,12 @@
                  console.error("Cannot set up listener: Firestore DB instance is not available.");
                  return;
             }
+
+            // Show loader and hide results container immediately on fetch start
+            resultsContainer.classList.add('hidden');
+            loadingOverlay.classList.remove('hidden');
+            loadingOverlay.classList.add('flex');
+
 
             // This path points to a public collection for your app
             const collectionPath = `artifacts/${appId}/public/data/employees`;
@@ -689,37 +801,57 @@
 
                     // --- FILTER 1: Remove the unwanted employee ID explicitly ---
                     allEmployees = rawEmployees.filter(emp => emp.id !== employeeIdToRemove);
+					allEmployees = rawEmployees.filter(emp => 
+                        //emp.id !== employeeIdToRemove &&
+                        emp.responsibilities !== "XXX"
+                    );
 
-                    // Sort by Last Name, then First Name
+                    // --- MODIFIED SORT LOGIC ---
+                    // Sort by Last Name (handling commas), then First Name
                     allEmployees.sort((a, b) => {
-                         // Basic name splitting (might need refinement for complex names)
-                         const nameA = a.name || '';
-                         const nameB = b.name || '';
-                         const lastNameA = nameA.split(' ').pop().toLowerCase();
-                         const lastNameB = nameB.split(' ').pop().toLowerCase();
+                         // Get the last name, defaulting to splitting the full name
+                         let lastNameA = a.Last || (a.name || '').split(' ').pop();
+                         let lastNameB = b.Last || (b.name || '').split(' ').pop();
 
+                         // NEW: Handle comma suffixes (e.g., "Baumann, P.E." -> "Baumann")
+                         lastNameA = lastNameA.split(',')[0].trim();
+                         lastNameB = lastNameB.split(',')[0].trim();
+						  console.log(`lastNameA: ${lastNameA} `);
+						   console.log(`lastNameB: ${lastNameB} `);
+                         
+                         const sortResult = lastNameA.toLowerCase().localeCompare(lastNameB.toLowerCase());
+                         if (sortResult !== 0) {
+                            return sortResult;
+                         }
 
-                         if (lastNameA !== lastNameB) {
-                            return lastNameA.localeCompare(lastNameB);
-                        }
-                        // If last names are the same, sort by full name (which covers first name)
-                        return nameA.localeCompare(nameB);
+                         // Secondary sort by First Name
+                         const firstNameA = a.First || (a.name || '').split(' ')[0];
+                         const firstNameB = b.First || (b.name || '').split(' ')[0];
+                         return firstNameA.toLowerCase().localeCompare(firstNameB.toLowerCase());
                     });
+                    // --- END MODIFIED SORT LOGIC ---
+
 
                     console.log(`Firestore update: Fetched and sorted ${allEmployees.length} employees (one record filtered by ID).`);
+                    
                     // Re-render the list with the new data
-                    filterAndRender(); // Call initial filter/render
+                    filterAndRender(); // Calls renderResults, which handles hiding loader and showing results
 
                 }, (error) => {
                     console.error("Error fetching data from Firestore:", error);
                      resultsContainer.innerHTML = `<div class="text-red-500 text-center p-4">Error: Could not fetch employee data. ${error.message}</div>`;
-                     // Optionally clear data on error
+                     // Hide loader on error
+                     loadingOverlay.classList.add('hidden');
+                     loadingOverlay.classList.remove('flex');
+                     resultsContainer.classList.remove('hidden');
                      allEmployees = [];
-                     renderResults([]);
                 });
             } catch (error) {
                  console.error("Error creating Firestore query:", error);
                  resultsContainer.innerHTML = `<div class="text-red-500 text-center p-4">Error setting up database listener. ${error.message}</div>`;
+                 loadingOverlay.classList.add('hidden');
+                 loadingOverlay.classList.remove('flex');
+                 resultsContainer.classList.remove('hidden');
             }
         }
 
