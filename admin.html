@@ -104,6 +104,15 @@
                             <label for="edit-title" class="block text-sm font-medium text-gray-700">Job Title</label>
                             <input type="text" id="edit-title" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
                         </div>
+                        
+                        <div>
+                            <label for="edit-first" class="block text-sm font-medium text-gray-700">First Name (for sorting)</label>
+                            <input type="text" id="edit-first" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        </div>
+                        <div>
+                            <label for="edit-last" class="block text-sm font-medium text-gray-700">Last Name (for sorting)</label>
+                            <input type="text" id="edit-last" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        </div>
                         <div>
                             <label for="edit-dept" class="block text-sm font-medium text-gray-700">Department</label>
                             <input type="text" id="edit-dept" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
@@ -220,6 +229,8 @@
         // --- Form Fields ---
         const editEmployeeId = document.getElementById('edit-employee-id');
         const editName = document.getElementById('edit-name');
+        const editFirst = document.getElementById('edit-first'); // <-- ADDED
+        const editLast = document.getElementById('edit-last'); // <-- ADDED
         const editTitle = document.getElementById('edit-title');
         const editDept = document.getElementById('edit-dept');
         const editExt = document.getElementById('edit-ext');
@@ -389,6 +400,8 @@
             // Populate the form
             editEmployeeId.value = employee.id;
             editName.value = employee.name || '';
+            editFirst.value = employee.First || ''; // <-- ADDED
+            editLast.value = employee.Last || ''; // <-- ADDED
             editTitle.value = employee.title || '';
             editDept.value = employee.dept || '';
             editExt.value = employee.ext || '';
@@ -460,8 +473,8 @@
                 finalUrlField = `<iframe src="${rawUrl}"></iframe>`;
             }
 
-            // Get First/Last names for sorting
-            const { First, Last } = getFirstAndLast(editName.value);
+            // Get First/Last names for sorting - REMOVED AUTOMATIC CALCULATION
+            // const { First, Last } = getFirstAndLast(editName.value);
 
             const employeeData = {
                 name: editName.value || '',
@@ -473,8 +486,8 @@
                 imageUrl: editImageUrl.value || '',
                 FloorMap: editFloorMap.value || '',
                 url: finalUrlField, // Storing the iframe-like string
-                First: First, // Add First name
-                Last: Last    // Add Last name
+                First: editFirst.value || '', // <-- MODIFIED
+                Last: editLast.value || ''    // <-- MODIFIED
             };
 
             try {
