@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQUALocator - Admin Panel</title>
+    <link rel="icon" href="data:,">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Simple Modal styles */
+        #edit-modal { z-index: 1000; }
+        .modal-body { max-height: 80vh; }
+        /* Simple Loader */
+        .loader {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #FFF;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div id="login-view" class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
+            <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">AQUALocator Admin</h1>
+            <div id="login-error" class="text-red-500 text-sm mb-4 hidden"></div>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label for="login-email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="login-email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <div class="mb-6">
+                    <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="login-password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <button type="submit" id="login-button" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <span id="login-button-text">Login</span>
+                    <div id="login-loader" class="loader hidden"></div>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="admin-panel" class="hidden">
+        <header class="bg-white shadow-md">
+            <div class="container mx-auto p-4 max-w-6xl flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-blue-600">AQUALocator Admin</h1>
+                <div>
+                    <span id="user-email" class="text-sm text-gray-600 mr-4"></span>
+                    <button id="logout-button" class="text-sm font-medium text-red-500 hover:text-red-700">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto p-4 max-w-6xl">
+            <div class="flex justify-end mb-4">
+                <button id="add-new-button" class="py-2 px-4 rounded-md font-medium text-white bg-green-600 hover:bg-green-700">
+                    + Add New Employee
+                </button>
+            </div>
+
+            <div id="admin-list-container" class="bg-white p-4 rounded-lg shadow-sm">
+                <div id="admin-loader" class="flex justify-center p-8">
+                    <div class="w-10 h-10 border-4 border-gray-200 border-t-4 border-t-blue-500 rounded-full animate-spin"></div>
+                </div>
+                </div>
+        </main>
+    </div>
+
+    <div id="edit-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl">
+            <form id="edit-form">
+                <div class="flex justify-between items-center p-4 border-b">
+                    <h3 id="modal-title" class="text-xl font-semibold">Modal Title</h3>
+                    <button type="button" id="modal-close-btn" class="text-gray-400 hover:text-gray-600">&times;</button>
+                </div>
+
+                <div class="modal-body p-6 overflow-y-auto space-y-4">
+                    <input type="hidden" id="edit-employee-id">
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="edit-name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                            <input type="text" id="edit-name" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>
+                        </div>
+                        <div>
+                            <label for="edit-title" class="block text-sm font-medium text-gray-700">Job Title</label>
+                            <input type="text" id="edit-title" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        </div>
+                        <div>
+                            <label for="edit-dept" class="block text-sm font-medium text-gray-700">Department</label>
+                            <input type="text" id="edit-dept" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        </div>
+                        <div>
+                            <label for="edit-ext" class="block text-sm font-medium text-gray-700">Extension</label>
+                            <input type="text" id="edit-ext" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="edit-email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="edit-email" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                    </div>
+                    
+                    <div>
+                        <label for="edit-responsibilities" class="block text-sm font-medium text-gray-700">Responsibilities</label>
+                        <textarea id="edit-responsibilities" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md p-2"></textarea>
+                    </div>
+
+                    <div>
+                        <label for="edit-imageUrl" class="block text-sm font-medium text-gray-700">Image Filename (e.g., "jdoe.jpg")</label>
+                        <input type="text" id="edit-imageUrl" class="mt-1 block w-full border border-gray-300 rounded-md p-2" placeholder="Leave blank for default photo">
+                    </div>
+                    
+                    <div>
+                        <label for="edit-FloorMap" class="block text-sm font-medium text-gray-700">'Get to Know Me' Filename (e.g., "jdoe_bio.jpg")</label>
+                        <input type="text" id="edit-FloorMap" class="mt-1 block w-full border border-gray-300 rounded-md p-2" placeholder="Leave blank to hide button">
+                    </div>
+                    
+                    <div>
+                        <label for="edit-url" class="block text-sm font-medium text-gray-700">'LOCATE' URL (Paste the full iframe src URL)</label>
+                        <input type="text" id="edit-url" class="mt-1 block w-full border border-gray-300 rounded-md p-2" placeholder="e.g., https://your-map-url.com/...">
+                        <p class="text-xs text-gray-500 mt-1">Note: This field expects the *URL only*, not the full iframe tag.</p>
+                    </div>
+
+                </div>
+
+                <div class="flex justify-end p-4 bg-gray-50 border-t">
+                    <button type="button" id="modal-cancel-btn" class="mr-2 py-2 px-4 rounded-md font-medium text-gray-700 bg-gray-100 hover:bg-gray-200">Cancel</button>
+                    <button type="submit" id="modal-save-btn" class="py-2 px-4 rounded-md font-medium text-white bg-blue-600 hover:bg-blue-700">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script type="module">
+        // --- Firebase SDK Imports ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged, 
+            signInWithEmailAndPassword, 
+            signOut 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, 
+            collection, 
+            onSnapshot, 
+            addDoc, 
+            updateDoc, 
+            deleteDoc, 
+            doc,
+            query,
+            orderBy
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; 
+
+        // --- Global Variables ---
+        let allEmployees = []; // Local cache of employees
+        let db, auth;
+        const appId = 'default-app-id'; // Use the same appId as your main app
+        let employeeCollection; // Will be set after auth
+
+        // --- !! PASTE YOUR FIREBASE CONFIG HERE !! ---
+        // (Copied from your aqualocator.html file)
+        const MANUAL_FIREBASE_CONFIG = {
+            apiKey: "AIzaSyABeCFheLuS08mxfWjCSS2ugXFbLDgnpIE",
+            authDomain: "aqualocator-23714.firebaseapp.com",
+            projectId: "aqualocator-23714",
+            storageBucket: "aqualocator-23714.appspot.com",
+            messagingSenderId: "654848563347",
+            appId: "1:654848563347:web:4702a6f55ccbf7d5edd566",
+            measurementId: "G-5R7XGHVDNH"
+        };
+        // -------------------------------------
+
+        // --- DOM Elements ---
+        const loginView = document.getElementById('login-view');
+        const loginForm = document.getElementById('login-form');
+        const loginEmail = document.getElementById('login-email');
+        const loginPassword = document.getElementById('login-password');
+        const loginButton = document.getElementById('login-button');
+        const loginButtonText = document.getElementById('login-button-text');
+        const loginLoader = document.getElementById('login-loader');
+        const loginError = document.getElementById('login-error');
+
+        const adminPanel = document.getElementById('admin-panel');
+        const userEmail = document.getElementById('user-email');
+        const logoutButton = document.getElementById('logout-button');
+        const addNewButton = document.getElementById('add-new-button');
+        const adminListContainer = document.getElementById('admin-list-container');
+        const adminLoader = document.getElementById('admin-loader');
+
+        const editModal = document.getElementById('edit-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const editForm = document.getElementById('edit-form');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const modalCancelBtn = document.getElementById('modal-cancel-btn');
+        const modalSaveBtn = document.getElementById('modal-save-btn');
+        
+        // --- Form Fields ---
+        const editEmployeeId = document.getElementById('edit-employee-id');
+        const editName = document.getElementById('edit-name');
+        const editTitle = document.getElementById('edit-title');
+        const editDept = document.getElementById('edit-dept');
+        const editExt = document.getElementById('edit-ext');
+        const editEmail = document.getElementById('edit-email');
+        const editResponsibilities = document.getElementById('edit-responsibilities');
+        const editImageUrl = document.getElementById('edit-imageUrl');
+        const editFloorMap = document.getElementById('edit-FloorMap');
+        const editUrl = document.getElementById('edit-url');
+
+
+        /**
+         * Initializes Firebase App
+         */
+        function initializeFirebaseApp() {
+            try {
+                const app = initializeApp(MANUAL_FIREBASE_CONFIG);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                // Define the collection path *once*
+                const collectionPath = `artifacts/${appId}/public/data/employees`;
+                employeeCollection = collection(db, collectionPath);
+
+                initAuthStateObserver();
+            } catch (error) {
+                console.error("Firebase Initialization Error:", error);
+                loginError.textContent = "Error initializing app. Check console.";
+                loginError.classList.remove('hidden');
+            }
+        }
+
+        /**
+         * Main authentication state listener.
+         * This controls showing/hiding the login page vs. the admin panel.
+         */
+        function initAuthStateObserver() {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    // User is signed in
+                    loginView.classList.add('hidden');
+                    adminPanel.classList.remove('hidden');
+                    userEmail.textContent = user.email;
+                    
+                    // User is logged in, NOW we can fetch and listen for data
+                    loadEmployees();
+                } else {
+                    // User is signed out
+                    adminPanel.classList.add('hidden');
+                    loginView.classList.remove('hidden');
+                    userEmail.textContent = '';
+                    
+                    // Stop listening if we have a listener attached
+                    // (Handle this if you have a persistent listener)
+                    adminListContainer.innerHTML = ''; // Clear list
+                }
+            });
+        }
+
+        /**
+         * Handles the login form submission.
+         */
+        async function handleLogin(event) {
+            event.preventDefault();
+            loginError.classList.add('hidden');
+            loginButton.disabled = true;
+            loginButtonText.classList.add('hidden');
+            loginLoader.classList.remove('hidden');
+
+            const email = loginEmail.value;
+            const password = loginPassword.value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                // Auth state observer will handle the UI change
+            } catch (error) {
+                console.error("Login Error:", error);
+                loginError.textContent = error.message;
+                loginError.classList.remove('hidden');
+            } finally {
+                loginButton.disabled = false;
+                loginButtonText.classList.remove('hidden');
+                loginLoader.classList.add('hidden');
+                loginForm.reset();
+            }
+        }
+
+        /**
+         * Handles the logout button click.
+         */
+        function handleLogout() {
+            signOut(auth).catch((error) => {
+                console.error("Logout Error:", error);
+            });
+        }
+
+        /**
+         * Sets up the real-time listener on the 'employees' collection.
+         */
+        function loadEmployees() {
+            adminLoader.classList.remove('hidden');
+            
+            // Use query and orderBy to sort by name, just like the main app
+            const q = query(employeeCollection, orderBy("Last"), orderBy("First"));
+
+            onSnapshot(q, (snapshot) => {
+                allEmployees = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+
+                renderEmployeeList();
+                adminLoader.classList.add('hidden');
+
+            }, (error) => {
+                console.error("Error fetching employees:", error);
+                adminListContainer.innerHTML = `<div class="text-red-500 p-4">Error loading data: ${error.message}</div>`;
+                adminLoader.classList.add('hidden');
+            });
+        }
+
+        /**
+         * Renders the list of employees to the admin panel.
+         */
+        function renderEmployeeList() {
+            if (allEmployees.length === 0) {
+                adminListContainer.innerHTML = '<p class="text-gray-500 text-center p-4">No employees found.</p>';
+                return;
+            }
+
+            adminListContainer.innerHTML = allEmployees.map(emp => `
+                <div class="flex items-center justify-between p-3 border-b border-gray-200 last:border-b-0">
+                    <div>
+                        <p class="font-semibold text-gray-900">${emp.name || 'N/A'}</p>
+                        <p class="text-sm text-gray-600">${emp.title || 'No Title'} | ${emp.dept || 'No Dept'}</p>
+                    </div>
+                    <div class="flex-shrink-0 space-x-2">
+                        <button class="btn-edit text-sm font-medium py-1 px-3 rounded-md text-white bg-yellow-500 hover:bg-yellow-600" data-id="${emp.id}">
+                            Edit
+                        </button>
+                        <button class="btn-delete text-sm font-medium py-1 px-3 rounded-md text-white bg-red-600 hover:bg-red-700" data-id="${emp.id}" data-name="${emp.name || 'this employee'}">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /**
+         * Opens the modal for adding a new employee (blank form).
+         */
+        function openModalForNew() {
+            modalTitle.textContent = "Add New Employee";
+            editForm.reset();
+            editEmployeeId.value = ''; // Ensure ID is blank for 'add'
+            editModal.classList.remove('hidden');
+        }
+
+        /**
+         * Opens the modal to edit an existing employee (fills form).
+         */
+        function openModalForEdit(id) {
+            const employee = allEmployees.find(emp => emp.id === id);
+            if (!employee) return;
+
+            modalTitle.textContent = `Edit: ${employee.name}`;
+            
+            // Populate the form
+            editEmployeeId.value = employee.id;
+            editName.value = employee.name || '';
+            editTitle.value = employee.title || '';
+            editDept.value = employee.dept || '';
+            editExt.value = employee.ext || '';
+            editEmail.value = employee.email || '';
+            editResponsibilities.value = employee.responsibilities || '';
+            editImageUrl.value = employee.imageUrl || '';
+            editFloorMap.value = employee.FloorMap || '';
+
+            // This is the tricky one. The main app expects the *full iframe src*
+            // but you might only be storing the URL part.
+            // Let's assume you're storing the *URL only* and wrap it.
+            // **ADJUST THIS LOGIC** based on what's in your 'url' field.
+            
+            // If your 'url' field stores: <iframe src="URL">...</iframe>
+            const urlMatch = (employee.url || '').match(/src="([^"]+)"/);
+            editUrl.value = urlMatch ? urlMatch[1] : (employee.url || ''); // Extracts URL or uses raw value
+            
+            editModal.classList.remove('hidden');
+        }
+
+        /**
+         * Closes and resets the add/edit modal.
+         */
+        function closeModal() {
+            editModal.classList.add('hidden');
+            editForm.reset();
+        }
+        
+        /**
+         * Calculates First and Last name from a Full Name string.
+         * This matches the logic from your `updateFirstAndLastFields` function.
+         */
+        function getFirstAndLast(name) {
+            const nameParts = (name || '').trim().split(/\s+/).filter(Boolean);
+            let firstName = nameParts.length > 0 ? nameParts[0] : '';
+            let lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
+            
+            // Handle comma suffixes (e.g., "Baumann, P.E." -> "Baumann")
+            lastName = lastName.split(',')[0].trim();
+
+            return { First: firstName, Last: lastName };
+        }
+
+
+        /**
+         * Handles the "Save" button click for both Add and Update.
+         */
+        async function handleSave(event) {
+            event.preventDefault();
+            modalSaveBtn.disabled = true;
+            modalSaveBtn.textContent = "Saving...";
+
+            const id = editEmployeeId.value;
+            
+            // Re-format the 'url' field to match the main app's expectation
+            // We'll store the full iframe tag string, but only if a URL is provided.
+            const rawUrl = editUrl.value.trim();
+            let finalUrlField = '';
+            if (rawUrl) {
+                // IMPORTANT: This creates the iframe tag string to store in Firestore
+                finalUrlField = `<iframe src="${rawUrl}" ...other attributes...></iframe>`;
+                // NOTE: You must replace "...other attributes..." with any
+                // required attributes like 'allowfullscreen', 'width', 'height'
+                // if your main app relies on them. For simplicity, we'll store
+                // just the src, but your main app logic only extracts the src,
+                // so this *should* work.
+                
+                // Let's use the exact logic from your main app:
+                finalUrlField = `<iframe src="${rawUrl}"></iframe>`;
+            }
+
+            // Get First/Last names for sorting
+            const { First, Last } = getFirstAndLast(editName.value);
+
+            const employeeData = {
+                name: editName.value || '',
+                title: editTitle.value || '',
+                dept: editDept.value || '',
+                ext: editExt.value || '',
+                email: editEmail.value || '',
+                responsibilities: editResponsibilities.value || '',
+                imageUrl: editImageUrl.value || '',
+                FloorMap: editFloorMap.value || '',
+                url: finalUrlField, // Storing the iframe-like string
+                First: First, // Add First name
+                Last: Last    // Add Last name
+            };
+
+            try {
+                if (id) {
+                    // UPDATE existing document
+                    const docRef = doc(employeeCollection, id);
+                    await updateDoc(docRef, employeeData);
+                } else {
+                    // ADD new document
+                    await addDoc(employeeCollection, employeeData);
+                }
+                closeModal();
+            } catch (error) {
+                console.error("Save Error:", error);
+                alert(`Error saving: ${error.message}`);
+            } finally {
+                modalSaveBtn.disabled = false;
+                modalSaveBtn.textContent = "Save Changes";
+            }
+        }
+
+        /**
+         * Handles a click on the "Delete" button.
+         */
+        async function handleDelete(id, name) {
+            if (!confirm(`Are you sure you want to delete ${name}? This cannot be undone.`)) {
+                return;
+            }
+
+            try {
+                const docRef = doc(employeeCollection, id);
+                await deleteDoc(docRef);
+                // The onSnapshot listener will automatically update the UI
+            } catch (error) {
+                console.error("Delete Error:", error);
+                alert(`Error deleting: ${error.message}`);
+            }
+        }
+
+        /**
+         * Handles delegated clicks for 'Edit' and 'Delete' buttons.
+         */
+        function handleListClick(event) {
+            const target = event.target;
+            
+            if (target.classList.contains('btn-edit')) {
+                openModalForEdit(target.dataset.id);
+            }
+            
+            if (target.classList.contains('btn-delete')) {
+                handleDelete(target.dataset.id, target.dataset.name);
+            }
+        }
+
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeFirebaseApp();
+            
+            // Auth
+            loginForm.addEventListener('submit', handleLogin);
+            logoutButton.addEventListener('click', handleLogout);
+
+            // Modal
+            addNewButton.addEventListener('click', openModalForNew);
+            modalCloseBtn.addEventListener('click', closeModal);
+            modalCancelBtn.addEventListener('click', closeModal);
+            editForm.addEventListener('submit', handleSave);
+
+            // List (Event Delegation)
+            adminListContainer.addEventListener('click', handleListClick);
+        });
+
+    </script>
+</body>
+</html>
