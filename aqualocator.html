@@ -93,6 +93,11 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
+        /* --- CUSTOM SPACING CLASS --- */
+        .custom-top-32 {
+            top: 8rem; /* 8rem = 128px */
+        }
+        /* ------------------------ */
     </style>
 </head>
 
@@ -115,7 +120,7 @@
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
 
             <aside class="md:col-span-5 lg:col-span-4">
-                <div class="bg-white p-4 rounded-lg shadow-sm sticky top-8">
+                <div class="bg-white p-4 rounded-lg shadow-sm sticky custom-top-32">
                     <form id="filter-form">
                         <div class="mb-4">
                             <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">
