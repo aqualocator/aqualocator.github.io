@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!version 3.1>
+    <!version 3.5>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AQUALocator - Employee Office Locator</title>
@@ -174,7 +174,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
 
-            <aside class="md:col-span-5 lg:col-span-4">
+            <aside class="md:col-span-5 lg:col-span-5">
                 <div class="bg-white p-4 rounded-lg shadow-sm sticky custom-top-32">
                     <form id="filter-form">
                         <div class="mb-4">
@@ -182,7 +182,7 @@
                                 Search by:<br>name,title,initials,responsibilities,dept,email
                             </label>
                             <div class="flex">
-                                <input type="text" id="search-input" class="flex-grow w-full px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g., Davis or AquaNereda">
+                                <input type="text" id="search-input" class="flex-grow w-full px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g.,Carlson or AquaNereda or RJW">
                                 <button type="button" id="reset-button" class="btn-reset font-medium px-4 py-2 rounded-r-md">RESET</button>
                             </div>
                         </div>
@@ -198,7 +198,7 @@
                 </div>
             </aside>
 
-            <main class="md:col-span-7 lg:col-span-8">
+            <main class="md:col-span-7 lg:col-span-7">
                 
                 <div id="loading-overlay" class="hidden">
                     <div class="loader"></div>

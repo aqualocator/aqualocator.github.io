@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQUALocator - Help Center</title>
+    <link rel="icon" href="data:,">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fafafa;
+        }
+        /* Style for placeholder images */
+        .screenshot-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 200px;
+            background-color: #e5e7eb; /* gray-200 */
+            border: 2px dashed #9ca3af; /* gray-400 */
+            border-radius: 8px;
+            color: #4b5563; /* gray-600 */
+            font-style: italic;
+            font-weight: 500;
+        }
+        
+        /* This will style the images I'm generating */
+        img[alt^="Image of"] {
+            width: 100%;
+            height: auto;
+            min-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-bottom: 1rem;
+        }
+
+
+        .video-placeholder {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #e5e7eb;
+            border-radius: 8px;
+            border: 2px dashed #9ca3af;
+        }
+        .video-placeholder-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: #4b5563;
+            font-style: italic;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-white shadow-md mb-6 sticky top-0 z-10">
+        <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <!-- Using a placeholder for the logo as I don't have the file -->
+                <img src="https://placehold.co/150x40/000000/FFFFFF?text=AQUA+LOGO&font=inter" alt="Aqua-Aerobic Systems Logo" class="h-10 sm:h-12">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold" style="color: #29aae2;">AQUALocator Help Center</h1>
+                    <p class="text-sm text-gray-500 hidden sm:block">How to use the employee locator</p>
+                </div>
+            </div>
+            <a href="index.html" class="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline">
+                &larr; Back to Locator
+            </a>
+        </div>
+    </header>
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl">
+        <main class="bg-white p-6 md:p-8 rounded-lg shadow-md space-y-8">
+            
+            <section>
+                <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">How to Find an Employee</h2>
+                <p class="text-gray-700 mb-4">You have two main ways to find an employee. Both are located in the left-hand panel.</p>
+                
+                
+                <!-- This is the placeholder you can replace with a real screenshot -->
+                <!-- <div class="screenshot-placeholder mb-4">
+                    
+                </div> -->
+
+                <div class="space-y-3">
+                    <h3 class="text-lg font-semibold">1. Use the Search Bar</h3>
+                    <p>You can type directly into the search bar to find employees by:</p>
+                    <ul class="list-disc list-inside text-gray-600 pl-4">
+                        <li>Full Name (e.g., "John Davis")</li>
+                        <li>First or Last Name (e.g., "Davis")</li>
+                        <li>Job Title (e.g., "Engineer")</li>
+                        <li>Initials</li>
+                        <li>Email Address</li>
+                        <li>Department Name</li>
+                        <li>Responsibilities (e.g., "AquaNereda")</li>
+                    </ul>
+
+                    <h3 class="text-lg font-semibold">2. Filter by Department</h3>
+                    <p>Click the dropdown menu (which defaults to "All Departments") to select a specific department and instantly narrow the list.</p>
+                    
+                    <h3 class="text-lg font-semibold">3. Reset Your Search</h3>
+                    <p>Click the blue <strong class="py-0.5 px-2 rounded" style="background-color: #35a2c4; color: white;">RESET</strong> button at any time to clear your search terms and filters, showing all employees again.</p>
+                </div>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">Understanding the Results</h2>
+                <p class="text-gray-700 mb-4">Matching employees will appear on the right side in "cards." Each card gives you a quick overview of the employee.</p>
+                
+                
+                <!-- This is the placeholder you can replace with a real screenshot -->
+                <!-- <div class="screenshot-placeholder mb-4">
+                    
+                </div> -->
+                <p>Each card displays the employee's photo, name, title, extension, department, email, and key responsibilities.</p>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">Using the Action Buttons</h2>
+                <p class="text-gray-700 mb-4">There are two primary buttons you can click on an employee's card:</p>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">LOCATE Button</h3>
+                        <p class="mb-3">Click the purple <strong class="py-0.5 px-2 rounded" style="background-color: #5d3587; color: white;">LOCATE</strong> button to open a pop-up window. This window will display a map showing that employee's specific office or cubicle location.</p>
+                        
+                        <!-- This is the placeholder you can replace with a real screenshot -->
+                        <!-- <div class="screenshot-placeholder">
+                            
+                        </div> -->
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">GET TO KNOW ME Button</h3>
+                        <p class="mb-3">Click the red <strong class="py-0.5 px-2 rounded" style="background-color: #ee2741; color: white;">GET TO KNOW ME</strong> button to open a pop-up with additional "get to know me" information provided by that employee.</p>
+                        <p class="text-sm text-gray-600 italic"><strong>Note:</strong> This button will only appear if the employee has submitted "get to know me" information.</p>
+                    </div>
+                </div>
+            </section>
+
+            <hr>
+            
+            <section>
+                <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">How-To Video</h2>
+                <p class="text-gray-700 mb-4">Watch this short video for a complete walkthrough of all AQUALocator features.</p>
+                
+                <div class="video-placeholder">
+                    <div class="video-placeholder-content">
+                        <svg class="w-16 h-16 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                        <span class="mt-2">Video Embed Placeholder</span>
+                    </div>
+                </div>
+                <blockquote class="mt-3 p-3 bg-blue-50 border-l-4 border-blue-400 text-blue-800">
+                    <strong>Note:</strong> A company "how-to" video can be embedded here using a standard `<iframe>` tag (e.g., from YouTube or Vimeo).
+                </blockquote>
+            </section>
+
+            <hr>
+
+            <section>
+                <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">Frequently Asked Questions (FAQ)</h2>
+                
+                <dl class="divide-y divide-gray-200">
+                    <div class="py-4">
+                        <dt class="font-semibold text-gray-800">Q: How do I update my own profile information or photo?</dt>
+                        <dd class="mt-1 text-gray-600">
+                            Click the <strong>"Update Profile"</strong> link located at the very top-left of the AQUALocator page (above the main header). This will take you to the profile update form.
+                            
+                            <!-- This is the placeholder you can replace with a real screenshot -->
+                            <!-- <div class="screenshot-placeholder mt-2 !min-h-[75px]">
+                                
+                            </div> -->
+                        </dd>
+                    </div>
+
+                    <div class="py-4">
+                        <dt class="font-semibold text-gray-800">Q: Why is the "LOCATE" button gray and disabled?</dt>
+                        <dd class="mt-1 text-gray-600">
+                            A disabled <strong>LOCATE</strong> button means that a location map has not yet been assigned to that employee in the system.
+                        </dd>
+                    </div>
+
+                    <div class="py-4">
+                        <dt class="font-semibold text-gray-800">Q: Why is the "GET TO KNOW ME" button missing for some people?</dt>
+                        <dd class="mt-1 text-gray-600">
+                            That button only appears for employees who have provided "get to know me" information. If the button is not there, that employee has not yet submitted that info.
+                        </Sdd>
+                    </div>
+
+                    <div class="py-4">
+                        <dt class="font-semibold text-gray-800">Q: I searched for someone, but no results appeared. What should I do?</dt>
+                        <dd class="mt-1 text-gray-600">
+                            First, double-check your spelling. If you're still not finding them, try searching for just their last name. You can also click the <strong>RESET</strong> button to clear all filters and see the full list.
+                        </dd>
+                    </div>
+                </dl>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+</html>
