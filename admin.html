@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- version 2.0 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AQUALocator - Admin Panel</title>
@@ -145,9 +146,18 @@
                     
                     <div>
                         <label for="edit-url" class="block text-sm font-medium text-gray-700">'LOCATE' URL (Paste the full iframe src URL)</label>
-                        <input type="text" id="edit-url" class="mt-1 block w-full border border-gray-300 rounded-md p-2" placeholder="e.g., https://your-map-url.com/...">
+                        <input type="text" id="edit-url" class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-xs" placeholder="e.g., https://your-map-url.com/...">
                         <p class="text-xs text-gray-500 mt-1">Note: This field expects the *URL only*, not the full iframe tag.</p>
-                    </div>
+                        
+                        <div id="map-links" class="text-sm mt-2 space-x-4 hidden">
+                            <a href="https://raw.githubusercontent.com/aquaaerobicsystem/aquadirectory/master/First_Floor_Map_png.png" target="_blank" class="text-blue-600 hover:underline">
+                                First Floor Office Map
+                            </a>
+                            <a href="https://raw.githubusercontent.com/aquaaerobicsystem/aquadirectory/master/Second_Floor_Map_png.png" target="_blank" class="text-blue-600 hover:underline">
+                                Second Floor Office Map
+                            </a>
+                        </div>
+                        </div>
 
                 </div>
 
@@ -190,7 +200,6 @@
         let employeeCollection; // Will be set after auth
 
         // --- !! PASTE YOUR FIREBASE CONFIG HERE !! ---
-        // (Copied from your aqualocator.html file)
         const MANUAL_FIREBASE_CONFIG = {
             apiKey: "AIzaSyABeCFheLuS08mxfWjCSS2ugXFbLDgnpIE",
             authDomain: "aqualocator-23714.firebaseapp.com",
@@ -202,45 +211,14 @@
         };
         // -------------------------------------
 
-        // --- DOM Elements ---
-        const loginView = document.getElementById('login-view');
-        const loginForm = document.getElementById('login-form');
-        const loginEmail = document.getElementById('login-email');
-        const loginPassword = document.getElementById('login-password');
-        const loginButton = document.getElementById('login-button');
-        const loginButtonText = document.getElementById('login-button-text');
-        const loginLoader = document.getElementById('login-loader');
-        const loginError = document.getElementById('login-error');
-
-        const adminPanel = document.getElementById('admin-panel');
-        const userEmail = document.getElementById('user-email');
-        const logoutButton = document.getElementById('logout-button');
-        const addNewButton = document.getElementById('add-new-button');
-        const adminListContainer = document.getElementById('admin-list-container');
-        const adminLoader = document.getElementById('admin-loader');
-
-        const editModal = document.getElementById('edit-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const editForm = document.getElementById('edit-form');
-        const modalCloseBtn = document.getElementById('modal-close-btn');
-        const modalCancelBtn = document.getElementById('modal-cancel-btn');
-        const modalSaveBtn = document.getElementById('modal-save-btn');
+        // === MODIFICATION: Declare DOM element variables here ===
+        // We will assign them inside the DOMContentLoaded listener
+        let loginView, loginForm, loginEmail, loginPassword, loginButton, loginButtonText, loginLoader, loginError;
+        let adminPanel, userEmail, logoutButton, addNewButton, adminListContainer, adminLoader;
+        let editModal, modalTitle, editForm, modalCloseBtn, modalCancelBtn, modalSaveBtn;
+        let editEmployeeId, editName, editFirst, editLast, editTitle, editDept, editExt, editEmail, editResponsibilities, editImageUrl, editFloorMap, editUrl;
+        let mapLinks;
         
-        // --- Form Fields ---
-        const editEmployeeId = document.getElementById('edit-employee-id');
-        const editName = document.getElementById('edit-name');
-        const editFirst = document.getElementById('edit-first'); // <-- ADDED
-        const editLast = document.getElementById('edit-last'); // <-- ADDED
-        const editTitle = document.getElementById('edit-title');
-        const editDept = document.getElementById('edit-dept');
-        const editExt = document.getElementById('edit-ext');
-        const editEmail = document.getElementById('edit-email');
-        const editResponsibilities = document.getElementById('edit-responsibilities');
-        const editImageUrl = document.getElementById('edit-imageUrl');
-        const editFloorMap = document.getElementById('edit-FloorMap');
-        const editUrl = document.getElementById('edit-url');
-
-
         /**
          * Initializes Firebase App
          */
@@ -385,6 +363,12 @@
             modalTitle.textContent = "Add New Employee";
             editForm.reset();
             editEmployeeId.value = ''; // Ensure ID is blank for 'add'
+            
+            // === MODIFICATION: Set default URL and hide map links ===
+            editUrl.value = 'https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=newhire';
+            mapLinks.classList.add('hidden');
+            // === END MODIFICATION ===
+            
             editModal.classList.remove('hidden');
         }
 
@@ -409,15 +393,13 @@
             editResponsibilities.value = employee.responsibilities || '';
             editImageUrl.value = employee.imageUrl || '';
             editFloorMap.value = employee.FloorMap || '';
-
-            // This is the tricky one. The main app expects the *full iframe src*
-            // but you might only be storing the URL part.
-            // Let's assume you're storing the *URL only* and wrap it.
-            // **ADJUST THIS LOGIC** based on what's in your 'url' field.
             
-            // If your 'url' field stores: <iframe src="URL">...</iframe>
             const urlMatch = (employee.url || '').match(/src="([^"]+)"/);
             editUrl.value = urlMatch ? urlMatch[1] : (employee.url || ''); // Extracts URL or uses raw value
+            
+            // === MODIFICATION: Show map links for editing ===
+            mapLinks.classList.remove('hidden');
+            // === END MODIFICATION ===
             
             editModal.classList.remove('hidden');
         }
@@ -428,23 +410,11 @@
         function closeModal() {
             editModal.classList.add('hidden');
             editForm.reset();
-        }
-        
-        /**
-         * Calculates First and Last name from a Full Name string.
-         * This matches the logic from your `updateFirstAndLastFields` function.
-         */
-        function getFirstAndLast(name) {
-            const nameParts = (name || '').trim().split(/\s+/).filter(Boolean);
-            let firstName = nameParts.length > 0 ? nameParts[0] : '';
-            let lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
             
-            // Handle comma suffixes (e.g., "Baumann, P.E." -> "Baumann")
-            lastName = lastName.split(',')[0].trim();
-
-            return { First: firstName, Last: lastName };
+            // === MODIFICATION: Hide map links on close ===
+            mapLinks.classList.add('hidden');
+            // === END MODIFICATION ===
         }
-
 
         /**
          * Handles the "Save" button click for both Add and Update.
@@ -455,26 +425,12 @@
             modalSaveBtn.textContent = "Saving...";
 
             const id = editEmployeeId.value;
-            
-            // Re-format the 'url' field to match the main app's expectation
-            // We'll store the full iframe tag string, but only if a URL is provided.
             const rawUrl = editUrl.value.trim();
             let finalUrlField = '';
             if (rawUrl) {
-                // IMPORTANT: This creates the iframe tag string to store in Firestore
-                finalUrlField = `<iframe src="${rawUrl}" ...other attributes...></iframe>`;
-                // NOTE: You must replace "...other attributes..." with any
-                // required attributes like 'allowfullscreen', 'width', 'height'
-                // if your main app relies on them. For simplicity, we'll store
-                // just the src, but your main app logic only extracts the src,
-                // so this *should* work.
-                
-                // Let's use the exact logic from your main app:
+                // Wrap the raw URL in the iframe tag structure
                 finalUrlField = `<iframe src="${rawUrl}"></iframe>`;
             }
-
-            // Get First/Last names for sorting - REMOVED AUTOMATIC CALCULATION
-            // const { First, Last } = getFirstAndLast(editName.value);
 
             const employeeData = {
                 name: editName.value || '',
@@ -486,8 +442,8 @@
                 imageUrl: editImageUrl.value || '',
                 FloorMap: editFloorMap.value || '',
                 url: finalUrlField, // Storing the iframe-like string
-                First: editFirst.value || '', // <-- MODIFIED
-                Last: editLast.value || ''    // <-- MODIFIED
+                First: editFirst.value || '', 
+                Last: editLast.value || ''
             };
 
             try {
@@ -542,11 +498,51 @@
             }
         }
 
-        // --- Event Listeners ---
+        // --- MODIFICATION: Wait for DOM to be ready before assigning elements and listeners ---
         document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Assign DOM Elements ---
+            loginView = document.getElementById('login-view');
+            loginForm = document.getElementById('login-form');
+            loginEmail = document.getElementById('login-email');
+            loginPassword = document.getElementById('login-password');
+            loginButton = document.getElementById('login-button');
+            loginButtonText = document.getElementById('login-button-text');
+            loginLoader = document.getElementById('login-loader');
+            loginError = document.getElementById('login-error');
+
+            adminPanel = document.getElementById('admin-panel');
+            userEmail = document.getElementById('user-email');
+            logoutButton = document.getElementById('logout-button');
+            addNewButton = document.getElementById('add-new-button');
+            adminListContainer = document.getElementById('admin-list-container');
+            adminLoader = document.getElementById('admin-loader');
+
+            editModal = document.getElementById('edit-modal');
+            modalTitle = document.getElementById('modal-title');
+            editForm = document.getElementById('edit-form');
+            modalCloseBtn = document.getElementById('modal-close-btn');
+            modalCancelBtn = document.getElementById('modal-cancel-btn');
+            modalSaveBtn = document.getElementById('modal-save-btn');
+            
+            editEmployeeId = document.getElementById('edit-employee-id');
+            editName = document.getElementById('edit-name');
+            editFirst = document.getElementById('edit-first');
+            editLast = document.getElementById('edit-last');
+            editTitle = document.getElementById('edit-title');
+            editDept = document.getElementById('edit-dept');
+            editExt = document.getElementById('edit-ext');
+            editEmail = document.getElementById('edit-email');
+            editResponsibilities = document.getElementById('edit-responsibilities');
+            editImageUrl = document.getElementById('edit-imageUrl');
+            editFloorMap = document.getElementById('edit-FloorMap');
+            editUrl = document.getElementById('edit-url');
+            mapLinks = document.getElementById('map-links');
+
+            // --- Initialize Firebase ---
             initializeFirebaseApp();
             
-            // Auth
+            // --- Attach Event Listeners ---
             loginForm.addEventListener('submit', handleLogin);
             logoutButton.addEventListener('click', handleLogout);
 
