@@ -542,7 +542,8 @@
                     await updateDoc(docRef, employeeData);
                 } else {
                     // ADD new document
-                    await addDoc(employeeCollection, employee.data);
+                    // === THIS IS THE FIX ===
+                    await addDoc(employeeCollection, employeeData);
                 }
                 closeModal();
             } catch (error) {
