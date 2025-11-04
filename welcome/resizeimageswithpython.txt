@@ -1,0 +1,3 @@
+python "C:\Users\CKonkol\Documents\GitHub\aqualocator.github.io\welcome\resize.py"
+
+python "C:\resize\resize.py"
