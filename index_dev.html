@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!version 3.5>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQUALocator - Employee Office Locator</title>
+    <link rel="icon" href="data:,">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+   
+	<style type="text/tailwindcss">
+    @theme {
+      --font-sans: system-ui, sans-serif;
+      --font-display: Inter, sans-serif;
+    }
+  </style>
+
+    <style>
+        /* Set default font for the page */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fafafa; /* Cleaner background */
+        }
+
+        /* Custom button colors (Updated Theme) */
+        .btn-locate {
+            background-color: #5d3587; /* Richer Indigo/Violet */
+            color: white;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-locate:hover {
+            background-color: #4a2d6b;
+        }
+         
+         .btn-know-me {
+            background-color: #ee2741; /* Red color */
+            color: white;
+            text-transform: uppercase;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-know-me:hover {
+            background-color: #d41f35;
+        }
+        .btn-reset {
+            background-color: #35a2c4; /* Blue */
+            color: white;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-reset:hover {
+            background-color: #2a8faf;
+        }
+
+        /* Custom styling for the select dropdown */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            /* Custom SVG arrow*/
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-13%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-13%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
+
+            background-repeat: no-repeat;
+            background-position: right .5rem center;
+            background-size: .65em auto;
+            padding-right: 2.5rem; /* Make space for arrow */
+
+            /* Blue bottom border style */
+            border: none;
+            border-bottom: 2px solid #35a2c4;
+            border-radius: 0;
+            padding-left: 0;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        /* Remove default focus ring and keep border */
+        select:focus {
+            box-shadow: none;
+            border-bottom: 2px solid #35a2c4;
+            outline: none;
+        }
+
+        /* Ensure modals are on top */
+        #locate-modal, #know-me-modal {
+            z-index: 1000;
+        }
+        /* Style disabled buttons */
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        /* --- CUSTOM CLASSES --- */
+        .custom-top-32 {
+            top: 8rem; /* 8rem = 128px */
+        }
+		
+		.custom-max-h-600 {
+         max-height: 600px;
+         min-height: 600px;
+        }
+		
+		.custom-max-h-800 {
+         max-height: 600px;
+         min-height: 600px;
+        }
+		
+		.custom-color-blue{
+		  color: #29aae2;
+		}
+        /* --- LOADER STYLES --- */
+        main {
+            position: relative; 
+        }
+        
+        #loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 200px;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e0e0e0;
+            border-top: 4px solid #5d3587;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+		
+		
+        /* ------------------------ */
+    </style>
+</head>
+
+<body class="bg-gray-100">
+
+   <div class="container mx-auto p-4 max-w-6xl">
+        <div class="w-full text-right text-sm">
+            <a 
+                href="https://form.jotform.com/193454652984168" 
+                target="_blank" 
+                class="text-blue-600 hover:text-blue-800 hover:underline font-medium">
+                Update Profile
+            </a>
+            <a 
+                href="help.html" 
+                class="text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4">
+                Help
+            </a>
+        </div>
+    </div>
+    <header class="bg-white shadow-md mb-6 sticky top-0 z-10">
+        <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="index.html"><img src="aqua-aerobics-logo.png" alt="Aqua-Aerobic Systems Logo" class="h-10 sm:h-12"></a>
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold custom-color-blue">AQUALocator</h1>
+                    <p class="text-sm text-gray-500 hidden sm:block">An Aqua employee office locator</p>
+                </div>
+            </div>
+            </div>
+    </header>
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl">
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+
+            <aside class="md:col-span-5 lg:col-span-5">
+                <div class="bg-white p-4 rounded-lg shadow-sm sticky custom-top-32">
+                    <form id="filter-form">
+                        <div class="mb-4">
+                            <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">
+                                Search by:<br>Name,title,initials,responsibilities,dept or email
+                            </label>
+                            <div class="flex">
+                                <input type="text" id="search-input" class="flex-grow w-full px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g.,Carlson or AquaNereda or RJW">
+                                <button type="button" id="reset-button" class="btn-reset font-medium px-4 py-2 rounded-r-md">RESET</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="dept-select" class="block text-sm font-medium text-gray-700 mb-1">
+                                Filter by:
+                            </label>
+                            <select id="dept-select" class="w-full text-lg font-medium text-gray-800 bg-white focus:outline-none">
+                                </select>
+                        </div>
+                    </form>
+                </div>
+            </aside>
+
+            <main class="md:col-span-7 lg:col-span-7">
+                
+                <div id="loading-overlay" class="hidden">
+                    <div class="loader"></div>
+                </div>
+                <div id="results-count" class="text-sm font-medium text-gray-600 mb-2 hidden"></div>
+                <div id="results-container" class="space-y-4">
+                    </div>
+                <div id="no-results" class="hidden text-center text-gray-500 p-8">
+                    No employees found matching your criteria.
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div id="locate-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl h-full custom-max-h-600 flex flex-col">
+            <div class="flex justify-between items-center p-3 border-b">
+                <h3 id="locate-modal-title" class="text-lg font-semibold text-gray-900">Location Viewer</h3>
+                <button id="locate-modal-close-btn" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="flex-1 p-1 bg-gray-200">
+                <iframe id="locate-iframe" class="w-full h-full border-0" src="about:blank" title="Location Map"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div id="know-me-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-xl h-full custom-max-h-800 flex flex-col">
+            <div class="flex justify-between items-center p-3 border-b">
+                <h3 id="know-me-modal-title" class="text-lg font-semibold text-gray-900">Get to Know Me</h3>
+                <button id="know-me-modal-close-btn" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="flex-1 p-1 bg-gray-200 overflow-auto"> <iframe id="know-me-iframe" class="w-full h-full border-0" src="about:blank" title="Get to Know Me"></iframe>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="module">
+        // --- Firebase SDK Imports ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        // IMPORT NEW MODULES for update functions
+        import { getFirestore, collection, onSnapshot, setLogLevel, addDoc, getDocs, query, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; 
+
+        // --- Global Variables ---
+        let allEmployees = []; // This will hold our data from Firebase
+        let db, auth;
+
+        // --- NEW: Image Base URL ---
+        const imageBaseUrl = "https://aqualocator.github.io/photos/";
+
+        // --- App/Firebase Config ---
+
+        // --- !! MANUAL FIREBASE CONFIG !! ---
+        // If the automatic config linking isn't working,
+        // you can paste your Firebase config object here.
+        const MANUAL_FIREBASE_CONFIG = {
+            apiKey: "AIzaSyABeCFheLuS08mxfWjCSS2ugXFbLDgnpIE",
+            authDomain: "aqualocator-23714.firebaseapp.com",
+            projectId: "aqualocator-23714",
+            storageBucket: "aqualocator-23714.appspot.com", // Corrected storage bucket name
+            messagingSenderId: "654848563347",
+            appId: "1:654848563347:web:4702a6f55ccbf7d5edd566",
+            measurementId: "G-5R7XGHVDNH"
+        };
+        // -------------------------------------
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        // Use manual config if provided, otherwise try automatic config
+        let firebaseConfig;
+        const usingManualConfig = Object.keys(MANUAL_FIREBASE_CONFIG).length > 0 && MANUAL_FIREBASE_CONFIG.apiKey; // Check if manual config is provided AND has apiKey
+
+        if (usingManualConfig) {
+            //console.log("Using MANUAL Firebase Config.");
+            firebaseConfig = MANUAL_FIREBASE_CONFIG;
+        } else {
+            console.log("Attempting to use AUTOMATIC Firebase Config.");
+            try {
+                firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+                 if (!firebaseConfig || !firebaseConfig.apiKey) {
+                    console.error("Automatic Firebase config is missing or invalid.");
+                    firebaseConfig = {}; // Ensure it's an empty object if invalid
+                }
+            } catch (e) {
+                console.error("Error parsing automatic Firebase config:", e);
+                firebaseConfig = {};
+            }
+        }
+
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+
+         // --- 1. DATA FOR BULK INSERT (Add data here and run uploadAllEmployees()) ---
+         const employeesToUpload = [
+             /* PASTE NEW EMPLOYEE JSON OBJECTS HERE FOR BULK INSERT */
+         ];
+
+        // --- Full Department List ---
+        const departmentList = [
+            "All Departments",
+            "Engineering Initials",
+            "All Engineering Departments",
+            "Accounting/Finance",
+            "Administration",
+            "AfterMarket Sales",
+            "Applications Engineering",
+            "Contract Administration",
+            "Customer Service",
+            "Domestic Sales-Midwest",
+            "Domestic Sales-Northeast",
+            "Domestic Sales-Southest",
+            "Domestic Sales-West",
+            "Eng - Admin",
+            "Eng - Electrical",
+            "Eng - Estimating",
+            "Eng - Mechanical",
+            "Eng - Standards",
+            //"All Engineers", // Added this based on filter logic
+            "Field Services",
+            "Human Resources",
+            "Industrial Sales",
+            "Information Technology",
+            "International Sales",
+            "Manufacturing",
+            "Marketing/PR",
+            "Operations",
+            "Prod Mgmt - Aeration/Mixing",
+            "Prod Mgmt - Bio/Membrane",
+            "Prod Mgmt - Filtration",
+            "Production Control",
+            "Project Management",
+            "Research & Development",
+            "Sales and Marketing"
+        ];
+
+        // --- DOM Elements ---
+        const searchInput = document.getElementById('search-input');
+        const deptSelect = document.getElementById('dept-select');
+        const resetButton = document.getElementById('reset-button');
+        const resultsContainer = document.getElementById('results-container');
+        const noResultsMessage = document.getElementById('no-results');
+        const loadingOverlay = document.getElementById('loading-overlay'); 
+		const resultsCount = document.getElementById('results-count');
+
+        // --- Locate Modal Elements ---
+        const locateModalOverlay = document.getElementById('locate-modal');
+        const locateModalTitle = document.getElementById('locate-modal-title');
+        const locateIframe = document.getElementById('locate-iframe');
+        const locateCloseBtn = document.getElementById('locate-modal-close-btn');
+
+        // --- Know Me Modal Elements ---
+        const knowMeModalOverlay = document.getElementById('know-me-modal');
+        const knowMeModalTitle = document.getElementById('know-me-modal-title');
+        const knowMeIframe = document.getElementById('know-me-iframe');
+        const knowMeCloseBtn = document.getElementById('know-me-modal-close-btn');
+
+
+        // --- FUNCTIONS ---
+
+        /**
+         * Populates the department dropdown.
+         */
+        function populateDepartments() {
+             deptSelect.innerHTML = ''; // Clear existing options first
+            departmentList.forEach(dept => {
+                const option = document.createElement('option');
+                option.value = dept; // Use the full name as value
+                option.textContent = dept;
+                deptSelect.appendChild(option);
+            });
+            // Set initial value
+            deptSelect.value = "All Departments"; // Default to "All Departments"
+        }
+
+        /**
+         * Renders the list of filtered employees to the page.
+         * @param {Array} filteredEmployees - The array of employees to display.
+         */
+     
+/**
+         * Renders the list of filtered employees to the page.
+         * @param {Array} filteredEmployees - The array of employees to display.
+         */
+        function renderResults(filteredEmployees) {
+            // Clear previous results
+            resultsContainer.innerHTML = '';
+            
+            // --- NEW: Get the count ---
+            const count = filteredEmployees.length;
+
+            // Show or hide the "no results" message
+            noResultsMessage.classList.toggle('hidden', count > 0);
+
+            // --- NEW: Update and show/hide the results count ---
+            if (count > 0) {
+                resultsCount.textContent = `Showing ${count} employee(s) matching your criteria.`;
+                resultsCount.classList.remove('hidden');
+            } else {
+                resultsCount.classList.add('hidden');
+            }
+            // --- END NEW ---
+
+            // Create and append a card for each employee
+            filteredEmployees.forEach(employee => {
+
+                // --- CHECK 1: Skip rendering if employee name is N/A or empty/missing ---
+                if (!employee.name || employee.name.trim() === '' || employee.name.trim().toLowerCase() === 'n/a') {
+                     return; // Skip to the next employee in the loop
+                }
+                // --- END CHECK 1 ---
+
+                // --- MODIFIED Image URL Logic ---
+                let finalImageUrl;
+                const placeholderUrl = 'https://placehold.co/80x80/CCCCCC/FFFFFF?text=No+Photo&font=inter';
+                const errorUrl = 'https://placehold.co/80x80/CCCCCC/FFFFFF?text=Error&font=inter';
+
+                if (employee.imageUrl) {
+                    // Check if it's a data URI
+                    if (employee.imageUrl.startsWith('data:image')) {
+                        finalImageUrl = employee.imageUrl; // Use data URI directly
+                    } else {
+                        // Assume it's a filename and prepend the base URL
+                        finalImageUrl = `${imageBaseUrl}${employee.imageUrl}`;
+                    }
+                } else {
+                    finalImageUrl = placeholderUrl; // Use placeholder if no imageUrl
+                }
+                // --- End MODIFIED Image URL Logic ---
+
+
+                 // Check if FloorMap exists and is not null/empty string/ "NULL"
+                const showKnowMeButton = employee.FloorMap &&
+                                         employee.FloorMap.trim() !== '' &&
+                                         employee.FloorMap.toLowerCase() !== 'null';
+
+                const card = `
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <img
+                            src="${finalImageUrl}"
+                            alt="Profile photo of ${employee.name || 'Employee'}"
+                            class="w-20 h-20 rounded-full mr-0 sm:mr-4 mb-3 sm:mb-0 flex-shrink-0 object-cover border"
+                            onerror="this.onerror=null; this.src='${errorUrl}';"
+                        >
+
+                        <div class="flex-1 min-w-0"> <h3 class="text-xl font-bold text-gray-800 truncate">${employee.name || 'N/A'}</h3>
+                            <p class="text-gray-600 truncate">${employee.title || 'N/A'}</p>
+                            ${employee.initials ? `<p class="text-sm text-gray-500"><strong class="font-medium">Initials:</strong> ${employee.initials}</p>` : ''}
+
+                             <div class="flex flex-wrap gap-2 mt-2 mb-2"> <button
+                                    class="btn-locate text-sm font-medium py-1 px-3 rounded-md"
+                                    data-employee-id="${employee.id}"
+                                    type="button"
+                                    ${!employee.url ? 'disabled title="Location URL missing"' : ''} >
+                                    LOCATE
+                                </button>
+                                ${showKnowMeButton ? `
+                                <button
+                                    class="btn-know-me text-sm font-medium py-1 px-3 rounded-md"
+                                    data-employee-id="${employee.id}"
+                                    type="button"
+                                >
+                                    GET TO KNOW ME
+                                </button>
+                                ` : ''}
+                            </div>
+
+                            ${employee.responsibilities ? `
+                            <div class="text-xs text-gray-600 mt-1 mb-2 break-words"> <p><strong class="font-medium">Responsibilities:</strong> ${employee.responsibilities}</p>
+                            </div>
+                            ` : ''}
+
+                            <div class="text-sm text-gray-700 space-y-0.5 mt-2">
+                                <p><strong class="font-medium">Ext:</strong> 
+                                    ${employee.ext ? `
+                                        <a href="webextel:${employee.ext}" class="text-blue-600 hover:underline">${employee.ext}</a>
+                                    ` : 'N/A'}
+                                </p>
+                                <p><strong class="font-medium">Dept:</strong> ${employee.dept || 'N/A'}</p>
+                                ${employee.email && employee.email.trim() !== '' ? `
+                                <a
+                                    href="mailto:${employee.email.trim()}"
+                                    class="text-blue-600 hover:underline break-words"
+                                >
+                                    ${employee.email.trim()}
+                                </a>
+                                ` : '<p>N/A</p>'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                resultsContainer.insertAdjacentHTML('beforeend', card);
+            });
+
+            // Hide loading overlay and show results container after filtering/rendering
+            loadingOverlay.classList.add('hidden');
+            loadingOverlay.classList.remove('flex');
+            resultsContainer.classList.remove('hidden');
+        }
+
+        /**
+         * Gets filter values, filters the employee list, and calls renderResults.
+         */
+         function filterAndRender() {
+            // Show loader and hide results before processing new filters
+            resultsContainer.classList.add('hidden');
+            loadingOverlay.classList.remove('hidden');
+            loadingOverlay.classList.add('flex');
+
+            // Defer the filtering to allow the UI to update with the loader immediately
+            setTimeout(() => {
+                const searchText = searchInput.value.toLowerCase().trim();
+                const searchTerms = searchText.split(' ').filter(Boolean); // Split search into terms
+                const selectedDept = deptSelect.value;
+                let filtered = [...allEmployees]; // Start with all employees
+
+                // --- Department Filtering ---
+                if (selectedDept && selectedDept !== "All Departments") {
+                    // console.log("Filtering by Dept:", selectedDept);
+                    if (selectedDept === "Engineering Initials" || selectedDept === "All Engineering Departments") {
+                        filtered = filtered.filter(emp => emp.dept && emp.dept.startsWith("Eng -"));
+                    } else if (selectedDept === "All Engineers") {
+                         filtered = filtered.filter(emp => emp.dept && (emp.dept.startsWith("Eng -") || emp.dept.startsWith("Prod Mgmt")));
+                    }
+                     else {
+                        filtered = filtered.filter(emp => emp.dept === selectedDept);
+                    }
+                }
+
+                // --- Text Search Filtering ---
+                if (searchTerms.length > 0) {
+                     // Determine which fields to search based on selectedDept
+                    let fieldsToSearch = ['name', 'title', 'email', 'responsibilities', 'dept']; // Default fields
+                    if (selectedDept === "Engineering Initials") {
+                        fieldsToSearch = ['initials']; // Only search initials
+                    } else {
+                         // Added First and Last to search
+                         fieldsToSearch.push('initials', 'First', 'Last'); 
+                    }
+
+                    filtered = filtered.filter(employee => {
+                        // Check if *all* search terms are found somewhere in the allowed fields
+                        return searchTerms.every(term => {
+                            // Check each specified field for the current term
+                            return fieldsToSearch.some(field => {
+                                const value = employee[field];
+                                // Ensure value is a string and perform case-insensitive search
+                                return typeof value === 'string' && value.toLowerCase().includes(term);
+                            });
+                        });
+                    });
+                }
+
+
+                renderResults(filtered);
+            }, 100); // Small delay to show loader effect
+        }
+
+
+        /**
+         * Resets all filters to their default state and re-renders the list.
+         */
+        function resetFilters() {
+            searchInput.value = '';
+            deptSelect.value = "All Departments"; // Reset to "All Departments" value
+            filterAndRender();
+        }
+
+        // --- NEW FIREBASE FUNCTIONS ---
+
+        /**
+         * Initializes the Firebase app and authentication.
+         */
+        async function initializeFirebaseApp() {
+             // Check if firebaseConfig is valid
+             if (!firebaseConfig || Object.keys(firebaseConfig).length === 0 || !firebaseConfig.apiKey) {
+                console.error("Firebase config is missing or invalid! Cannot initialize Firebase.");
+                resultsContainer.innerHTML = `<div class="text-red-600 text-center p-4 font-semibold">Error: Firebase configuration is missing or invalid. Please check the MANUAL_FIREBASE_CONFIG or link your project correctly.</div>`;
+                return; // Stop initialization
+            }
+
+            try {
+              // console.log("Initializing Firebase app...");
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                setLogLevel('error'); // Set log level (e.g., 'debug', 'error')
+
+                //console.log("Setting up Auth state listener...");
+                onAuthStateChanged(auth, async (user) => { // Make listener async
+                    if (user) {
+                      //  console.log("Firebase Auth Ready. User:", user.uid);
+                        // User is signed in, now we can fetch data.
+                        setupFirebaseListener();
+                    } else {
+                        console.log("User is not signed in. Attempting sign-in...");
+                         // Attempt sign-in only if not already authenticated
+                         try {
+                            // Prioritize initialAuthToken if available and not using manual config
+                             if (initialAuthToken && !usingManualConfig) {
+                                console.log("Signing in with Custom Token...");
+                                await signInWithCustomToken(auth, initialAuthToken);
+                                // Listener will re-trigger with the authenticated user
+                            } else {
+                                console.log("Signing in Anonymously...");
+                                await signInAnonymously(auth);
+                                 // Listener will re-trigger with the authenticated user
+                            }
+                        } catch (signInError) {
+                             console.error("Firebase Sign-In Error:", signInError);
+                             resultsContainer.innerHTML = `<div class="text-red-600 text-center p-4 font-semibold">Error: Could not sign in to Firebase. ${signInError.message}</div>`;
+                             // Clear potentially stale data if sign-in fails
+                             allEmployees = [];
+                             // No explicit call to renderResults here, as setupFirebaseListener is not running yet.
+                        }
+                    }
+                });
+
+            } catch (error) {
+                console.error("Firebase Initialization Error:", error);
+                resultsContainer.innerHTML = `<div class="text-red-600 text-center p-4 font-semibold">Error: Could not initialize Firebase. ${error.message}</div>`;
+            }
+        }
+
+
+        /**
+         * Sets up the real-time listener on the 'employees' collection.
+         */
+           function setupFirebaseListener() {
+            if (!auth.currentUser) {
+                console.error("Cannot set up listener: User is not authenticated.");
+                return;
+            }
+             if (!db) {
+                 console.error("Cannot set up listener: Firestore DB instance is not available.");
+                 return;
+            }
+
+            // Show loader and hide results container immediately on fetch start
+            resultsContainer.classList.add('hidden');
+            loadingOverlay.classList.remove('hidden');
+            loadingOverlay.classList.add('flex');
+
+
+            // This path points to a public collection for your app
+            const collectionPath = `artifacts/${appId}/public/data/employees`;
+
+            try {
+                const q = collection(db, collectionPath);
+
+                onSnapshot(q, (snapshot) => {
+                    let rawEmployees = snapshot.docs.map(doc => ({
+                        id: doc.id, // Keep Firestore document ID
+                        ...doc.data()
+                    }));
+
+                    // --- FILTER 1: Remove employee  ---
+					allEmployees = rawEmployees.filter(emp => 
+                        emp.responsibilities !== "XXX"
+                    );
+
+                    // --- MODIFIED SORT LOGIC ---
+                    // Sort by Last Name (handling commas), then First Name
+                    allEmployees.sort((a, b) => {
+                         // Get the last name, defaulting to splitting the full name
+                         let lastNameA = a.Last || (a.name || '').split(' ').pop();
+                         let lastNameB = b.Last || (b.name || '').split(' ').pop();
+
+                         // NEW: Handle comma suffixes (e.g., "Baumann, P.E." -> "Baumann")
+                         lastNameA = lastNameA.split(',')[0].trim();
+                         lastNameB = lastNameB.split(',')[0].trim();
+                         
+                         const sortResult = lastNameA.toLowerCase().localeCompare(lastNameB.toLowerCase());
+                         if (sortResult !== 0) {
+                            return sortResult;
+                         }
+
+                         // Secondary sort by First Name
+                         const firstNameA = a.First || (a.name || '').split(' ')[0];
+                         const firstNameB = b.First || (b.name || '').split(' ')[0];
+                         return firstNameA.toLowerCase().localeCompare(firstNameB.toLowerCase());
+                    });
+                    // --- END MODIFIED SORT LOGIC ---
+
+
+                    //console.log(`Firestore update: Fetched and sorted ${allEmployees.length} employees (one record filtered by ID).`);
+                    
+                    // Re-render the list with the new data
+                    filterAndRender(); // Calls renderResults, which handles hiding loader and showing results
+
+                }, (error) => {
+                    console.error("Error fetching data from Firestore:", error);
+                     resultsContainer.innerHTML = `<div class="text-red-500 text-center p-4">Error: Could not fetch employee data. ${error.message}</div>`;
+                     // Hide loader on error
+                     loadingOverlay.classList.add('hidden');
+                     loadingOverlay.classList.remove('flex');
+                     resultsContainer.classList.remove('hidden');
+                     allEmployees = [];
+                });
+            } catch (error) {
+                 console.error("Error creating Firestore query:", error);
+                 resultsContainer.innerHTML = `<div class="text-red-500 text-center p-4">Error setting up database listener. ${error.message}</div>`;
+                 loadingOverlay.classList.add('hidden');
+                 loadingOverlay.classList.remove('flex');
+                 resultsContainer.classList.remove('hidden');
+            }
+        }
+
+        /**
+         * Opens the Locate modal with the employee's location iframe.
+         */
+        function showLocateModal(employee) {
+             if (employee && employee.url) {
+                // Extract the URL from the 'src="..."' string safely
+                const urlMatch = employee.url.match(/src="([^"]+)"/);
+                const extractedUrl = urlMatch ? urlMatch[1] : null;
+
+                if (extractedUrl) {
+                    locateModalTitle.textContent = `Location: ${employee.name || 'Employee'}`;
+                    locateIframe.src = extractedUrl;
+                    locateModalOverlay.classList.remove('hidden');
+                    locateModalOverlay.classList.add('flex'); // Use flex for centering
+                } else {
+                     console.warn(`Could not extract URL from 'url' field for ${employee.name}:`, employee.url);
+                     alert(`Location data URL format is incorrect for ${employee.name}.`);
+                }
+            } else if (employee) {
+                console.warn(`No valid 'url' field found for employee ${employee.name}.`);
+                alert(`Location data is not available for ${employee.name}.`);
+            }
+        }
+
+        /** Closes the Locate modal */
+        function closeLocateModal() {
+            locateModalOverlay.classList.add('hidden');
+            locateModalOverlay.classList.remove('flex');
+            locateIframe.src = 'about:blank'; // Clear iframe
+        }
+
+        /**
+         * NEW: Opens the Get to Know Me modal.
+         */
+        function showKnowMeModal(employee) {
+            if (employee && employee.FloorMap && employee.FloorMap.trim() !== '' && employee.FloorMap.toLowerCase() !== 'null') {
+                 // Construct the URL using the FloorMap value
+                 const knowMeUrl = `https://aqualocator.github.io/welcome/index.html?image=${encodeURIComponent(employee.FloorMap)}`;
+                 knowMeModalTitle.textContent = `Get to Know: ${employee.name || 'Employee'}`;
+                 knowMeIframe.src = knowMeUrl;
+                 knowMeModalOverlay.classList.remove('hidden');
+                 knowMeModalOverlay.classList.add('flex'); // Use flex for centering
+            } else {
+                 console.warn(`No valid 'FloorMap' field found for employee ${employee.name} to show 'Get to Know Me'.`);
+                 // Optionally show an alert if the button was somehow clicked without data
+                 // alert(`'Get to Know Me' data is not available for ${employee.name}.`);
+            }
+        }
+
+
+        /** NEW: Closes the Get to Know Me modal */
+         function closeKnowMeModal() {
+            knowMeModalOverlay.classList.add('hidden');
+            knowMeModalOverlay.classList.remove('flex');
+            knowMeIframe.src = 'about:blank'; // Clear iframe
+        }
+
+
+        /**
+         * Handles clicks within the results container using event delegation.
+         */
+        function handleResultsClick(event) {
+            const button = event.target.closest('button'); // Find the closest button element
+            if (!button) return; // Exit if the click wasn't on or inside a button
+
+            const employeeId = button.dataset.employeeId;
+             if (!employeeId) return; // Exit if the button doesn't have an employee ID
+
+            const employee = allEmployees.find(emp => emp.id === employeeId);
+            if (!employee) {
+                 console.warn(`Employee not found for ID: ${employeeId}`);
+                 return;
+            }
+
+            // Check which button was clicked
+            if (button.classList.contains('btn-locate')) {
+                showLocateModal(employee);
+            } else if (button.classList.contains('btn-know-me')) {
+                showKnowMeModal(employee);
+            }
+        }
+
+
+        // --- INITIALIZATION & EVENT LISTENERS ---
+
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            //console.log("DOM Loaded. Initializing app...");
+            populateDepartments();
+            initializeFirebaseApp(); // Start Firebase initialization and auth
+
+            // Add filter event listeners
+            searchInput.addEventListener('input', filterAndRender);
+            deptSelect.addEventListener('change', filterAndRender);
+            resetButton.addEventListener('click', (e) => {
+                e.preventDefault(); // Stop potential form submission
+                resetFilters();
+            });
+
+            // Add ONE event listener to the results container for delegation
+            resultsContainer.addEventListener('click', handleResultsClick);
+
+            // Locate Modal Close Listeners
+            locateCloseBtn.addEventListener('click', closeLocateModal);
+            locateModalOverlay.addEventListener('click', (event) => {
+                if (event.target === locateModalOverlay) closeLocateModal(); // Close only if backdrop is clicked
+            });
+
+             // Know Me Modal Close Listeners
+            knowMeCloseBtn.addEventListener('click', closeKnowMeModal);
+            knowMeModalOverlay.addEventListener('click', (event) => {
+                if (event.target === knowMeModalOverlay) closeKnowMeModal(); // Close only if backdrop is clicked
+            });
+
+             // Initial render call removed - will be triggered by onSnapshot
+             //console.log("App initialization complete. Waiting for Firebase data...");
+
+        });
+
+    </script>
+
+</body>
+</html>
