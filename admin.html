@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQUALocator - Admin Panel</title>
+    <link rel="icon" href="data:,">
+      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style type="text/tailwindcss">
+    @theme {
+      --font-sans: system-ui, sans-serif;
+      --font-display: Inter, sans-serif;
+    }
+  </style>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Simple Modal styles */
+        #edit-modal { z-index: 1000; }
+        .modal-body { max-height: 80vh; }
+        /* Simple Loader */
+        .loader {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #FFF;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div id="login-view" class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
+            <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">AQUALocator Admin</h1>
+            <div id="login-error" class="text-red-500 text-sm mb-4 hidden"></div>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label for="login-email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="login-email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <div class="mb-6">
+                    <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="login-password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <button type="submit" id="login-button" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <span id="login-button-text">Login</span>
+                    <div id="login-loader" class="loader hidden"></div>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="admin-panel" class="hidden">
+        <header class="bg-white shadow-md">
+            <div class="container mx-auto p-4 max-w-6xl flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-blue-600">AQUALocator Admin</h1>
+                <div>
+                    <span id="user-email" class="text-sm text-gray-600 mr-4"></span>
+                    <button id="logout-button" class="text-sm font-medium text-red-500 hover:text-red-700">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto p-4 max-w-6xl">
+            
+            <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
+                <div class="w-full md:w-1/2">
+                    <input type="search" id="search-input" placeholder="Search by name, title, or department..." class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div class="w-full md:w-auto flex-shrink-0">
+                    <button id="add-new-button" class="w-full md:w-auto py-2 px-4 rounded-md font-medium text-white bg-green-600 hover:bg-green-700">
+                        + Add New Employee
+                    </button>
+                </div>
+            </div>
+            <div id="admin-list-container" class="bg-white p-4 rounded-lg shadow-sm">
+                <div id="admin-loader" class="flex justify-center p-8">
+                    <div class="w-10 h-10 border-4 border-gray-200 border-t-4 border-t-blue-500 rounded-full animate-spin"></div>
+                </div>
+                </div>
+        </main>
+    </div>
+
+    <div id="edit-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl">
+            <form id="edit-form">
+                <div class="flex justify-between items-center p-4 border-b">
+                    <h3 id="modal-title" class="text-xl font-semibold">Modal Title</h3>
+                    <button type="button" id="modal-close-btn" class="text-gray-400 hover:text-gray-600">&times;</button>
+                </div>
+
+                <div class="modal-body p-6 overflow-y-auto space-y-4">
+                    <input type="hidden" id="edit-employee-id">
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="edit-name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                            <input type="text" id="edit-name" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>
+                        </div>
+                        <div>
+                            <label for="edit-title" class="block text-sm font-medium text-gray-700">Job Title</label>
+                            <input type="text" id="edit-title" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        </div>
+                        
+                        <div>
+                            <label for="edit-first" class="block text-sm font-medium text-gray-700">First Name (for sorting)</label>
+                            <input type="text" id="edit-first" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        </div>
+                        <div>
+                            <label for="edit-last" class="block text-sm font-medium text-gray-700">Last Name (for sorting)</label>
+                            <input type="text" id="edit-last" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        </div>
+                        <div>
+                            <label for="edit-dept" class="block text-sm font-medium text-gray-700">Department</label>
+                            <input type="text" id="edit-dept" class="mt-1 block w-full border border-gray-300 rounded-md p-2" list="department-list" placeholder="Select or type new department...">
+                            <datalist id="department-list">
+                                </datalist>
+                            </div>
+                        <div>
+                            <label for="edit-ext" class="block text-sm font-medium text-gray-700">Extension</label>
+                            <input type="text" id="edit-ext" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="edit-email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="edit-email" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                    </div>
+                    
+                    <div>
+                        <label for="edit-responsibilities" class="block text-sm font-medium text-gray-700">Responsibilities</label>
+                        <textarea id="edit-responsibilities" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md p-2"></textarea>
+                    </div>
+
+                    <div>
+                        <label for="edit-imageUrl" class="block text-sm font-medium text-gray-700">Image Filename (e.g., "jdoe.jpg")</label>
+                        <input type="text" id="edit-imageUrl" class="mt-1 block w-full border border-gray-300 rounded-md p-2" placeholder="Leave blank for default photo">
+                    </div>
+                    
+                    <div>
+                        <label for="edit-FloorMap" class="block text-sm font-medium text-gray-700">'Get to Know Me' Filename (e.g., "jdoe_bio.jpg")</label>
+                        <input type="text" id="edit-FloorMap" class="mt-1 block w-full border border-gray-300 rounded-md p-2" placeholder="Leave blank to hide button">
+                    </div>
+                    
+                    <div>
+                        <div class="mb-4">
+                            <label for="edit-cubicle-select" class="block text-sm font-medium text-gray-700">Cubicle / Location Selector</label>
+                            <select id="edit-cubicle-select" class="mt-1 block w-full border border-gray-300 rounded-md p-2 bg-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </select>
+                            <p class="text-xs text-gray-500 mt-1">Selecting a location will auto-fill the 'LOCATE' URL below.</p>
+                        </div>
+                        <label for="edit-url" class="block text-sm font-medium text-gray-700">'LOCATE' URL (Auto-generated)</label>
+                        <input type="text" id="edit-url" class="mt-1 block w-full border border-gray-300 rounded-md p-2 text-xs bg-gray-100" placeholder="Select a location above..." readonly>
+                        <p class="text-xs text-gray-500 mt-1">This field is auto-generated by the selector above.</p>
+                        
+                        <div id="map-links" class="text-sm mt-2 space-x-4 hidden">
+                            <a href="https://raw.githubusercontent.com/aquaaerobicsystem/aquadirectory/master/First_Floor_Map_png.png" target="_blank" class="text-blue-600 hover:underline">
+                                First Floor Office Map
+                            </a>
+                            <a href="https://raw.githubusercontent.com/aquaaerobicsystem/aquadirectory/master/Second_Floor_Map_png.png" target="_blank" class="text-blue-600 hover:underline">
+                                Second Floor Office Map
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="flex justify-end p-4 bg-gray-50 border-t">
+                    <button type="button" id="modal-cancel-btn" class="mr-2 py-2 px-4 rounded-md font-medium text-gray-700 bg-gray-100 hover:bg-gray-200">Cancel</button>
+                    <button type="submit" id="modal-save-btn" class="py-2 px-4 rounded-md font-medium text-white bg-blue-600 hover:bg-blue-700">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script type="module">
+        // --- Firebase SDK Imports ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged, 
+            signInWithEmailAndPassword, 
+            signOut 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, 
+            collection, 
+            onSnapshot, 
+            addDoc, 
+            updateDoc, 
+            deleteDoc, 
+            doc,
+            query,
+            orderBy
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; 
+
+        // --- Global Variables ---
+        let allEmployees = []; // Local cache of employees
+        let db, auth;
+        const appId = 'default-app-id'; // Use the same appId as your main app
+        let employeeCollection; // Will be set after auth
+        let allDepartments = []; // <-- ADDED: For department datalist
+
+        // --- !! PASTE YOUR FIREBASE CONFIG HERE !! ---
+        const MANUAL_FIREBASE_CONFIG = {
+            apiKey: "AIzaSyABeCFheLuS08mxfWjCSS2ugXFbLDgnpIE",
+            authDomain: "aqualocator-23714.firebaseapp.com",
+            projectId: "aqualocator-23714",
+            storageBucket: "aqualocator-23714.appspot.com",
+            messagingSenderId: "654848563347",
+            appId: "1:654848563347:web:4702a6f55ccbf7d5edd566",
+            measurementId: "G-5R7XGHVDNH"
+        };
+        // -------------------------------------
+
+        // === MODIFICATION: Cubicle list and base URL ===
+        const CUBICLE_LIST = [
+            '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+            '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40',
+            '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60',
+            '60a', '61', '62', '63', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80',
+            '81', '82', '83', '84', '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100',
+            '101', '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120',
+            '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132', '133', '134', '135', '136', '137', '138', '139', '140',
+            '141', '142', '143', '144', '145', '146', '147', '148', '149', '150', '151', '152', '153', '154', '155', '156', '157', '158', '159', '160',
+            '161', '162', '163', '164', '165', '166', '167', '168', '169', '170', '171', '172', '173', '174', '175', '176',
+            'shop', 'newhire', 'lobby', 'lobbydesk', 'ceo', 'ceoadmin', 'fieldservice', 'newlayout1', 'remote'
+        ];
+        const BASE_CUBICLE_URL = 'https://aquaaerobicsystem.github.io/aquadirectory/index.html?app=aquadirectory&cubicle=';
+        // === END MODIFICATION ===
+
+        // === MODIFICATION: Declare DOM element variables here ===
+        // We will assign them inside the DOMContentLoaded listener
+        let loginView, loginForm, loginEmail, loginPassword, loginButton, loginButtonText, loginLoader, loginError;
+        let adminPanel, userEmail, logoutButton, addNewButton, adminListContainer, adminLoader;
+        let editModal, modalTitle, editForm, modalCloseBtn, modalCancelBtn, modalSaveBtn;
+        let editEmployeeId, editName, editFirst, editLast, editTitle, editDept, editExt, editEmail, editResponsibilities, editImageUrl, editFloorMap, editUrl;
+        let mapLinks;
+        let editCubicleSelect; // <-- ADDED
+        let departmentDataList; // <-- ADDED
+        let searchInput; // <-- MODIFICATION: Added searchInput variable
+        
+        /**
+         * Initializes Firebase App
+         */
+        function initializeFirebaseApp() {
+            try {
+                const app = initializeApp(MANUAL_FIREBASE_CONFIG);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                // Define the collection path *once*
+                const collectionPath = `artifacts/${appId}/public/data/employees`;
+                employeeCollection = collection(db, collectionPath);
+
+                initAuthStateObserver();
+            } catch (error) {
+                console.error("Firebase Initialization Error:", error);
+                loginError.textContent = "Error initializing app. Check console.";
+                loginError.classList.remove('hidden');
+            }
+        }
+
+        /**
+         * Main authentication state listener.
+         * This controls showing/hiding the login page vs. the admin panel.
+         */
+        function initAuthStateObserver() {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    // User is signed in
+                    loginView.classList.add('hidden');
+                    adminPanel.classList.remove('hidden');
+                    userEmail.textContent = user.email;
+                    
+                    // User is logged in, NOW we can fetch and listen for data
+                    loadEmployees();
+                } else {
+                    // User is signed out
+                    adminPanel.classList.add('hidden');
+                    loginView.classList.remove('hidden');
+                    userEmail.textContent = '';
+                    
+                    // Stop listening if we have a listener attached
+                    // (Handle this if you have a persistent listener)
+                    adminListContainer.innerHTML = ''; // Clear list
+                }
+            });
+        }
+
+        /**
+         * Handles the login form submission.
+         */
+        async function handleLogin(event) {
+            event.preventDefault();
+            loginError.classList.add('hidden');
+            loginButton.disabled = true;
+            loginButtonText.classList.add('hidden');
+            loginLoader.classList.remove('hidden');
+
+            const email = loginEmail.value;
+            const password = loginPassword.value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                // Auth state observer will handle the UI change
+            } catch (error) {
+                console.error("Login Error:", error);
+                // --- MODIFICATION: Provide a more user-friendly error message ---
+                if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-email') {
+                    loginError.textContent = "Error: Invalid email or password. Please try again.";
+                } else {
+                    loginError.textContent = error.message;
+                }
+                // --- END MODIFICATION ---
+                loginError.classList.remove('hidden');
+            } finally {
+                loginButton.disabled = false;
+                loginButtonText.classList.remove('hidden');
+                loginLoader.classList.add('hidden');
+                loginForm.reset();
+            }
+        }
+
+        /**
+         * Handles the logout button click.
+         */
+        function handleLogout() {
+            signOut(auth).catch((error) => {
+                console.error("Logout Error:", error);
+            });
+        }
+
+        /**
+         * Sets up the real-time listener on the 'employees' collection.
+         */
+        function loadEmployees() {
+            adminLoader.classList.remove('hidden');
+            
+            // Use query and orderBy to sort by name, just like the main app
+            const q = query(employeeCollection, orderBy("Last"), orderBy("First"));
+
+            onSnapshot(q, (snapshot) => {
+                allEmployees = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+
+                // NEW: Extract and update departments
+                const depts = new Set(allEmployees.map(emp => emp.dept).filter(Boolean)); // Use Set for unique, filter(Boolean) to remove empty
+                allDepartments = [...depts].sort(); // Convert back to array and sort
+                renderDepartmentList();
+                // END NEW
+
+                renderEmployeeList(); // This will now apply any existing search filter
+                adminLoader.classList.add('hidden');
+
+            }, (error) => {
+                console.error("Error fetching employees:", error);
+                adminListContainer.innerHTML = `<div class="text-red-500 p-4">Error loading data: ${error.message}</div>`;
+                adminLoader.classList.add('hidden');
+            });
+        }
+
+        /**
+         * MODIFICATION: Renders the list of employees, applying search filter.
+         */
+        function renderEmployeeList() {
+            // Get search term, ensure searchInput is available
+            const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+
+            let filteredEmployees = allEmployees;
+
+            if (searchTerm) {
+                filteredEmployees = allEmployees.filter(emp => {
+                    const name = (emp.name || '').toLowerCase();
+                    const title = (emp.title || '').toLowerCase();
+                    const dept = (emp.dept || '').toLowerCase();
+                    
+                    return name.includes(searchTerm) || 
+                           title.includes(searchTerm) || 
+                           dept.includes(searchTerm);
+                });
+            }
+
+
+            if (filteredEmployees.length === 0) {
+                if (searchTerm) {
+                    adminListContainer.innerHTML = '<p class="text-gray-500 text-center p-4">No employees match your search.</p>';
+                } else {
+                    adminListContainer.innerHTML = '<p class="text-gray-500 text-center p-4">No employees found.</p>';
+                }
+                return;
+            }
+
+            adminListContainer.innerHTML = filteredEmployees.map(emp => `
+                <div class="flex items-center justify-between p-3 border-b border-gray-200 last:border-b-0">
+                    <div>
+                        <p class="font-semibold text-gray-900">${emp.name || 'N/A'}</p>
+                        <p class="text-sm text-gray-600">${emp.title || 'No Title'} | ${emp.dept || 'No Dept'}</p>
+                    </div>
+                    <div class="flex-shrink-0 space-x-2">
+                        <button class="btn-edit text-sm font-medium py-1 px-3 rounded-md text-white bg-yellow-500 hover:bg-yellow-600" data-id="${emp.id}">
+                            Edit
+                        </button>
+                        <button class="btn-delete text-sm font-medium py-1 px-3 rounded-md text-white bg-red-600 hover:bg-red-700" data-id="${emp.id}" data-name="${emp.name || 'this employee'}">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        // --- END MODIFICATION ---
+
+        /**
+         * Populates the datalist for departments.
+         */
+        function renderDepartmentList() {
+            if (!departmentDataList) return;
+            departmentDataList.innerHTML = allDepartments.map(dept => 
+                `<option value="${dept}"></option>`
+            ).join('');
+        }
+
+
+        /**
+         * Opens the modal for adding a new employee (blank form).
+         */
+        function openModalForNew() {
+            modalTitle.textContent = "Add New Employee";
+            editForm.reset();
+            editEmployeeId.value = ''; // Ensure ID is blank for 'add'
+            
+            // === MODIFICATION: Set default URL and SYNC dropdown ===
+            editUrl.value = `${BASE_CUBICLE_URL}newhire`;
+            editCubicleSelect.value = 'newhire'; // <-- ADDED
+            mapLinks.classList.add('hidden');
+            // === END MODIFICATION ===
+            
+            editModal.classList.remove('hidden');
+        }
+
+        /**
+         * Opens the modal to edit an existing employee (fills form).
+         */
+        function openModalForEdit(id) {
+            const employee = allEmployees.find(emp => emp.id === id);
+            if (!employee) return;
+
+            modalTitle.textContent = `Edit: ${employee.name}`;
+            
+            // Populate the form
+            editEmployeeId.value = employee.id;
+            editName.value = employee.name || '';
+            editFirst.value = employee.First || ''; // <-- ADDED
+            editLast.value = employee.Last || ''; // <-- ADDED
+            editTitle.value = employee.title || '';
+            editDept.value = employee.dept || '';
+            editExt.value = employee.ext || '';
+            editEmail.value = employee.email || '';
+            editResponsibilities.value = employee.responsibilities || '';
+            editImageUrl.value = employee.imageUrl || '';
+            editFloorMap.value = employee.FloorMap || '';
+            
+            const urlMatch = (employee.url || '').match(/src="([^"]+)"/);
+            const rawUrl = urlMatch ? urlMatch[1] : (employee.url || ''); // Extracts URL or uses raw value
+            editUrl.value = rawUrl;
+
+            // === MODIFICATION: Try to parse cubicle from URL and set dropdown ===
+            if (rawUrl.startsWith(BASE_CUBICLE_URL)) {
+                const cubicle = rawUrl.substring(BASE_CUBICLE_URL.length);
+                if (CUBICLE_LIST.includes(cubicle)) {
+                    editCubicleSelect.value = cubicle;
+                } else {
+                    editCubicleSelect.value = ''; // URL is custom, so reset dropdown
+                }
+            } else {
+                editCubicleSelect.value = ''; // URL is not a cubicle URL, reset dropdown
+            }
+            // === END MODIFICATION ===
+            
+            // === MODIFICATION: Show map links for editing ===
+            mapLinks.classList.remove('hidden');
+            // === END MODIFICATION ===
+            
+            editModal.classList.remove('hidden');
+        }
+
+        /**
+         * Closes and resets the add/edit modal.
+         */
+        function closeModal() {
+            editModal.classList.add('hidden');
+            editForm.reset();
+            
+            // === MODIFICATION: Hide map links and reset dropdown on close ===
+            editCubicleSelect.value = ''; // <-- ADDED
+            mapLinks.classList.add('hidden');
+            // === END MODIFICATION ===
+        }
+
+        /**
+         * Handles the "Save" button click for both Add and Update.
+         */
+        async function handleSave(event) {
+            event.preventDefault();
+            modalSaveBtn.disabled = true;
+            modalSaveBtn.textContent = "Saving...";
+
+            const id = editEmployeeId.value;
+            const rawUrl = editUrl.value.trim();
+            let finalUrlField = '';
+            if (rawUrl) {
+                // Wrap the raw URL in the iframe tag structure
+                finalUrlField = `<iframe src="${rawUrl}"></iframe>`;
+            }
+
+            const employeeData = {
+                name: editName.value || '',
+                title: editTitle.value || '',
+                dept: editDept.value || '',
+                ext: editExt.value || '',
+                email: editEmail.value || '',
+                responsibilities: editResponsibilities.value || '',
+                imageUrl: editImageUrl.value || '',
+                FloorMap: editFloorMap.value || '',
+                url: finalUrlField, // Storing the iframe-like string
+                First: editFirst.value || '', 
+                Last: editLast.value || ''
+            };
+
+            try {
+                if (id) {
+                    // UPDATE existing document
+                    const docRef = doc(employeeCollection, id);
+                    await updateDoc(docRef, employeeData);
+                } else {
+                    // ADD new document
+                    await addDoc(employeeCollection, employee.data);
+                }
+                closeModal();
+            } catch (error) {
+                console.error("Save Error:", error);
+                alert(`Error saving: ${error.message}`);
+            } finally {
+                modalSaveBtn.disabled = false;
+                modalSaveBtn.textContent = "Save Changes";
+            }
+        }
+
+        /**
+         * Handles a click on the "Delete" button.
+         */
+        async function handleDelete(id, name) {
+            // Re-enabling confirm for this specific admin panel context,
+            // as it's a critical destructive action.
+            if (!confirm(`Are you sure you want to delete ${name}? This cannot be undone.`)) {
+                return;
+            }
+
+            try {
+                const docRef = doc(employeeCollection, id);
+                await deleteDoc(docRef);
+                // The onSnapshot listener will automatically update the UI
+            } catch (error) {
+                console.error("Delete Error:", error);
+                alert(`Error deleting: ${error.message}`);
+            }
+        }
+
+        /**
+         * Handles delegated clicks for 'Edit' and 'Delete' buttons.
+         */
+        function handleListClick(event) {
+            const target = event.target;
+            
+            if (target.classList.contains('btn-edit')) {
+                openModalForEdit(target.dataset.id);
+            }
+            
+            if (target.classList.contains('btn-delete')) {
+                handleDelete(target.dataset.id, target.dataset.name);
+            }
+        }
+
+        // --- MODIFICATION: Wait for DOM to be ready before assigning elements and listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Assign DOM Elements ---
+            loginView = document.getElementById('login-view');
+            loginForm = document.getElementById('login-form');
+            loginEmail = document.getElementById('login-email');
+            loginPassword = document.getElementById('login-password');
+            loginButton = document.getElementById('login-button');
+            loginButtonText = document.getElementById('login-button-text');
+            loginLoader = document.getElementById('login-loader');
+            loginError = document.getElementById('login-error');
+
+            adminPanel = document.getElementById('admin-panel');
+            userEmail = document.getElementById('user-email');
+            logoutButton = document.getElementById('logout-button');
+            addNewButton = document.getElementById('add-new-button');
+            adminListContainer = document.getElementById('admin-list-container');
+            adminLoader = document.getElementById('admin-loader');
+            searchInput = document.getElementById('search-input'); // <-- MODIFICATION: Assign search input
+
+            editModal = document.getElementById('edit-modal');
+            modalTitle = document.getElementById('modal-title');
+            editForm = document.getElementById('edit-form');
+            modalCloseBtn = document.getElementById('modal-close-btn');
+            modalCancelBtn = document.getElementById('modal-cancel-btn');
+            modalSaveBtn = document.getElementById('modal-save-btn');
+            
+            editEmployeeId = document.getElementById('edit-employee-id');
+            editName = document.getElementById('edit-name');
+            editFirst = document.getElementById('edit-first');
+            editLast = document.getElementById('edit-last');
+            editTitle = document.getElementById('edit-title');
+            editDept = document.getElementById('edit-dept');
+            editExt = document.getElementById('edit-ext');
+            editEmail = document.getElementById('edit-email');
+            editResponsibilities = document.getElementById('edit-responsibilities');
+            editImageUrl = document.getElementById('edit-imageUrl');
+            editFloorMap = document.getElementById('edit-FloorMap');
+            editUrl = document.getElementById('edit-url');
+            mapLinks = document.getElementById('map-links');
+            editCubicleSelect = document.getElementById('edit-cubicle-select'); // <-- ADDED
+            departmentDataList = document.getElementById('department-list'); // <-- ADDED
+
+            // --- Initialize Firebase ---
+            initializeFirebaseApp();
+            
+            // --- MODIFICATION: Populate Cubicle Dropdown ---
+            let optionsHtml = '<option value="">-- Select a Location --</option>';
+            CUBICLE_LIST.forEach(cubicle => {
+                optionsHtml += `<option value="${cubicle}">${cubicle}</option>`;
+            });
+            editCubicleSelect.innerHTML = optionsHtml;
+            // --- END MODIFICATION ---
+
+            // --- Attach Event Listeners ---
+            loginForm.addEventListener('submit', handleLogin);
+            logoutButton.addEventListener('click', handleLogout);
+            
+            // --- MODIFICATION: Add listener for search input ---
+            searchInput.addEventListener('input', renderEmployeeList);
+            // --- END MODIFICATION ---
+
+            // Modal
+            addNewButton.addEventListener('click', openModalForNew);
+            modalCloseBtn.addEventListener('click', closeModal);
+            modalCancelBtn.addEventListener('click', closeModal);
+            editForm.addEventListener('submit', handleSave);
+
+            // --- MODIFICATION: Add listener for cubicle select ---
+            editCubicleSelect.addEventListener('change', (e) => {
+                const selectedValue = e.target.value;
+                if (selectedValue) {
+                    editUrl.value = `${BASE_CUBICLE_URL}${selectedValue}`;
+                } else {
+                    editUrl.value = ''; // Clear if they select the placeholder
+                }
+            });
+            // --- END MODIFICATION ---
+
+            // List (Event Delegation)
+            adminListContainer.addEventListener('click', handleListClick);
+        });
+
+    </script>
+</body>
+</html>
