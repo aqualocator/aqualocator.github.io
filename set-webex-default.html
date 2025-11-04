@@ -6,17 +6,11 @@
   <title>AQUALocator - Set Up Webex Calling</title>
   <link rel="icon" href="data:,">
   <!-- Tailwind CSS -->
-   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-	<style type="text/tailwindcss">
-    @theme {
-      --font-sans: system-ui, sans-serif;
-      --font-display: Inter, sans-serif;
-    }
-  </style>  
-<style>
+  <style>
     body {
       font-family: 'Inter', sans-serif;
       background-color: #fafafa;
@@ -82,6 +76,7 @@
             <li>When prompted, click <strong>“Open Pick an app”</strong>.</li>
             <li>Select <strong>Webex</strong> from the suggested apps list.</li>
             <li>Click <strong>“Always”</strong> to set Webex as your default calling app.</li>
+            <li>Check <strong>“Always allow this type of link”</strong> and click <strong>“Open Webex”</strong>.</li>
           </ol>
         </div>
 
@@ -106,6 +101,12 @@
   </div>
 
   <script>
+    // Auto-focus input for convenience
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('extInput').focus();
+    });
+
+    // Handle test button click
     document.getElementById('testBtn').addEventListener('click', () => {
       const ext = document.getElementById('extInput').value.trim();
       if (/^\d{4}$/.test(ext)) {
