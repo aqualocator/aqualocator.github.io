@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Set Webex as Default Calling App</title>
+  <title>Set Up Webex Calling</title>
   <link rel="icon" href="data:,">
   <style>
     body {
@@ -13,6 +13,7 @@
       padding: 2rem;
       max-width: 700px;
       margin: auto;
+      text-align: center;
       line-height: 1.6;
     }
     h1 {
@@ -20,32 +21,68 @@
       font-size: 1.8rem;
       margin-bottom: 1rem;
     }
+    input {
+      padding: 0.5rem 1rem;
+      font-size: 1.1rem;
+      border: 2px solid #5d3587;
+      border-radius: 8px;
+      outline: none;
+      width: 150px;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+    button {
+      background: #5d3587;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-left: 0.5rem;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #4a2d6b;
+    }
+    p.note {
+      margin-top: 2rem;
+      color: #555;
+      font-size: 0.95rem;
+    }
     a {
       color: #0078d7;
       text-decoration: underline;
     }
-    code {
-      background: #eee;
-      padding: 2px 4px;
-      border-radius: 3px;
-    }
   </style>
 </head>
 <body>
-  <h1>Set Webex as Your Default Calling App</h1>
+  <h1>Set Up Webex Calling</h1>
+  <p>Enter your 4-digit extension below and click <strong>Call Test</strong>.</p>
+  <p>This will open a normal Windows pop-up asking which app to use for phone links.  
+  Select <strong>Webex</strong> and check “Always use this app.”</p>
 
-  <p>If you’d like links like <code>tel:4595</code> to open automatically in Webex instead of another dialer:</p>
+  <div style="margin-top:1.5rem;">
+    <input type="text" id="extInput" maxlength="4" placeholder="1234" />
+    <button id="testBtn">Call Test</button>
+  </div>
 
-  <ol>
-    <li>Open the <strong>Windows Settings</strong> app.</li>
-    <li>Go to <strong>Apps → Default Apps</strong>.</li>
-    <li>Search for <strong>Webex</strong> in the list.</li>
-    <li>Scroll down and find the <strong>URL:tel</strong> or <strong>Telephone</strong> protocol.</li>
-    <li>Click it and choose <strong>Webex</strong> as the default app.</li>
-  </ol>
+  <p class="note">
+    Once you’ve set Webex as default, any extension link (like <code>Ext: 4595</code>) in the directory will open Webex automatically.
+  </p>
 
-  <p>Once done, any extension link (e.g., <a href="tel:4595">tel:4595</a>) will open directly in Webex if it’s running.</p>
-
-  <p><em>Tip:</em> The first time you click a phone link, Windows may prompt you to select a default app — choose Webex and check “Always use this app.”</p>
+  <script>
+    document.getElementById('testBtn').addEventListener('click', () => {
+      const ext = document.getElementById('extInput').value.trim();
+      if (/^\\d{4}$/.test(ext)) {
+        // Create the tel: link dynamically
+        const link = document.createElement('a');
+        link.href = `tel:${ext}`;
+        link.click();
+      } else {
+        alert('Please enter a valid 4-digit extension.');
+      }
+    });
+  </script>
 </body>
 </html>
