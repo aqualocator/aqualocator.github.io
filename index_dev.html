@@ -332,17 +332,18 @@
         }
 
         function hideTooltip(immediate = false) {
-            if (immediate) {
-                tooltip.classList.remove('show');
-                tooltipTarget = null;
-                return;
-            }
-            clearTimeout(hideTimer);
-            hideTimer = setTimeout(() => {
-                tooltip.classList.remove('show');
-                tooltipTarget = null;
-            }, 80);
-        }
+    if (immediate) {
+        tooltip.classList.remove('show');
+        tooltipTarget = null;
+        return;
+    }
+    clearTimeout(hideTimer);
+    // Wait longer (e.g., 800 ms) before hiding so users can read
+    hideTimer = setTimeout(() => {
+        tooltip.classList.remove('show');
+        tooltipTarget = null;
+    }, 2000);
+}
 
         // Show on hover/focus for any element with [data-tooltip]
         document.addEventListener('mouseover', (e) => {
