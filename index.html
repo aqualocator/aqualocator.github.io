@@ -183,11 +183,13 @@
             margin-top: 6px; /* Add space below */
         }
 
-        /* Show on hover */
-        [data-tooltip]:hover::after {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) scale(1); /* Scale to full size on hover */
+/* Show on hover - ONLY for devices that support hover (non-touch) */
+        @media (hover: hover) {
+            [data-tooltip]:hover::after {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(-50%) scale(1); /* Scale to full size on hover */
+            }
         }
         /* ------------------------ */
     </style>
