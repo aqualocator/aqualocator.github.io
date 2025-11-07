@@ -1,363 +1,675 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!version 3.9>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AQUALocator - Employee Office Locator</title>
-  <link rel="icon" href="favicon.ico">
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!version 3.6 (clear-button integration)>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQUALocator - Employee Office Locator</title>
+    <link rel="icon" href="favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<style type="text/tailwindcss">
-@theme {
-  --font-sans: system-ui, sans-serif;
-  --font-display: Inter, sans-serif;
-}
-</style>
+    <style type="text/tailwindcss">
+      @theme {
+        --font-sans: system-ui, sans-serif;
+        --font-display: Inter, sans-serif;
+      }
+    </style>
 
-<style>
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #fafafa;
-}
+    <style>
+        /* Set default font for the page */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fafafa; /* Cleaner background */
+        }
 
-/* Buttons */
-.btn-locate { background-color: #5d3587; color: white; transition: background-color 0.2s ease-in-out; }
-.btn-locate:hover { background-color: #4a2d6b; }
-.btn-know-me { background-color: #ee2741; color: white; transition: background-color 0.2s ease-in-out; }
-.btn-know-me:hover { background-color: #d41f35; }
-.btn-reset { background-color: #35a2c4; color: white; transition: background-color 0.2s ease-in-out; }
-.btn-reset:hover { background-color: #2a8faf; }
+        /* Custom button colors (Updated Theme) */
+        .btn-locate {
+            background-color: #5d3587; /* Richer Indigo/Violet */
+            color: white;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-locate:hover { background-color: #4a2d6b; }
 
-/* Placeholder */
-#search-input::placeholder { font-size: 0.775rem; }
+        .btn-know-me {
+            background-color: #ee2741; /* Red color */
+            color: white;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-know-me:hover { background-color: #d41f35; }
 
-/* Clear button (✕) styling */
-#clear-search {
-  position: absolute;
-  right: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  background: none;
-  border: none;
-  color: #9ca3af;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.25rem;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out, color 0.2s ease-in-out;
-}
-#clear-search:hover { color: #4b5563; }
-#clear-search.visible { opacity: 1; visibility: visible; }
+        .btn-reset {
+            background-color: #35a2c4; /* Blue */
+            color: white;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .btn-reset:hover { background-color: #2a8faf; }
 
-/* Dropdown */
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-13%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-13%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
-  background-repeat: no-repeat;
-  background-position: right .5rem center;
-  background-size: .65em auto;
-  padding-right: 2.5rem;
-  border: none;
-  border-bottom: 2px solid #35a2c4;
-  border-radius: 0;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-select:focus { box-shadow: none; border-bottom: 2px solid #35a2c4; outline: none; }
+        #search-input::placeholder { font-size: 0.775rem; /* ~12.4px */ }
 
-button:disabled { opacity: 0.5; cursor: not-allowed; }
+        /* --- Clear (✕) button that fades in/out and sits inside the input --- */
+        #clear-search {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #9ca3af; /* gray-400 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.25rem;
+            /* Hidden by default, shown via .visible */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out, color 0.2s ease-in-out;
+        }
+        #clear-search:hover { color: #4b5563; } /* gray-600 */
+        #clear-search.visible {
+            opacity: 1;
+            visibility: visible;
+        }
 
-/* Tooltip styling */
-[data-tooltip] {
-  position: relative;
-  cursor: pointer;
-}
-[data-tooltip]::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%) scale(0.8);
-  background-color: #333;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.875rem;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, visibility 0.2s;
-  white-space: nowrap;
-}
-[data-tooltip].tooltip-bottom::after { bottom: auto; top: 100%; margin-top: 6px; }
-@media (hover: hover) {
-  [data-tooltip]:hover::after {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) scale(1);
-  }
-}
-</style>
+        /* Custom styling for the select dropdown */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            /* Custom SVG arrow*/
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-13%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-13%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right .5rem center;
+            background-size: .65em auto;
+            padding-right: 2.5rem; /* Make space for arrow */
+
+            /* Blue bottom border style */
+            border: none;
+            border-bottom: 2px solid #35a2c4;
+            border-radius: 0;
+            padding-left: 0;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        /* Remove default focus ring and keep border */
+        select:focus {
+            box-shadow: none;
+            border-bottom: 2px solid #35a2c4;
+            outline: none;
+        }
+
+        /* Ensure modals are on top */
+        #locate-modal, #know-me-modal { z-index: 1000; }
+
+        /* Style disabled buttons */
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* --- CUSTOM CLASSES --- */
+        .custom-top-32 { top: 8rem; /* 8rem = 128px */ }
+        .custom-max-h-600 { max-height: 600px; }
+        .custom-max-h-800 { max-height: 600px; }
+        .custom-color-blue { color: #29aae2; }
+
+        /* --- LOADER STYLES --- */
+        main { position: relative; }
+        #loading-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            min-height: 200px;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        .loader {
+            width: 50px; height: 50px;
+            border: 4px solid #e0e0e0;
+            border-top: 4px solid #5d3587;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
+
+        /* --- TOOLTIP STYLES --- */
+        [data-tooltip] { position: relative; cursor: pointer; }
+        [data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%; left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            background-color: #333; color: white;
+            padding: 4px 8px; border-radius: 4px;
+            font-size: 0.875rem; line-height: 1.25rem; font-weight: 500;
+            white-space: nowrap; z-index: 10000;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, visibility 0.2s;
+            pointer-events: none; margin-bottom: 6px;
+        }
+        [data-tooltip].tooltip-bottom::after {
+            bottom: auto; top: 100%;
+            margin-bottom: 0; margin-top: 6px;
+        }
+        @media (hover: hover) {
+            [data-tooltip]:hover::after {
+                opacity: 1; visibility: visible; transform: translateX(-50%) scale(1);
+            }
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
 
-<!-- Header links -->
-<div class="container mx-auto p-4 max-w-6xl">
-  <div class="w-full text-right text-sm">
-    <a href="https://form.jotform.com/193454652984168" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline font-medium tooltip-bottom" data-tooltip="Submit a request to update your profile details">Update Profile</a>
-    <a href="help.html" class="text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4 tooltip-bottom" data-tooltip="View the AQUALocator help guide">Help</a>
-    <a href="set-webex-default.html" class="text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4 tooltip-bottom" data-tooltip="Instructions for setting up Webex Calling default">Set Up Webex Calling</a>
-  </div>
-</div>
-
-<!-- Title Header -->
-<header class="bg-white shadow-md mb-6 sticky top-0 z-10">
-  <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl flex items-center justify-between">
-    <div class="flex items-center space-x-4">
-      <a href="index.html" data-tooltip="Go to Homepage"><img src="aqua-aerobics-logo.png" alt="Aqua-Aerobic Systems Logo" class="h-10 sm:h-12"></a>
-      <div>
-        <h1 class="text-2xl sm:text-3xl font-bold text-[#29aae2]">AQUALocator</h1>
-        <p class="text-sm text-gray-500 hidden sm:block">An Aqua employee office locator</p>
-      </div>
+   <div class="container mx-auto p-4 max-w-6xl">
+        <div class="w-full text-right text-sm">
+            <a href="https://form.jotform.com/193454652984168" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline font-medium tooltip-bottom" data-tooltip="Submit a request to update your profile details">Update Profile</a>
+            <a href="help.html" class="text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4 tooltip-bottom" data-tooltip="View the AQUALocator help guide">Help</a>
+            <a href="set-webex-default.html" class="text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4 tooltip-bottom" data-tooltip="Instructions for setting up Webex Calling default">Set Up Webex Calling</a>
+        </div>
     </div>
-  </div>
-</header>
 
-<!-- Content -->
-<div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl">
-  <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+    <header class="bg-white shadow-md mb-6 sticky top-0 z-10">
+        <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="index.html" data-tooltip="Go to Homepage"><img src="aqua-aerobics-logo.png" alt="Aqua-Aerobic Systems Logo" class="h-10 sm:h-12"></a>
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold custom-color-blue">AQUALocator</h1>
+                    <p class="text-sm text-gray-500 hidden sm:block">An Aqua employee office locator</p>
+                </div>
+            </div>
+        </div>
+    </header>
 
-    <!-- Sidebar -->
-    <aside class="md:col-span-5 lg:col-span-5">
-      <div class="bg-white p-4 rounded-lg shadow-sm sticky top-32 z-20">
-        <form id="filter-form">
-          <div class="mb-4">
-            <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">
-              Search by:<br>Name, title, initials, responsibilities, dept or email
-            </label>
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
 
-            <!-- Search input -->
-            <div class="flex">
-              <div class="relative flex-grow">
-                <input type="text" id="search-input" class="w-full px-3 py-2 pr-8 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-[0.775rem]" placeholder="e.g., Carlson or AquaNereda or RJW" autofocus>
-                <!-- ✕ Clear Button -->
-                <button type="button" id="clear-search" data-tooltip="Clear search text">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                  </svg>
+            <aside class="md:col-span-5 lg:col-span-5">
+                <div class="bg-white p-4 rounded-lg shadow-sm sticky custom-top-32 z-20">
+                    <form id="filter-form">
+                        <div class="mb-4">
+                            <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">
+                                Search by:<br>Name,title,initials,responsibilities,dept or email
+                            </label>
+
+                            <!-- Search input with inside clear button + RESET -->
+                            <div class="flex">
+                              <div class="relative flex-grow">
+                                <input
+                                  type="text"
+                                  id="search-input"
+                                  class="w-full px-3 py-2 pr-8 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-[0.775rem]"
+                                  placeholder="e.g.,Carlson or AquaNereda or RJW"
+                                  autofocus
+                                >
+                                <!-- ✕ clear button (SVG) -->
+                                <button type="button" id="clear-search" class="text-gray-400" data-tooltip="Clear search text">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                  </svg>
+                                </button>
+                              </div>
+
+                              <button type="button" id="reset-button" class="btn-reset font-medium px-4 py-2 rounded-r-md" data-tooltip="Clear all search terms and reset filters">RESET</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="dept-select" class="block text-sm font-medium text-gray-700 mb-1">Filter by:</label>
+                            <div data-tooltip="Limit results to a specific department group">
+                                <select id="dept-select" class="w-full text-lg font-medium text-gray-800 bg-white focus:outline-none"></select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </aside>
+
+            <main class="md:col-span-7 lg:col-span-7">
+                <div id="loading-overlay" class="hidden"><div class="loader"></div></div>
+                <div id="results-count" class="text-sm font-medium text-gray-600 mb-2 hidden"></div>
+                <div id="results-container" class="space-y-4"></div>
+                <div id="no-results" class="hidden text-center text-gray-500 p-8">No employees found matching your criteria.</div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Locate Modal -->
+    <div id="locate-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl h-full custom-max-h-600 flex flex-col">
+            <div class="flex justify-between items-center p-3 border-b">
+                <h3 id="locate-modal-title" class="text-lg font-semibold text-gray-900">Location Viewer</h3>
+                <button id="locate-modal-close-btn" class="text-gray-400 hover:text-gray-600" data-tooltip="Close this window">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
-              </div>
-              <button type="button" id="reset-button" class="btn-reset font-medium px-4 py-2 rounded-r-md" data-tooltip="Clear all search terms and reset filters">RESET</button>
             </div>
-          </div>
-
-          <div>
-            <label for="dept-select" class="block text-sm font-medium text-gray-700 mb-1">Filter by:</label>
-            <div data-tooltip="Limit results to a specific department group">
-              <select id="dept-select" class="w-full text-lg font-medium text-gray-800 bg-white focus:outline-none"></select>
+            <div class="flex-1 p-1 bg-gray-200">
+                <iframe id="locate-iframe" class="w-full h-full border-0" src="about:blank" title="Location Map"></iframe>
             </div>
-          </div>
-        </form>
-      </div>
-    </aside>
-
-    <!-- Main -->
-    <main class="md:col-span-7 lg:col-span-7">
-      <div id="loading-overlay" class="hidden"><div class="loader"></div></div>
-      <div id="results-count" class="text-sm font-medium text-gray-600 mb-2 hidden"></div>
-      <div id="results-container" class="space-y-4"></div>
-      <div id="no-results" class="hidden text-center text-gray-500 p-8">No employees found matching your criteria.</div>
-    </main>
-  </div>
-</div>
-
-<!-- Locate Modal -->
-<div id="locate-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
-  <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl h-full max-h-[600px] flex flex-col">
-    <div class="flex justify-between items-center p-3 border-b">
-      <h3 id="locate-modal-title" class="text-lg font-semibold text-gray-900">Location Viewer</h3>
-      <button id="locate-modal-close-btn" class="text-gray-400 hover:text-gray-600">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </button>
+        </div>
     </div>
-    <div class="flex-1 p-1 bg-gray-200">
-      <iframe id="locate-iframe" class="w-full h-full border-0" src="about:blank" title="Location Map"></iframe>
+
+    <!-- Know Me Modal -->
+    <div id="know-me-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-xl h-full custom-max-h-800 flex flex-col">
+            <div class="flex justify-between items-center p-3 border-b">
+                <h3 id="know-me-modal-title" class="text-lg font-semibold text-gray-900">Get to Know Me</h3>
+                <button id="know-me-modal-close-btn" class="text-gray-400 hover:text-gray-600" data-tooltip="Close this window">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="flex-1 p-1 bg-gray-200 overflow-auto">
+                <iframe id="know-me-iframe" class="w-full h-full border-0" src="about:blank" title="Get to Know Me"></iframe>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-<!-- Know Me Modal -->
-<div id="know-me-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
-  <div class="bg-white rounded-lg shadow-2xl w-full max-w-xl h-full max-h-[600px] flex flex-col">
-    <div class="flex justify-between items-center p-3 border-b">
-      <h3 id="know-me-modal-title" class="text-lg font-semibold text-gray-900">Get to Know Me</h3>
-      <button id="know-me-modal-close-btn" class="text-gray-400 hover:text-gray-600">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-    <div class="flex-1 p-1 bg-gray-200 overflow-auto">
-      <iframe id="know-me-iframe" class="w-full h-full border-0" src="about:blank" title="Get to Know Me"></iframe>
-    </div>
-  </div>
-</div>
+    <script type="module">
+        // --- Firebase SDK Imports ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-<!-- Full JavaScript -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-  import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-  import { getFirestore, collection, onSnapshot, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // --- Global Variables ---
+        let allEmployees = []; // This will hold our data from Firebase
+        let db, auth;
 
-  let allEmployees = [];
-  let db, auth;
+        // --- Image Base URL ---
+        const imageBaseUrl = "https://aqualocator.github.io/photos/";
 
-  const MANUAL_FIREBASE_CONFIG = {
-    apiKey: "AIzaSyABeCFheLuS08mxfWjCSS2ugXFbLDgnpIE",
-    authDomain: "aqualocator-23714.firebaseapp.com",
-    projectId: "aqualocator-23714",
-    storageBucket: "aqualocator-23714.appspot.com",
-    messagingSenderId: "654848563347",
-    appId: "1:654848563347:web:4702a6f55ccbf7d5edd566"
-  };
+        // --- Manual Firebase Config ---
+        const MANUAL_FIREBASE_CONFIG = {
+            apiKey: "AIzaSyABeCFheLuS08mxfWjCSS2ugXFbLDgnpIE",
+            authDomain: "aqualocator-23714.firebaseapp.com",
+            projectId: "aqualocator-23714",
+            storageBucket: "aqualocator-23714.appspot.com",
+            messagingSenderId: "654848563347",
+            appId: "1:654848563347:web:4702a6f55ccbf7d5edd566",
+            measurementId: "G-5R7XGHVDNH"
+        };
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const searchInput = document.getElementById("search-input");
-    const clearBtn = document.getElementById("clear-search");
-    const deptSelect = document.getElementById("dept-select");
-    const resultsContainer = document.getElementById("results-container");
-    const loadingOverlay = document.getElementById("loading-overlay");
-    const noResults = document.getElementById("no-results");
-    const resetButton = document.getElementById("reset-button");
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        let firebaseConfig = MANUAL_FIREBASE_CONFIG;
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
-    // --- Clear button logic (smooth fade) ---
-    searchInput.addEventListener("input", () => {
-      if (searchInput.value.trim() !== "") {
-        clearBtn.classList.add("visible");
-      } else {
-        clearBtn.classList.remove("visible");
-      }
-      filterAndRender();
-    });
+        // --- Full Department List ---
+        const departmentList = [
+            "All Departments",
+            "Engineering Initials",
+            "All Engineering Departments",
+            "Accounting/Finance",
+            "Administration",
+            "AfterMarket Sales",
+            "Applications Engineering",
+            "Contract Administration",
+            "Customer Service",
+            "Domestic Sales-Midwest",
+            "Domestic Sales-Northeast",
+            "Domestic Sales-Southest",
+            "Domestic Sales-West",
+            "Eng - Admin",
+            "Eng - Electrical",
+            "Eng - Estimating",
+            "Eng - Mechanical",
+            "Eng - Standards",
+            "Field Services",
+            "Human Resources",
+            "Industrial Sales",
+            "Information Technology",
+            "International Sales",
+            "Manufacturing",
+            "Marketing/PR",
+            "Operations",
+            "Prod Mgmt - Aeration/Mixing",
+            "Prod Mgmt - Bio/Membrane",
+            "Prod Mgmt - Filtration",
+            "Production Control",
+            "Project Management",
+            "Research & Development",
+            "Sales and Marketing"
+        ];
 
-    clearBtn.addEventListener("click", () => {
-      searchInput.value = "";
-      clearBtn.classList.remove("visible");
-      filterAndRender();
-      searchInput.focus();
-    });
+        // --- DOM Elements ---
+        const searchInput = document.getElementById('search-input');
+        const deptSelect = document.getElementById('dept-select');
+        const resetButton = document.getElementById('reset-button');
+        const resultsContainer = document.getElementById('results-container');
+        const noResultsMessage = document.getElementById('no-results');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const resultsCount = document.getElementById('results-count');
+        const filterForm = document.getElementById('filter-form');
+        const clearBtn = document.getElementById('clear-search');
 
-    resetButton.addEventListener("click", () => {
-      searchInput.value = "";
-      deptSelect.value = "All Departments";
-      clearBtn.classList.remove("visible");
-      filterAndRender();
-    });
+        // --- Locate Modal Elements ---
+        const locateModalOverlay = document.getElementById('locate-modal');
+        const locateModalTitle = document.getElementById('locate-modal-title');
+        const locateIframe = document.getElementById('locate-iframe');
+        const locateCloseBtn = document.getElementById('locate-modal-close-btn');
 
-    // --- Populate department dropdown ---
-    const departmentList = [
-      "All Departments","Engineering Initials","All Engineering Departments",
-      "Accounting/Finance","Administration","AfterMarket Sales","Applications Engineering",
-      "Contract Administration","Customer Service","Domestic Sales-Midwest","Domestic Sales-Northeast",
-      "Domestic Sales-Southest","Domestic Sales-West","Eng - Admin","Eng - Electrical","Eng - Estimating",
-      "Eng - Mechanical","Eng - Standards","Field Services","Human Resources","Industrial Sales",
-      "Information Technology","International Sales","Manufacturing","Marketing/PR","Operations",
-      "Prod Mgmt - Aeration/Mixing","Prod Mgmt - Bio/Membrane","Prod Mgmt - Filtration","Production Control",
-      "Project Management","Research & Development","Sales and Marketing"
-    ];
-    deptSelect.innerHTML = departmentList.map(d => `<option>${d}</option>`).join("");
-    deptSelect.value = "All Departments";
+        // --- Know Me Modal Elements ---
+        const knowMeModalOverlay = document.getElementById('know-me-modal');
+        const knowMeModalTitle = document.getElementById('know-me-modal-title');
+        const knowMeIframe = document.getElementById('know-me-iframe');
+        const knowMeCloseBtn = document.getElementById('know-me-modal-close-btn');
 
-    // --- Firebase init ---
-    const app = initializeApp(MANUAL_FIREBASE_CONFIG);
-    db = getFirestore(app);
-    auth = getAuth(app);
-    setLogLevel("error");
-    signInAnonymously(auth);
-    onAuthStateChanged(auth, () => setupListener());
+        // --- Populate Departments ---
+        function populateDepartments() {
+            deptSelect.innerHTML = '';
+            departmentList.forEach(dept => {
+                const option = document.createElement('option');
+                option.value = dept;
+                option.textContent = dept;
+                deptSelect.appendChild(option);
+            });
+            deptSelect.value = "All Departments";
+        }
 
-    function setupListener() {
-      const q = collection(db, "artifacts/default-app-id/public/data/employees");
-      onSnapshot(q, snapshot => {
-        allEmployees = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-        filterAndRender();
-      });
-    }
+        // --- Render Results ---
+        function renderResults(filteredEmployees) {
+            resultsContainer.innerHTML = '';
+            const count = filteredEmployees.length;
 
-    // --- Filtering logic ---
-    function filterAndRender() {
-      const term = searchInput.value.toLowerCase().trim();
-      const dept = deptSelect.value;
-      let filtered = [...allEmployees];
+            noResultsMessage.classList.toggle('hidden', count > 0);
 
-      if (dept !== "All Departments") {
-        filtered = filtered.filter(e => e.dept && e.dept.startsWith(dept.replace("All ", "")));
-      }
+            if (count > 0) {
+                resultsCount.textContent = `Showing ${count} employee(s) matching your criteria.`;
+                resultsCount.classList.remove('hidden');
+            } else {
+                resultsCount.classList.add('hidden');
+            }
 
-      if (term) {
-        filtered = filtered.filter(e => {
-          return ["name","title","email","dept","responsibilities","initials"].some(f =>
-            e[f]?.toLowerCase().includes(term)
-          );
+            filteredEmployees.forEach(employee => {
+                const safeEmpName = employee.name || 'Employee';
+                if (!employee.name || employee.name.trim() === '' || employee.name.trim().toLowerCase() === 'n/a') return;
+
+                let finalImageUrl;
+                const placeholderUrl = 'https://placehold.co/80x80/CCCCCC/FFFFFF?text=No+Photo&font=inter';
+                const errorUrl = 'https://placehold.co/80x80/CCCCCC/FFFFFF?text=Error&font=inter';
+
+                if (employee.imageUrl) {
+                    if (employee.imageUrl.startsWith('data:image')) {
+                        finalImageUrl = employee.imageUrl;
+                    } else {
+                        finalImageUrl = `${imageBaseUrl}${employee.imageUrl}`;
+                    }
+                } else {
+                    finalImageUrl = placeholderUrl;
+                }
+
+                const showKnowMeButton = employee.FloorMap && employee.FloorMap.trim() !== '' && employee.FloorMap.toLowerCase() !== 'null';
+
+                const card = `
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                        <img
+                            src="${finalImageUrl}"
+                            alt="Profile photo of ${employee.name || 'Employee'}"
+                            class="w-20 h-20 rounded-full mr-0 sm:mr-4 mb-3 sm:mb-0 flex-shrink-0 object-cover border"
+                            onerror="this.onerror=null; this.src='${errorUrl}';"
+                        >
+                        <div class="flex-1 min-w-0">
+                            <h3 class="text-xl font-bold text-gray-800 truncate">${employee.name || 'N/A'}</h3>
+                            <p class="text-gray-600 truncate">${employee.title || 'N/A'}</p>
+                            ${employee.initials ? `<p class="text-sm text-gray-500"><strong class="font-medium">Initials:</strong> ${employee.initials}</p>` : ''}
+
+                            <div class="flex flex-wrap gap-2 mt-2 mb-2">
+                                <button
+                                    class="btn-locate text-sm font-medium py-1 px-3 rounded-md"
+                                    data-employee-id="${employee.id}"
+                                    type="button"
+                                    ${!employee.url ? 'disabled title="Location URL missing"' : `data-tooltip="Show ${safeEmpName}'s office location on the map"`}
+                                >LOCATE</button>
+                                ${showKnowMeButton ? `
+                                <button
+                                    class="btn-know-me text-sm font-medium py-1 px-3 rounded-md"
+                                    data-employee-id="${employee.id}"
+                                    type="button"
+                                    data-tooltip="View 'Get to Know Me' info for ${safeEmpName}"
+                                >GET TO KNOW ME</button>` : ''}
+                            </div>
+
+                            ${employee.responsibilities ? `
+                            <div class="text-xs text-gray-600 mt-1 mb-2 break-words">
+                                <p><strong class="font-medium">Responsibilities:</strong> ${employee.responsibilities}</p>
+                            </div>` : ''}
+
+                            <div class="text-sm text-gray-700 space-y-0.5 mt-2">
+                                <p><strong class="font-medium">Ext:</strong>
+                                    ${employee.ext ? `<a href="tel:${employee.ext}" class="text-blue-600 hover:underline" data-tooltip="Call ${safeEmpName} at extension ${employee.ext} via Webex">${employee.ext}</a>` : 'N/A'}
+                                </p>
+                                <p><strong class="font-medium">Dept:</strong> ${employee.dept || 'N/A'}</p>
+                                ${employee.email && employee.email.trim() !== '' ? `
+                                <a href="mailto:${employee.email.trim()}" class="text-blue-600 hover:underline break-words" data-tooltip="Send an email to ${safeEmpName}">${employee.email.trim()}</a>
+                                ` : '<p>N/A</p>'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                resultsContainer.insertAdjacentHTML('beforeend', card);
+            });
+
+            loadingOverlay.classList.add('hidden');
+            loadingOverlay.classList.remove('flex');
+            resultsContainer.classList.remove('hidden');
+        }
+
+        // --- Filter + Render ---
+        function filterAndRender() {
+            resultsContainer.classList.add('hidden');
+            loadingOverlay.classList.remove('hidden');
+            loadingOverlay.classList.add('flex');
+
+            setTimeout(() => {
+                const searchText = searchInput.value.toLowerCase().trim();
+                const searchTerms = searchText.split(' ').filter(Boolean);
+                const selectedDept = deptSelect.value;
+                let filtered = [...allEmployees];
+
+                // Department Filtering
+                if (selectedDept && selectedDept !== "All Departments") {
+                    if (selectedDept === "Engineering Initials" || selectedDept === "All Engineering Departments") {
+                        filtered = filtered.filter(emp => emp.dept && emp.dept.startsWith("Eng -"));
+                    } else if (selectedDept === "All Engineers") {
+                        filtered = filtered.filter(emp => emp.dept && (emp.dept.startsWith("Eng -") || emp.dept.startsWith("Prod Mgmt")));
+                    } else {
+                        filtered = filtered.filter(emp => emp.dept === selectedDept);
+                    }
+                }
+
+                // Text Search Filtering
+                if (searchTerms.length > 0) {
+                    let fieldsToSearch = ['name', 'title', 'email', 'responsibilities', 'dept'];
+                    if (selectedDept === "Engineering Initials") {
+                        fieldsToSearch = ['initials']; // Only initials for ENG Initials
+                    } else {
+                        fieldsToSearch.push('initials', 'First', 'Last');
+                    }
+
+                    filtered = filtered.filter(employee =>
+                        searchTerms.every(term =>
+                            fieldsToSearch.some(field => {
+                                const value = employee[field];
+                                return typeof value === 'string' && value.toLowerCase().includes(term);
+                            })
+                        )
+                    );
+                }
+
+                renderResults(filtered);
+            }, 100);
+        }
+
+        // --- Reset ---
+        function resetFilters() {
+            searchInput.value = '';
+            deptSelect.value = "All Departments";
+            clearBtn.classList.remove('visible');
+            filterAndRender();
+            searchInput.focus();
+        }
+
+        // --- Firebase Init + Listener ---
+        async function initializeFirebaseApp() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                setLogLevel('error');
+
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        setupFirebaseListener();
+                    } else {
+                        try {
+                            if (initialAuthToken) {
+                                await signInWithCustomToken(auth, initialAuthToken);
+                            } else {
+                                await signInAnonymously(auth);
+                            }
+                        } catch (signInError) {
+                            resultsContainer.innerHTML = `<div class="text-red-600 text-center p-4 font-semibold">Error: Could not sign in to Firebase. ${signInError.message}</div>`;
+                            allEmployees = [];
+                        }
+                    }
+                });
+            } catch (error) {
+                resultsContainer.innerHTML = `<div class="text-red-600 text-center p-4 font-semibold">Error: Could not initialize Firebase. ${error.message}</div>`;
+            }
+        }
+
+        function setupFirebaseListener() {
+            if (!auth.currentUser || !db) return;
+
+            resultsContainer.classList.add('hidden');
+            loadingOverlay.classList.remove('hidden');
+            loadingOverlay.classList.add('flex');
+
+            const collectionPath = `artifacts/${appId}/public/data/employees`;
+            const q = collection(db, collectionPath);
+
+            onSnapshot(q, (snapshot) => {
+                let rawEmployees = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                // Remove unwanted rows by responsibility value
+                allEmployees = rawEmployees.filter(emp => emp.responsibilities !== "XXX");
+
+                // Sort by Last then First (handling commas)
+                allEmployees.sort((a, b) => {
+                    let lastNameA = a.Last || (a.name || '').split(' ').pop();
+                    let lastNameB = b.Last || (b.name || '').split(' ').pop();
+                    lastNameA = lastNameA.split(',')[0].trim();
+                    lastNameB = lastNameB.split(',')[0].trim();
+                    const s = lastNameA.toLowerCase().localeCompare(lastNameB.toLowerCase());
+                    if (s !== 0) return s;
+                    const firstNameA = a.First || (a.name || '').split(' ')[0];
+                    const firstNameB = b.First || (b.name || '').split(' ')[0];
+                    return firstNameA.toLowerCase().localeCompare(firstNameB.toLowerCase());
+                });
+
+                filterAndRender();
+            }, (error) => {
+                resultsContainer.innerHTML = `<div class="text-red-500 text-center p-4">Error: Could not fetch employee data. ${error.message}</div>`;
+                loadingOverlay.classList.add('hidden');
+                loadingOverlay.classList.remove('flex');
+                resultsContainer.classList.remove('hidden');
+                allEmployees = [];
+            });
+        }
+
+        // --- Modal Helpers ---
+        function showLocateModal(employee) {
+            if (employee && employee.url) {
+                const urlMatch = employee.url.match(/src="([^"]+)"/);
+                const extractedUrl = urlMatch ? urlMatch[1] : null;
+
+                if (extractedUrl) {
+                    locateModalTitle.textContent = `Location: ${employee.name || 'Employee'}`;
+                    locateIframe.src = extractedUrl;
+                    locateModalOverlay.classList.remove('hidden');
+                    locateModalOverlay.classList.add('flex');
+                } else {
+                    alert(`Location data URL format is incorrect for ${employee.name}.`);
+                }
+            } else if (employee) {
+                alert(`Location data is not available for ${employee.name}.`);
+            }
+        }
+        function closeLocateModal() {
+            locateModalOverlay.classList.add('hidden');
+            locateModalOverlay.classList.remove('flex');
+            locateIframe.src = 'about:blank';
+        }
+
+        function showKnowMeModal(employee) {
+            if (employee && employee.FloorMap && employee.FloorMap.trim() !== '' && employee.FloorMap.toLowerCase() !== 'null') {
+                const knowMeUrl = `https://aqualocator.github.io/welcome/index.html?image=${encodeURIComponent(employee.FloorMap)}`;
+                knowMeModalTitle.textContent = `Get to Know: ${employee.name || 'Employee'}`;
+                knowMeIframe.src = knowMeUrl;
+                knowMeModalOverlay.classList.remove('hidden');
+                knowMeModalOverlay.classList.add('flex');
+            }
+        }
+        function closeKnowMeModal() {
+            knowMeModalOverlay.classList.add('hidden');
+            knowMeModalOverlay.classList.remove('flex');
+            knowMeIframe.src = 'about:blank';
+        }
+
+        function handleResultsClick(event) {
+            const button = event.target.closest('button');
+            if (!button) return;
+            const employeeId = button.dataset.employeeId;
+            if (!employeeId) return;
+            const employee = allEmployees.find(emp => emp.id === employeeId);
+            if (!employee) return;
+
+            if (button.classList.contains('btn-locate')) {
+                showLocateModal(employee);
+            } else if (button.classList.contains('btn-know-me')) {
+                showKnowMeModal(employee);
+            }
+        }
+
+        // --- Init & Event Listeners ---
+        document.addEventListener('DOMContentLoaded', () => {
+            populateDepartments();
+            initializeFirebaseApp();
+
+            // Existing filters
+            searchInput.addEventListener('input', filterAndRender);
+            deptSelect.addEventListener('change', filterAndRender);
+            resetButton.addEventListener('click', (e) => { e.preventDefault(); resetFilters(); });
+            filterForm.addEventListener('submit', (e) => e.preventDefault());
+            resultsContainer.addEventListener('click', handleResultsClick);
+
+            // Modals close
+            locateCloseBtn.addEventListener('click', closeLocateModal);
+            locateModalOverlay.addEventListener('click', (e) => { if (e.target === locateModalOverlay) closeLocateModal(); });
+            knowMeCloseBtn.addEventListener('click', closeKnowMeModal);
+            knowMeModalOverlay.addEventListener('click', (e) => { if (e.target === knowMeModalOverlay) closeKnowMeModal(); });
+
+            // --- NEW: Clear (✕) button show/hide + action ---
+            // show only when typing (non-empty)
+            const toggleClear = () => {
+                if (searchInput.value.trim() !== '') {
+                    clearBtn.classList.add('visible');
+                } else {
+                    clearBtn.classList.remove('visible');
+                }
+            };
+            searchInput.addEventListener('input', toggleClear);
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                clearBtn.classList.remove('visible');
+                filterAndRender();
+                searchInput.focus();
+            });
+
+            // Ensure correct initial state on load
+            toggleClear();
         });
-      }
+    </script>
 
-      renderResults(filtered);
-    }
-
-    // --- Render logic ---
-    function renderResults(list) {
-      resultsContainer.innerHTML = "";
-      if (list.length === 0) {
-        noResults.classList.remove("hidden");
-        return;
-      }
-      noResults.classList.add("hidden");
-      list.forEach(emp => {
-        resultsContainer.insertAdjacentHTML("beforeend", `
-          <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex flex-col sm:flex-row items-start sm:items-center">
-            <img src="${emp.imageUrl ? `https://aqualocator.github.io/photos/${emp.imageUrl}` : 'https://placehold.co/80x80/CCC/FFF?text=No+Photo'}" class="w-20 h-20 rounded-full border object-cover mr-4 mb-2 sm:mb-0">
-            <div>
-              <h3 class="text-lg font-semibold text-gray-800">${emp.name || "Unnamed"}</h3>
-              <p class="text-sm text-gray-600">${emp.title || ""}</p>
-              <p class="text-sm text-gray-500">${emp.dept || ""}</p>
-              <div class="mt-2 flex flex-wrap gap-2">
-                ${emp.url ? `<button class="btn-locate text-sm px-3 py-1 rounded" onclick="openLocate('${emp.url}','${emp.name}')">Locate</button>` : ""}
-                ${emp.website ? `<button class="btn-know-me text-sm px-3 py-1 rounded" onclick="openKnowMe('${emp.website}','${emp.name}')">Know Me</button>` : ""}
-              </div>
-            </div>
-          </div>
-        `);
-      });
-    }
-
-    // --- Modal logic ---
-    window.openLocate = (url, name) => {
-      const modal = document.getElementById("locate-modal");
-      document.getElementById("locate-iframe").src = url;
-      document.getElementById("locate-modal-title").textContent = `Location: ${name}`;
-      modal.classList.remove("hidden");
-    };
-    window.openKnowMe = (url, name) => {
-      const modal = document.getElementById("know-me-modal");
-      document.getElementById("know-me-iframe").src = url;
-      document.getElementById("know-me-modal-title").textContent = `About: ${name}`;
-      modal.classList.remove("hidden");
-    };
-    document.getElementById("locate-modal-close-btn").onclick = () => document.getElementById("locate-modal").classList.add("hidden");
-    document.getElementById("know-me-modal-close-btn").onclick = () => document.getElementById("know-me-modal").classList.add("hidden");
-  });
-</script>
 </body>
 </html>
