@@ -645,8 +645,10 @@
             deptSelect.value = "All Departments"; // Reset to "All Departments" value
             filterAndRender();
             
-            // --- NEW: Focus on search input after reset ---
-            searchInput.focus();
+            // --- NEW: Focus on search input on load (with mobile workaround) ---
+            setTimeout(() => {
+                searchInput.focus();
+            }, 100); // 100ms delay
             // --- END NEW ---
         }
 
