@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!version 3.6 (clear-button integration)>
+    <!-- version 3.6 (clear-button integration) -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AQUALocator - Employee Office Locator</title>
@@ -168,7 +168,7 @@
         <div class="w-full text-right text-sm">
             <a href="https://form.jotform.com/193454652984168" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline font-medium tooltip-bottom" data-tooltip="Submit a request to update your profile details">Update Profile</a>
             <a href="help.html" class="text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4 tooltip-bottom" data-tooltip="View the AQUALocator help guide">Help</a>
-            <a href="set-webex-default.html" class="text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4 tooltip-bottom" data-tooltip="Instructions for setting up Webex Calling default">Set Up Webex Calling</a>
+            <a href="set-webex-default.html" class="hidden sm:inline text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4 tooltip-bottom" data-tooltip="Instructions for setting up Webex Calling default">Set Up Webex Calling</a>
         </div>
     </div>
 
@@ -195,7 +195,6 @@
                                 Search by:<br>Name,title,initials,responsibilities,dept or email
                             </label>
 
-                            <!-- Search input with inside clear button + RESET -->
                             <div class="flex">
                               <div class="relative flex-grow">
                                 <input
@@ -205,7 +204,6 @@
                                   placeholder="e.g.,Carlson or AquaNereda or RJW"
                                   autofocus
                                 >
-                                <!-- ✕ clear button (SVG) -->
                                 <button type="button" id="clear-search" class="text-gray-400" data-tooltip="Clear search text">
                                   <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -236,7 +234,6 @@
         </div>
     </div>
 
-    <!-- Locate Modal -->
     <div id="locate-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl h-full custom-max-h-600 flex flex-col">
             <div class="flex justify-between items-center p-3 border-b">
@@ -251,7 +248,6 @@
         </div>
     </div>
 
-    <!-- Know Me Modal -->
     <div id="know-me-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-xl h-full custom-max-h-800 flex flex-col">
             <div class="flex justify-between items-center p-3 border-b">
@@ -436,7 +432,10 @@
 
                             <div class="text-sm text-gray-700 space-y-0.5 mt-2">
                                 <p><strong class="font-medium">Ext:</strong>
-                                    ${employee.ext ? `<a href="tel:${employee.ext}" class="text-blue-600 hover:underline" data-tooltip="Call ${safeEmpName} at extension ${employee.ext} via Webex">${employee.ext}</a>` : 'N/A'}
+                                    ${employee.ext ? `
+                                        <a href="tel:${employee.ext}" class="hidden sm:inline text-blue-600 hover:underline" data-tooltip="Call ${safeEmpName} at extension ${employee.ext} via Webex">${employee.ext}</a>
+                                        <span class="inline sm:hidden">${employee.ext}</span>
+                                    ` : 'N/A'}
                                 </p>
                                 <p><strong class="font-medium">Dept:</strong> ${employee.dept || 'N/A'}</p>
                                 ${employee.email && employee.email.trim() !== '' ? `

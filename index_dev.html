@@ -1,89 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!version 3.6 (adds hover-toasts) >
+    <!-- version 3.6 (clear-button integration) -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AQUALocator - Employee Office Locator</title>
-    <link rel="icon" href="data:,">
+    <link rel="icon" href="favicon.ico">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-	<style type="text/tailwindcss">
-    @theme {
-      --font-sans: system-ui, sans-serif;
-      --font-display: Inter, sans-serif;
-    }
-  </style>
+    <style type="text/tailwindcss">
+      @theme {
+        --font-sans: system-ui, sans-serif;
+        --font-display: Inter, sans-serif;
+      }
+    </style>
 
     <style>
+        /* Set default font for the page */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #fafafa;
+            background-color: #fafafa; /* Cleaner background */
         }
-        .btn-locate { background-color: #5d3587; color: #fff; transition: background-color .2s ease-in-out; }
+
+        /* Custom button colors (Updated Theme) */
+        .btn-locate {
+            background-color: #5d3587; /* Richer Indigo/Violet */
+            color: white;
+            transition: background-color 0.2s ease-in-out;
+        }
         .btn-locate:hover { background-color: #4a2d6b; }
-        .btn-know-me { background-color: #ee2741; color:#fff; text-transform: uppercase; transition: background-color .2s ease-in-out; }
+
+        .btn-know-me {
+            background-color: #ee2741; /* Red color */
+            color: white;
+            transition: background-color 0.2s ease-in-out;
+        }
         .btn-know-me:hover { background-color: #d41f35; }
-        .btn-reset { background-color: #35a2c4; color:#fff; transition: background-color .2s ease-in-out; }
+
+        .btn-reset {
+            background-color: #35a2c4; /* Blue */
+            color: white;
+            transition: background-color 0.2s ease-in-out;
+        }
         .btn-reset:hover { background-color: #2a8faf; }
 
-        select {
-            -webkit-appearance: none; -moz-appearance: none; appearance: none;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-13%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-13%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
-            background-repeat: no-repeat; background-position: right .5rem center; background-size: .65em auto;
-            padding-right: 2.5rem;
-            border: none; border-bottom: 2px solid #35a2c4; border-radius: 0;
-            padding-left: 0; padding-top: .5rem; padding-bottom: .5rem;
+        #search-input::placeholder { font-size: 0.775rem; /* ~12.4px */ }
+
+        /* --- Clear (✕) button that fades in/out and sits inside the input --- */
+        #clear-search {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #9ca3af; /* gray-400 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.25rem;
+            /* Hidden by default, shown via .visible */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out, color 0.2s ease-in-out;
         }
-        select:focus { box-shadow: none; border-bottom: 2px solid #35a2c4; outline: none; }
+        #clear-search:hover { color: #4b5563; } /* gray-600 */
+        #clear-search.visible {
+            opacity: 1;
+            visibility: visible;
+        }
 
+        /* Custom styling for the select dropdown */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            /* Custom SVG arrow*/
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-13%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-13%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right .5rem center;
+            background-size: .65em auto;
+            padding-right: 2.5rem; /* Make space for arrow */
+
+            /* Blue bottom border style */
+            border: none;
+            border-bottom: 2px solid #35a2c4;
+            border-radius: 0;
+            padding-left: 0;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        /* Remove default focus ring and keep border */
+        select:focus {
+            box-shadow: none;
+            border-bottom: 2px solid #35a2c4;
+            outline: none;
+        }
+
+        /* Ensure modals are on top */
         #locate-modal, #know-me-modal { z-index: 1000; }
-        button:disabled { opacity: .5; cursor: not-allowed; }
 
-        .custom-top-32 { top: 8rem; }
-		.custom-max-h-600 { max-height: 600px; min-height: 600px; }
-		.custom-max-h-800 { max-height: 600px; min-height: 600px; }
-		.custom-color-blue { color: #29aae2; }
+        /* Style disabled buttons */
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
 
+        /* --- CUSTOM CLASSES --- */
+        .custom-top-32 { top: 8rem; /* 8rem = 128px */ }
+        .custom-max-h-600 { max-height: 600px; }
+        .custom-max-h-800 { max-height: 600px; }
+        .custom-color-blue { color: #29aae2; }
+
+        /* --- LOADER STYLES --- */
         main { position: relative; }
         #loading-overlay {
-            position: absolute; top:0; left:0; width:100%; min-height:200px; height:100%;
-            background-color: rgba(255,255,255,.7);
-            justify-content: center; align-items: center; z-index:10;
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            min-height: 200px;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
         }
-        .loader { width:50px; height:50px; border:4px solid #e0e0e0; border-top:4px solid #5d3587; border-radius:50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% {transform: rotate(0)} 100% {transform: rotate(360deg)} }
+        .loader {
+            width: 50px; height: 50px;
+            border: 4px solid #e0e0e0;
+            border-top: 4px solid #5d3587;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
 
-        /* Tooltip (hover-toast) */
-        .tooltip {
-            position: fixed;
-            max-width: 280px;
-            font-size: 12px;
-            line-height: 1.25rem;
-            background: rgba(17,24,39,0.95); /* gray-900 */
-            color: #fff;
-            padding: .5rem .6rem;
-            border-radius: .5rem;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
-            z-index: 9999;
-            transform: translate(-50%, -100%);
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity .12s ease, transform .12s ease;
-            white-space: normal;
+        /* --- TOOLTIP STYLES --- */
+        [data-tooltip] { position: relative; cursor: pointer; }
+        [data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%; left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            background-color: #333; color: white;
+            padding: 4px 8px; border-radius: 4px;
+            font-size: 0.875rem; line-height: 1.25rem; font-weight: 500;
+            white-space: nowrap; z-index: 10000;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, visibility 0.2s;
+            pointer-events: none; margin-bottom: 6px;
         }
-        .tooltip.show {
-            opacity: 1;
-            transform: translate(-50%, -110%);
+        [data-tooltip].tooltip-bottom::after {
+            bottom: auto; top: 100%;
+            margin-bottom: 0; margin-top: 6px;
         }
-        .tooltip[data-pos="bottom"] {
-            transform: translate(-50%, 0%);
-        }
-        .tooltip[data-pos="bottom"].show {
-            transform: translate(-50%, 10%);
+        @media (hover: hover) {
+            [data-tooltip]:hover::after {
+                opacity: 1; visibility: visible; transform: translateX(-50%) scale(1);
+            }
         }
     </style>
 </head>
@@ -92,34 +166,16 @@
 
    <div class="container mx-auto p-4 max-w-6xl">
         <div class="w-full text-right text-sm">
-            <a 
-                href="https://form.jotform.com/193454652984168" 
-                target="_blank" 
-                class="text-blue-600 hover:text-blue-800 hover:underline font-medium"
-                data-tooltip="Update your profile details (photo, contact info, etc.) in a secure form.">
-                Update Profile
-            </a>
-            <a 
-                href="help.html" 
-                class="text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4"
-                data-tooltip="Open the Help page for setup steps and common questions.">
-                Help
-            </a>
-            <a 
-                href="set-webex-default.html" 
-                class="text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4"
-                data-tooltip="Guide to set Webex as your default calling app for 4-digit extensions.">
-                Set Up Webex Calling
-            </a>
+            <a href="https://form.jotform.com/193454652984168" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline font-medium tooltip-bottom" data-tooltip="Submit a request to update your profile details">Update Profile</a>
+            <a href="help.html" class="text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4 tooltip-bottom" data-tooltip="View the AQUALocator help guide">Help</a>
+            <a href="set-webex-default.html" class="hidden sm:inline text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4 tooltip-bottom" data-tooltip="Instructions for setting up Webex Calling default">Set Up Webex Calling</a>
         </div>
     </div>
 
     <header class="bg-white shadow-md mb-6 sticky top-0 z-10">
         <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl flex items-center justify-between">
             <div class="flex items-center space-x-4">
-                <a href="index.html" data-tooltip="Back to the AQUALocator home page">
-                    <img src="aqua-aerobics-logo.png" alt="Aqua-Aerobic Systems Logo" class="h-10 sm:h-12">
-                </a>
+                <a href="index.html" data-tooltip="Go to Homepage"><img src="aqua-aerobics-logo.png" alt="Aqua-Aerobic Systems Logo" class="h-10 sm:h-12"></a>
                 <div>
                     <h1 class="text-2xl sm:text-3xl font-bold custom-color-blue">AQUALocator</h1>
                     <p class="text-sm text-gray-500 hidden sm:block">An Aqua employee office locator</p>
@@ -129,42 +185,51 @@
     </header>
 
     <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl">
-
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
 
             <aside class="md:col-span-5 lg:col-span-5">
-                <div class="bg-white p-4 rounded-lg shadow-sm sticky custom-top-32">
+                <div class="bg-white p-4 rounded-lg shadow-sm sticky custom-top-32 z-20">
                     <form id="filter-form">
                         <div class="mb-4">
                             <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">
                                 Search by:<br>Name,title,initials,responsibilities,dept or email
                             </label>
+
                             <div class="flex">
-                                <input type="text" id="search-input" class="flex-grow w-full px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g.,Carlson or AquaNereda or RJW">
-                                <button type="button" id="reset-button" class="btn-reset font-medium px-4 py-2 rounded-r-md" data-tooltip="Clear the search and department filter.">RESET</button>
+                              <div class="relative flex-grow">
+                                <input
+                                  type="text"
+                                  id="search-input"
+                                  class="w-full px-3 py-2 pr-8 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-[0.775rem]"
+                                  placeholder="e.g.,Carlson or AquaNereda or RJW"
+                                  autofocus
+                                >
+                                <button type="button" id="clear-search" class="text-gray-400" data-tooltip="Clear search text">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                  </svg>
+                                </button>
+                              </div>
+
+                              <button type="button" id="reset-button" class="btn-reset font-medium px-4 py-2 rounded-r-md" data-tooltip="Clear all search terms and reset filters">RESET</button>
                             </div>
                         </div>
 
                         <div>
-                            <label for="dept-select" class="block text-sm font-medium text-gray-700 mb-1">
-                                Filter by:
-                            </label>
-                            <select id="dept-select" class="w-full text-lg font-medium text-gray-800 bg-white focus:outline-none" data-tooltip="Limit results to a specific department group (default shows all).">
-                            </select>
+                            <label for="dept-select" class="block text-sm font-medium text-gray-700 mb-1">Filter by:</label>
+                            <div data-tooltip="Limit results to a specific department group">
+                                <select id="dept-select" class="w-full text-lg font-medium text-gray-800 bg-white focus:outline-none"></select>
+                            </div>
                         </div>
                     </form>
                 </div>
             </aside>
 
             <main class="md:col-span-7 lg:col-span-7">
-                <div id="loading-overlay" class="hidden">
-                    <div class="loader"></div>
-                </div>
+                <div id="loading-overlay" class="hidden"><div class="loader"></div></div>
                 <div id="results-count" class="text-sm font-medium text-gray-600 mb-2 hidden"></div>
                 <div id="results-container" class="space-y-4"></div>
-                <div id="no-results" class="hidden text-center text-gray-500 p-8">
-                    No employees found matching your criteria.
-                </div>
+                <div id="no-results" class="hidden text-center text-gray-500 p-8">No employees found matching your criteria.</div>
             </main>
         </div>
     </div>
@@ -173,8 +238,8 @@
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl h-full custom-max-h-600 flex flex-col">
             <div class="flex justify-between items-center p-3 border-b">
                 <h3 id="locate-modal-title" class="text-lg font-semibold text-gray-900">Location Viewer</h3>
-                <button id="locate-modal-close-btn" class="text-gray-400 hover:text-gray-600" aria-label="Close location modal" data-tooltip="Close this window">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <button id="locate-modal-close-btn" class="text-gray-400 hover:text-gray-600" data-tooltip="Close this window">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
             <div class="flex-1 p-1 bg-gray-200">
@@ -187,8 +252,8 @@
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-xl h-full custom-max-h-800 flex flex-col">
             <div class="flex justify-between items-center p-3 border-b">
                 <h3 id="know-me-modal-title" class="text-lg font-semibold text-gray-900">Get to Know Me</h3>
-                <button id="know-me-modal-close-btn" class="text-gray-400 hover:text-gray-600" aria-label="Close info modal" data-tooltip="Close this window">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <button id="know-me-modal-close-btn" class="text-gray-400 hover:text-gray-600" data-tooltip="Close this window">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
             <div class="flex-1 p-1 bg-gray-200 overflow-auto">
@@ -197,12 +262,11 @@
         </div>
     </div>
 
-
     <script type="module">
         // --- Firebase SDK Imports ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, onSnapshot, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; 
+        import { getFirestore, collection, onSnapshot, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- Global Variables ---
         let allEmployees = []; // This will hold our data from Firebase
@@ -211,7 +275,7 @@
         // --- Image Base URL ---
         const imageBaseUrl = "https://aqualocator.github.io/photos/";
 
-        // --- App/Firebase Config ---
+        // --- Manual Firebase Config ---
         const MANUAL_FIREBASE_CONFIG = {
             apiKey: "AIzaSyABeCFheLuS08mxfWjCSS2ugXFbLDgnpIE",
             authDomain: "aqualocator-23714.firebaseapp.com",
@@ -223,16 +287,7 @@
         };
 
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        let firebaseConfig;
-        const usingManualConfig = Object.keys(MANUAL_FIREBASE_CONFIG).length > 0 && MANUAL_FIREBASE_CONFIG.apiKey;
-        if (usingManualConfig) {
-            firebaseConfig = MANUAL_FIREBASE_CONFIG;
-        } else {
-            try {
-                firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-                if (!firebaseConfig || !firebaseConfig.apiKey) { firebaseConfig = {}; }
-            } catch (e) { firebaseConfig = {}; }
-        }
+        let firebaseConfig = MANUAL_FIREBASE_CONFIG;
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
         // --- Full Department List ---
@@ -278,8 +333,10 @@
         const resetButton = document.getElementById('reset-button');
         const resultsContainer = document.getElementById('results-container');
         const noResultsMessage = document.getElementById('no-results');
-        const loadingOverlay = document.getElementById('loading-overlay'); 
-		const resultsCount = document.getElementById('results-count');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const resultsCount = document.getElementById('results-count');
+        const filterForm = document.getElementById('filter-form');
+        const clearBtn = document.getElementById('clear-search');
 
         // --- Locate Modal Elements ---
         const locateModalOverlay = document.getElementById('locate-modal');
@@ -293,77 +350,7 @@
         const knowMeIframe = document.getElementById('know-me-iframe');
         const knowMeCloseBtn = document.getElementById('know-me-modal-close-btn');
 
-        /** ------------------------------
-         * Tooltip (hover-toast) utility
-         * ------------------------------ */
-        const tooltip = document.createElement('div');
-        tooltip.className = 'tooltip';
-        tooltip.setAttribute('role', 'tooltip');
-        document.body.appendChild(tooltip);
-
-        let tooltipTarget = null;
-        let hideTimer = null;
-
-        function showTooltip(el) {
-            if (!el) return;
-            const text = el.getAttribute('data-tooltip');
-            if (!text) return;
-            tooltip.textContent = text;
-
-            const rect = el.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            let top = rect.top - 8; // above by default
-            let pos = 'top';
-
-            // If not enough space above, place below
-            if (rect.top < 40) {
-                top = rect.bottom + 8;
-                pos = 'bottom';
-            }
-            tooltip.dataset.pos = pos;
-
-            const x = centerX + window.scrollX;
-            const y = top + window.scrollY;
-            tooltip.style.left = x + 'px';
-            tooltip.style.top = y + 'px';
-
-            tooltip.classList.add('show');
-            tooltipTarget = el;
-        }
-
-        function hideTooltip(immediate = false) {
-    if (immediate) {
-        tooltip.classList.remove('show');
-        tooltipTarget = null;
-        return;
-    }
-    clearTimeout(hideTimer);
-    // Wait longer (e.g., 800 ms) before hiding so users can read
-    hideTimer = setTimeout(() => {
-        tooltip.classList.remove('show');
-        tooltipTarget = null;
-    }, 2000);
-}
-
-        // Show on hover/focus for any element with [data-tooltip]
-        document.addEventListener('mouseover', (e) => {
-            const el = e.target.closest('[data-tooltip]');
-            if (!el) return;
-            showTooltip(el);
-        });
-        document.addEventListener('mouseout', (e) => {
-            if (e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest('[data-tooltip]') === tooltipTarget) return;
-            hideTooltip();
-        });
-        document.addEventListener('focusin', (e) => {
-            const el = e.target.closest?.('[data-tooltip]');
-            if (!el) return;
-            showTooltip(el);
-        });
-        document.addEventListener('focusout', () => hideTooltip());
-
-        /** ------------------------------ */
-
+        // --- Populate Departments ---
         function populateDepartments() {
             deptSelect.innerHTML = '';
             departmentList.forEach(dept => {
@@ -375,9 +362,11 @@
             deptSelect.value = "All Departments";
         }
 
+        // --- Render Results ---
         function renderResults(filteredEmployees) {
             resultsContainer.innerHTML = '';
             const count = filteredEmployees.length;
+
             noResultsMessage.classList.toggle('hidden', count > 0);
 
             if (count > 0) {
@@ -388,9 +377,8 @@
             }
 
             filteredEmployees.forEach(employee => {
-                if (!employee.name || employee.name.trim() === '' || employee.name.trim().toLowerCase() === 'n/a') {
-                    return;
-                }
+                const safeEmpName = employee.name || 'Employee';
+                if (!employee.name || employee.name.trim() === '' || employee.name.trim().toLowerCase() === 'n/a') return;
 
                 let finalImageUrl;
                 const placeholderUrl = 'https://placehold.co/80x80/CCCCCC/FFFFFF?text=No+Photo&font=inter';
@@ -406,22 +394,7 @@
                     finalImageUrl = placeholderUrl;
                 }
 
-                const showKnowMeButton = employee.FloorMap &&
-                                         employee.FloorMap.trim() !== '' &&
-                                         employee.FloorMap.toLowerCase() !== 'null';
-
-                const locateEnabled = !!employee.url;
-                const locateTooltip = locateEnabled
-                    ? "Open this employee’s location in a modal viewer."
-                    : "Location data is missing for this employee.";
-
-                const telHtml = employee.ext
-                    ? `<a href="tel:${employee.ext}" class="text-blue-600 hover:underline" data-tooltip="Dial this 4-digit extension in your calling app.">${employee.ext}</a>`
-                    : 'N/A';
-
-                const emailHtml = (employee.email && employee.email.trim() !== '')
-                    ? `<a href="mailto:${employee.email.trim()}" class="text-blue-600 hover:underline break-words" data-tooltip="Compose an email to this employee.">${employee.email.trim()}</a>`
-                    : '<p>N/A</p>';
+                const showKnowMeButton = employee.FloorMap && employee.FloorMap.trim() !== '' && employee.FloorMap.toLowerCase() !== 'null';
 
                 const card = `
                     <div class="flex flex-col sm:flex-row items-start sm:items-center bg-white p-4 rounded-lg shadow-sm border border-gray-200">
@@ -431,7 +404,6 @@
                             class="w-20 h-20 rounded-full mr-0 sm:mr-4 mb-3 sm:mb-0 flex-shrink-0 object-cover border"
                             onerror="this.onerror=null; this.src='${errorUrl}';"
                         >
-
                         <div class="flex-1 min-w-0">
                             <h3 class="text-xl font-bold text-gray-800 truncate">${employee.name || 'N/A'}</h3>
                             <p class="text-gray-600 truncate">${employee.title || 'N/A'}</p>
@@ -442,19 +414,15 @@
                                     class="btn-locate text-sm font-medium py-1 px-3 rounded-md"
                                     data-employee-id="${employee.id}"
                                     type="button"
-                                    ${!locateEnabled ? 'disabled' : ''}
-                                    data-tooltip="${locateTooltip}">
-                                    LOCATE
-                                </button>
-
+                                    ${!employee.url ? 'disabled title="Location URL missing"' : `data-tooltip="Show ${safeEmpName}'s office location on the map"`}
+                                >LOCATE</button>
                                 ${showKnowMeButton ? `
                                 <button
                                     class="btn-know-me text-sm font-medium py-1 px-3 rounded-md"
                                     data-employee-id="${employee.id}"
                                     type="button"
-                                    data-tooltip="Open a quick profile with photo and basics.">
-                                    GET TO KNOW ME
-                                </button>` : ''}
+                                    data-tooltip="View 'Get to Know Me' info for ${safeEmpName}"
+                                >GET TO KNOW ME</button>` : ''}
                             </div>
 
                             ${employee.responsibilities ? `
@@ -463,9 +431,16 @@
                             </div>` : ''}
 
                             <div class="text-sm text-gray-700 space-y-0.5 mt-2">
-                                <p><strong class="font-medium">Ext:</strong> ${telHtml}</p>
+                                <p><strong class="font-medium">Ext:</strong>
+                                    ${employee.ext ? `
+                                        <a href="tel:${employee.ext}" class="hidden sm:inline text-blue-600 hover:underline" data-tooltip="Call ${safeEmpName} at extension ${employee.ext} via Webex">${employee.ext}</a>
+                                        <span class="inline sm:hidden">${employee.ext}</span>
+                                    ` : 'N/A'}
+                                </p>
                                 <p><strong class="font-medium">Dept:</strong> ${employee.dept || 'N/A'}</p>
-                                ${emailHtml}
+                                ${employee.email && employee.email.trim() !== '' ? `
+                                <a href="mailto:${employee.email.trim()}" class="text-blue-600 hover:underline break-words" data-tooltip="Send an email to ${safeEmpName}">${employee.email.trim()}</a>
+                                ` : '<p>N/A</p>'}
                             </div>
                         </div>
                     </div>
@@ -478,6 +453,7 @@
             resultsContainer.classList.remove('hidden');
         }
 
+        // --- Filter + Render ---
         function filterAndRender() {
             resultsContainer.classList.add('hidden');
             loadingOverlay.classList.remove('hidden');
@@ -489,6 +465,7 @@
                 const selectedDept = deptSelect.value;
                 let filtered = [...allEmployees];
 
+                // Department Filtering
                 if (selectedDept && selectedDept !== "All Departments") {
                     if (selectedDept === "Engineering Initials" || selectedDept === "All Engineering Departments") {
                         filtered = filtered.filter(emp => emp.dept && emp.dept.startsWith("Eng -"));
@@ -499,40 +476,40 @@
                     }
                 }
 
+                // Text Search Filtering
                 if (searchTerms.length > 0) {
                     let fieldsToSearch = ['name', 'title', 'email', 'responsibilities', 'dept'];
                     if (selectedDept === "Engineering Initials") {
-                        fieldsToSearch = ['initials'];
+                        fieldsToSearch = ['initials']; // Only initials for ENG Initials
                     } else {
-                        fieldsToSearch.push('initials', 'First', 'Last'); 
+                        fieldsToSearch.push('initials', 'First', 'Last');
                     }
 
-                    filtered = filtered.filter(employee => {
-                        return searchTerms.every(term => {
-                            return fieldsToSearch.some(field => {
+                    filtered = filtered.filter(employee =>
+                        searchTerms.every(term =>
+                            fieldsToSearch.some(field => {
                                 const value = employee[field];
                                 return typeof value === 'string' && value.toLowerCase().includes(term);
-                            });
-                        });
-                    });
+                            })
+                        )
+                    );
                 }
 
                 renderResults(filtered);
             }, 100);
         }
 
+        // --- Reset ---
         function resetFilters() {
             searchInput.value = '';
             deptSelect.value = "All Departments";
+            clearBtn.classList.remove('visible');
             filterAndRender();
+            searchInput.focus();
         }
 
+        // --- Firebase Init + Listener ---
         async function initializeFirebaseApp() {
-             if (!firebaseConfig || Object.keys(firebaseConfig).length === 0 || !firebaseConfig.apiKey) {
-                resultsContainer.innerHTML = `<div class="text-red-600 text-center p-4 font-semibold">Error: Firebase configuration is missing or invalid. Please check the MANUAL_FIREBASE_CONFIG or link your project correctly.</div>`;
-                return;
-            }
-
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
@@ -544,7 +521,7 @@
                         setupFirebaseListener();
                     } else {
                         try {
-                            if (initialAuthToken && !usingManualConfig) {
+                            if (initialAuthToken) {
                                 await signInWithCustomToken(auth, initialAuthToken);
                             } else {
                                 await signInAnonymously(auth);
@@ -555,7 +532,6 @@
                         }
                     }
                 });
-
             } catch (error) {
                 resultsContainer.innerHTML = `<div class="text-red-600 text-center p-4 font-semibold">Error: Could not initialize Firebase. ${error.message}</div>`;
             }
@@ -569,46 +545,38 @@
             loadingOverlay.classList.add('flex');
 
             const collectionPath = `artifacts/${appId}/public/data/employees`;
+            const q = collection(db, collectionPath);
 
-            try {
-                const q = collection(db, collectionPath);
+            onSnapshot(q, (snapshot) => {
+                let rawEmployees = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-                onSnapshot(q, (snapshot) => {
-                    let rawEmployees = snapshot.docs.map(doc => ({
-                        id: doc.id,
-                        ...doc.data()
-                    }));
+                // Remove unwanted rows by responsibility value
+                allEmployees = rawEmployees.filter(emp => emp.responsibilities !== "XXX");
 
-                    allEmployees = rawEmployees.filter(emp => emp.responsibilities !== "XXX");
-
-                    allEmployees.sort((a, b) => {
-                        let lastNameA = a.Last || (a.name || '').split(' ').pop();
-                        let lastNameB = b.Last || (b.name || '').split(' ').pop();
-                        lastNameA = lastNameA.split(',')[0].trim();
-                        lastNameB = lastNameB.split(',')[0].trim();
-                        const sortResult = lastNameA.toLowerCase().localeCompare(lastNameB.toLowerCase());
-                        if (sortResult !== 0) return sortResult;
-                        const firstNameA = a.First || (a.name || '').split(' ')[0];
-                        const firstNameB = b.First || (b.name || '').split(' ')[0];
-                        return firstNameA.toLowerCase().localeCompare(firstNameB.toLowerCase());
-                    });
-
-                    filterAndRender();
-                }, (error) => {
-                    resultsContainer.innerHTML = `<div class="text-red-500 text-center p-4">Error: Could not fetch employee data. ${error.message}</div>`;
-                    loadingOverlay.classList.add('hidden');
-                    loadingOverlay.classList.remove('flex');
-                    resultsContainer.classList.remove('hidden');
-                    allEmployees = [];
+                // Sort by Last then First (handling commas)
+                allEmployees.sort((a, b) => {
+                    let lastNameA = a.Last || (a.name || '').split(' ').pop();
+                    let lastNameB = b.Last || (b.name || '').split(' ').pop();
+                    lastNameA = lastNameA.split(',')[0].trim();
+                    lastNameB = lastNameB.split(',')[0].trim();
+                    const s = lastNameA.toLowerCase().localeCompare(lastNameB.toLowerCase());
+                    if (s !== 0) return s;
+                    const firstNameA = a.First || (a.name || '').split(' ')[0];
+                    const firstNameB = b.First || (b.name || '').split(' ')[0];
+                    return firstNameA.toLowerCase().localeCompare(firstNameB.toLowerCase());
                 });
-            } catch (error) {
-                resultsContainer.innerHTML = `<div class="text-red-500 text-center p-4">Error setting up database listener. ${error.message}</div>`;
+
+                filterAndRender();
+            }, (error) => {
+                resultsContainer.innerHTML = `<div class="text-red-500 text-center p-4">Error: Could not fetch employee data. ${error.message}</div>`;
                 loadingOverlay.classList.add('hidden');
                 loadingOverlay.classList.remove('flex');
                 resultsContainer.classList.remove('hidden');
-            }
+                allEmployees = [];
+            });
         }
 
+        // --- Modal Helpers ---
         function showLocateModal(employee) {
             if (employee && employee.url) {
                 const urlMatch = employee.url.match(/src="([^"]+)"/);
@@ -634,11 +602,11 @@
 
         function showKnowMeModal(employee) {
             if (employee && employee.FloorMap && employee.FloorMap.trim() !== '' && employee.FloorMap.toLowerCase() !== 'null') {
-                 const knowMeUrl = `https://aqualocator.github.io/welcome/index.html?image=${encodeURIComponent(employee.FloorMap)}`;
-                 knowMeModalTitle.textContent = `Get to Know: ${employee.name || 'Employee'}`;
-                 knowMeIframe.src = knowMeUrl;
-                 knowMeModalOverlay.classList.remove('hidden');
-                 knowMeModalOverlay.classList.add('flex');
+                const knowMeUrl = `https://aqualocator.github.io/welcome/index.html?image=${encodeURIComponent(employee.FloorMap)}`;
+                knowMeModalTitle.textContent = `Get to Know: ${employee.name || 'Employee'}`;
+                knowMeIframe.src = knowMeUrl;
+                knowMeModalOverlay.classList.remove('hidden');
+                knowMeModalOverlay.classList.add('flex');
             }
         }
         function closeKnowMeModal() {
@@ -650,10 +618,8 @@
         function handleResultsClick(event) {
             const button = event.target.closest('button');
             if (!button) return;
-
             const employeeId = button.dataset.employeeId;
             if (!employeeId) return;
-
             const employee = allEmployees.find(emp => emp.id === employeeId);
             if (!employee) return;
 
@@ -664,21 +630,43 @@
             }
         }
 
+        // --- Init & Event Listeners ---
         document.addEventListener('DOMContentLoaded', () => {
             populateDepartments();
             initializeFirebaseApp();
 
+            // Existing filters
             searchInput.addEventListener('input', filterAndRender);
             deptSelect.addEventListener('change', filterAndRender);
             resetButton.addEventListener('click', (e) => { e.preventDefault(); resetFilters(); });
-
+            filterForm.addEventListener('submit', (e) => e.preventDefault());
             resultsContainer.addEventListener('click', handleResultsClick);
 
+            // Modals close
             locateCloseBtn.addEventListener('click', closeLocateModal);
-            locateModalOverlay.addEventListener('click', (event) => { if (event.target === locateModalOverlay) closeLocateModal(); });
-
+            locateModalOverlay.addEventListener('click', (e) => { if (e.target === locateModalOverlay) closeLocateModal(); });
             knowMeCloseBtn.addEventListener('click', closeKnowMeModal);
-            knowMeModalOverlay.addEventListener('click', (event) => { if (event.target === knowMeModalOverlay) closeKnowMeModal(); });
+            knowMeModalOverlay.addEventListener('click', (e) => { if (e.target === knowMeModalOverlay) closeKnowMeModal(); });
+
+            // --- NEW: Clear (✕) button show/hide + action ---
+            // show only when typing (non-empty)
+            const toggleClear = () => {
+                if (searchInput.value.trim() !== '') {
+                    clearBtn.classList.add('visible');
+                } else {
+                    clearBtn.classList.remove('visible');
+                }
+            };
+            searchInput.addEventListener('input', toggleClear);
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                clearBtn.classList.remove('visible');
+                filterAndRender();
+                searchInput.focus();
+            });
+
+            // Ensure correct initial state on load
+            toggleClear();
         });
     </script>
 
