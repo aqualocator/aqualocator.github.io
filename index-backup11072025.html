@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!version 3.9>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AQUALocator - Employee Office Locator</title>
+  <link rel="icon" href="favicon.ico">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style type="text/tailwindcss">
+@theme {
+  --font-sans: system-ui, sans-serif;
+  --font-display: Inter, sans-serif;
+}
+</style>
+
+<style>
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #fafafa;
+}
+
+/* Buttons */
+.btn-locate { background-color: #5d3587; color: white; transition: background-color 0.2s ease-in-out; }
+.btn-locate:hover { background-color: #4a2d6b; }
+.btn-know-me { background-color: #ee2741; color: white; transition: background-color 0.2s ease-in-out; }
+.btn-know-me:hover { background-color: #d41f35; }
+.btn-reset { background-color: #35a2c4; color: white; transition: background-color 0.2s ease-in-out; }
+.btn-reset:hover { background-color: #2a8faf; }
+
+/* Placeholder */
+#search-input::placeholder { font-size: 0.775rem; }
+
+/* Clear button (✕) styling */
+#clear-search {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out, color 0.2s ease-in-out;
+}
+#clear-search:hover { color: #4b5563; }
+#clear-search.visible { opacity: 1; visibility: visible; }
+
+/* Dropdown */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-13%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-13%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right .5rem center;
+  background-size: .65em auto;
+  padding-right: 2.5rem;
+  border: none;
+  border-bottom: 2px solid #35a2c4;
+  border-radius: 0;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+select:focus { box-shadow: none; border-bottom: 2px solid #35a2c4; outline: none; }
+
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Tooltip styling */
+[data-tooltip] {
+  position: relative;
+  cursor: pointer;
+}
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  background-color: #333;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, visibility 0.2s;
+  white-space: nowrap;
+}
+[data-tooltip].tooltip-bottom::after { bottom: auto; top: 100%; margin-top: 6px; }
+@media (hover: hover) {
+  [data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+  }
+}
+</style>
+</head>
+
+<body class="bg-gray-100">
+
+<!-- Header links -->
+<div class="container mx-auto p-4 max-w-6xl">
+  <div class="w-full text-right text-sm">
+    <a href="https://form.jotform.com/193454652984168" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline font-medium tooltip-bottom" data-tooltip="Submit a request to update your profile details">Update Profile</a>
+    <a href="help.html" class="text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4 tooltip-bottom" data-tooltip="View the AQUALocator help guide">Help</a>
+    <a href="set-webex-default.html" class="text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4 tooltip-bottom" data-tooltip="Instructions for setting up Webex Calling default">Set Up Webex Calling</a>
+  </div>
+</div>
+
+<!-- Title Header -->
+<header class="bg-white shadow-md mb-6 sticky top-0 z-10">
+  <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <a href="index.html" data-tooltip="Go to Homepage"><img src="aqua-aerobics-logo.png" alt="Aqua-Aerobic Systems Logo" class="h-10 sm:h-12"></a>
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-bold text-[#29aae2]">AQUALocator</h1>
+        <p class="text-sm text-gray-500 hidden sm:block">An Aqua employee office locator</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Content -->
+<div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl">
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+
+    <!-- Sidebar -->
+    <aside class="md:col-span-5 lg:col-span-5">
+      <div class="bg-white p-4 rounded-lg shadow-sm sticky top-32 z-20">
+        <form id="filter-form">
+          <div class="mb-4">
+            <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">
+              Search by:<br>Name, title, initials, responsibilities, dept or email
+            </label>
+
+            <!-- Search input -->
+            <div class="flex">
+              <div class="relative flex-grow">
+                <input type="text" id="search-input" class="w-full px-3 py-2 pr-8 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-[0.775rem]" placeholder="e.g., Carlson or AquaNereda or RJW" autofocus>
+                <!-- ✕ Clear Button -->
+                <button type="button" id="clear-search" data-tooltip="Clear search text">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+              <button type="button" id="reset-button" class="btn-reset font-medium px-4 py-2 rounded-r-md" data-tooltip="Clear all search terms and reset filters">RESET</button>
+            </div>
+          </div>
+
+          <div>
+            <label for="dept-select" class="block text-sm font-medium text-gray-700 mb-1">Filter by:</label>
+            <div data-tooltip="Limit results to a specific department group">
+              <select id="dept-select" class="w-full text-lg font-medium text-gray-800 bg-white focus:outline-none"></select>
+            </div>
+          </div>
+        </form>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="md:col-span-7 lg:col-span-7">
+      <div id="loading-overlay" class="hidden"><div class="loader"></div></div>
+      <div id="results-count" class="text-sm font-medium text-gray-600 mb-2 hidden"></div>
+      <div id="results-container" class="space-y-4"></div>
+      <div id="no-results" class="hidden text-center text-gray-500 p-8">No employees found matching your criteria.</div>
+    </main>
+  </div>
+</div>
+
+<!-- Locate Modal -->
+<div id="locate-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
+  <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl h-full max-h-[600px] flex flex-col">
+    <div class="flex justify-between items-center p-3 border-b">
+      <h3 id="locate-modal-title" class="text-lg font-semibold text-gray-900">Location Viewer</h3>
+      <button id="locate-modal-close-btn" class="text-gray-400 hover:text-gray-600">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="flex-1 p-1 bg-gray-200">
+      <iframe id="locate-iframe" class="w-full h-full border-0" src="about:blank" title="Location Map"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Know Me Modal -->
+<div id="know-me-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
+  <div class="bg-white rounded-lg shadow-2xl w-full max-w-xl h-full max-h-[600px] flex flex-col">
+    <div class="flex justify-between items-center p-3 border-b">
+      <h3 id="know-me-modal-title" class="text-lg font-semibold text-gray-900">Get to Know Me</h3>
+      <button id="know-me-modal-close-btn" class="text-gray-400 hover:text-gray-600">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="flex-1 p-1 bg-gray-200 overflow-auto">
+      <iframe id="know-me-iframe" class="w-full h-full border-0" src="about:blank" title="Get to Know Me"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Full JavaScript -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+  import { getFirestore, collection, onSnapshot, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+  let allEmployees = [];
+  let db, auth;
+
+  const MANUAL_FIREBASE_CONFIG = {
+    apiKey: "AIzaSyABeCFheLuS08mxfWjCSS2ugXFbLDgnpIE",
+    authDomain: "aqualocator-23714.firebaseapp.com",
+    projectId: "aqualocator-23714",
+    storageBucket: "aqualocator-23714.appspot.com",
+    messagingSenderId: "654848563347",
+    appId: "1:654848563347:web:4702a6f55ccbf7d5edd566"
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("search-input");
+    const clearBtn = document.getElementById("clear-search");
+    const deptSelect = document.getElementById("dept-select");
+    const resultsContainer = document.getElementById("results-container");
+    const loadingOverlay = document.getElementById("loading-overlay");
+    const noResults = document.getElementById("no-results");
+    const resetButton = document.getElementById("reset-button");
+
+    // --- Clear button logic (smooth fade) ---
+    searchInput.addEventListener("input", () => {
+      if (searchInput.value.trim() !== "") {
+        clearBtn.classList.add("visible");
+      } else {
+        clearBtn.classList.remove("visible");
+      }
+      filterAndRender();
+    });
+
+    clearBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      clearBtn.classList.remove("visible");
+      filterAndRender();
+      searchInput.focus();
+    });
+
+    resetButton.addEventListener("click", () => {
+      searchInput.value = "";
+      deptSelect.value = "All Departments";
+      clearBtn.classList.remove("visible");
+      filterAndRender();
+    });
+
+    // --- Populate department dropdown ---
+    const departmentList = [
+      "All Departments","Engineering Initials","All Engineering Departments",
+      "Accounting/Finance","Administration","AfterMarket Sales","Applications Engineering",
+      "Contract Administration","Customer Service","Domestic Sales-Midwest","Domestic Sales-Northeast",
+      "Domestic Sales-Southest","Domestic Sales-West","Eng - Admin","Eng - Electrical","Eng - Estimating",
+      "Eng - Mechanical","Eng - Standards","Field Services","Human Resources","Industrial Sales",
+      "Information Technology","International Sales","Manufacturing","Marketing/PR","Operations",
+      "Prod Mgmt - Aeration/Mixing","Prod Mgmt - Bio/Membrane","Prod Mgmt - Filtration","Production Control",
+      "Project Management","Research & Development","Sales and Marketing"
+    ];
+    deptSelect.innerHTML = departmentList.map(d => `<option>${d}</option>`).join("");
+    deptSelect.value = "All Departments";
+
+    // --- Firebase init ---
+    const app = initializeApp(MANUAL_FIREBASE_CONFIG);
+    db = getFirestore(app);
+    auth = getAuth(app);
+    setLogLevel("error");
+    signInAnonymously(auth);
+    onAuthStateChanged(auth, () => setupListener());
+
+    function setupListener() {
+      const q = collection(db, "artifacts/default-app-id/public/data/employees");
+      onSnapshot(q, snapshot => {
+        allEmployees = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+        filterAndRender();
+      });
+    }
+
+    // --- Filtering logic ---
+    function filterAndRender() {
+      const term = searchInput.value.toLowerCase().trim();
+      const dept = deptSelect.value;
+      let filtered = [...allEmployees];
+
+      if (dept !== "All Departments") {
+        filtered = filtered.filter(e => e.dept && e.dept.startsWith(dept.replace("All ", "")));
+      }
+
+      if (term) {
+        filtered = filtered.filter(e => {
+          return ["name","title","email","dept","responsibilities","initials"].some(f =>
+            e[f]?.toLowerCase().includes(term)
+          );
+        });
+      }
+
+      renderResults(filtered);
+    }
+
+    // --- Render logic ---
+    function renderResults(list) {
+      resultsContainer.innerHTML = "";
+      if (list.length === 0) {
+        noResults.classList.remove("hidden");
+        return;
+      }
+      noResults.classList.add("hidden");
+      list.forEach(emp => {
+        resultsContainer.insertAdjacentHTML("beforeend", `
+          <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex flex-col sm:flex-row items-start sm:items-center">
+            <img src="${emp.imageUrl ? `https://aqualocator.github.io/photos/${emp.imageUrl}` : 'https://placehold.co/80x80/CCC/FFF?text=No+Photo'}" class="w-20 h-20 rounded-full border object-cover mr-4 mb-2 sm:mb-0">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800">${emp.name || "Unnamed"}</h3>
+              <p class="text-sm text-gray-600">${emp.title || ""}</p>
+              <p class="text-sm text-gray-500">${emp.dept || ""}</p>
+              <div class="mt-2 flex flex-wrap gap-2">
+                ${emp.url ? `<button class="btn-locate text-sm px-3 py-1 rounded" onclick="openLocate('${emp.url}','${emp.name}')">Locate</button>` : ""}
+                ${emp.website ? `<button class="btn-know-me text-sm px-3 py-1 rounded" onclick="openKnowMe('${emp.website}','${emp.name}')">Know Me</button>` : ""}
+              </div>
+            </div>
+          </div>
+        `);
+      });
+    }
+
+    // --- Modal logic ---
+    window.openLocate = (url, name) => {
+      const modal = document.getElementById("locate-modal");
+      document.getElementById("locate-iframe").src = url;
+      document.getElementById("locate-modal-title").textContent = `Location: ${name}`;
+      modal.classList.remove("hidden");
+    };
+    window.openKnowMe = (url, name) => {
+      const modal = document.getElementById("know-me-modal");
+      document.getElementById("know-me-iframe").src = url;
+      document.getElementById("know-me-modal-title").textContent = `About: ${name}`;
+      modal.classList.remove("hidden");
+    };
+    document.getElementById("locate-modal-close-btn").onclick = () => document.getElementById("locate-modal").classList.add("hidden");
+    document.getElementById("know-me-modal-close-btn").onclick = () => document.getElementById("know-me-modal").classList.add("hidden");
+  });
+</script>
+</body>
+</html>
