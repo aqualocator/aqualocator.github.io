@@ -95,14 +95,14 @@
             top: 8rem; /* 8rem = 128px */
         }
 		
-		.custom-max-h-600 {
+	.custom-max-h-600 {
          max-height: 600px;
-         min-height: 600px;
+        /* min-height: 600px; */
         }
 		
 		.custom-max-h-800 {
          max-height: 600px;
-         min-height: 600px;
+         /* min-height: 600px; */
         }
 		
 		.custom-color-blue{
@@ -192,6 +192,7 @@
             }
         }
         /* ------------------------ */
+
     </style>
 </head>
 
@@ -643,6 +644,12 @@
             searchInput.value = '';
             deptSelect.value = "All Departments"; // Reset to "All Departments" value
             filterAndRender();
+            
+            // --- NEW: Focus on search input on load (with mobile workaround) ---
+          
+                searchInput.focus();
+         
+            // --- END NEW ---
         }
 
         // --- NEW FIREBASE FUNCTIONS ---
@@ -876,6 +883,7 @@
             populateDepartments();
             initializeFirebaseApp(); // Start_firebase_initialization_and_auth
 
+    
             // Add filter event listeners
             searchInput.addEventListener('input', filterAndRender);
             deptSelect.addEventListener('change', filterAndRender);
@@ -901,6 +909,11 @@
 
              // Initial render call removed - will be triggered by onSnapshot
              //console.log("App initialization complete. Waiting for Firebase data...");
+                // --- NEW: Focus on search input on load (with mobile workaround) ---
+            setTimeout(() => {
+                searchInput.focus();
+            }, 1000); // 100ms delay
+            // --- END NEW ---
 
         });
 
