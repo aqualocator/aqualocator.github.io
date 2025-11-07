@@ -246,7 +246,7 @@
                                 Search by:<br>Name,title,initials,responsibilities,dept or email
                             </label>
                             <div class="flex">
-                                <input type="text" id="search-input" class="flex-grow w-full px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g.,Carlson or AquaNereda or RJW">
+                                <input type="text" id="search-input" class="flex-grow w-full px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g.,Carlson,AquaNereda,RJW"  autofocus>
                                 <button type="button" id="reset-button" class="btn-reset font-medium px-4 py-2 rounded-r-md" data-tooltip="Clear all search terms and reset filters">RESET</button>
                             </div>
                         </div>
@@ -909,11 +909,7 @@
 
              // Initial render call removed - will be triggered by onSnapshot
              //console.log("App initialization complete. Waiting for Firebase data...");
-                // --- NEW: Focus on search input on load (with mobile workaround) ---
-            setTimeout(() => {
-                searchInput.focus();
-            }, 1000); // 100ms delay
-            // --- END NEW ---
+ 
 
         });
 
