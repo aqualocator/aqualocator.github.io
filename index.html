@@ -54,7 +54,7 @@
         }
 
 #search-input::placeholder {
-    font-size: 0.775rem; /* This is 14px (Tailwind's 'text-sm') */
+    font-size: 0.775rem; /* ~12.4px */
 }
 
         /* Custom styling for the select dropdown */
@@ -250,7 +250,7 @@
                                 Search by:<br>Name,title,initials,responsibilities,dept or email
                             </label>
                             <div class="flex">
-                                <input type="text" id="search-input" class="flex-grow w-full px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g.,Carlson or AquaNereda or RJW"  autofocus>
+                                <input type="text" id="search-input" class="flex-grow w-full px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-[0.775rem]" placeholder="e.g.,Carlson or AquaNereda or RJW"  autofocus>
                                 <button type="button" id="reset-button" class="btn-reset font-medium px-4 py-2 rounded-r-md" data-tooltip="Clear all search terms and reset filters">RESET</button>
                             </div>
                         </div>
@@ -418,6 +418,7 @@
         const noResultsMessage = document.getElementById('no-results');
         const loadingOverlay = document.getElementById('loading-overlay'); 
 		const resultsCount = document.getElementById('results-count');
+        const filterForm = document.getElementById('filter-form'); // For preventing Enter submit
 
         // --- Locate Modal Elements ---
         const locateModalOverlay = document.getElementById('locate-modal');
@@ -756,7 +757,7 @@
                          let lastNameA = a.Last || (a.name || '').split(' ').pop();
                          let lastNameB = b.Last || (b.name || '').split(' ').pop();
 
-                         // NEW: Handle comma suffixes (e.g., "Baumann, P.E." -> "Baumann")
+                         // NEW: Handle comma suffixes (e.Example., "Baumann, P.E." -> "Baumann")
                          lastNameA = lastNameA.split(',')[0].trim();
                          lastNameB = lastNameB.split(',')[0].trim();
                          
@@ -895,6 +896,12 @@
                 e.preventDefault(); // Stop potential form submission
                 resetFilters();
             });
+
+            // --- NEW: Stop the form from submitting on 'Enter' ---
+            filterForm.addEventListener('submit', (event) => {
+                event.preventDefault(); // This stops the page refresh
+            });
+            // --- END NEW ---
 
             // Add ONE event listener to the results container for delegation
             resultsContainer.addEventListener('click', handleResultsClick);
