@@ -250,19 +250,10 @@
                                 Search by:<br>Name,title,initials,responsibilities,dept or email
                             </label>
                             <div class="flex">
-                                <div class="relative flex-grow w-full">
-                                    
-                                    <input type="text" id="search-input" class="flex-grow w-full px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-[0.775rem] pr-8" placeholder="e.g.,Carlson or AquaNereda or RJW"  autofocus>
-                                    
-                                    <button type="button" id="clear-search-btn" class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 hidden" data-tooltip="Clear search term">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                                    </button>
-
-                                </div>
-                                
+                                <input type="text" id="search-input" class="flex-grow w-full px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-[0.775rem]" placeholder="e.g.,Carlson or AquaNereda or RJW"  autofocus>
                                 <button type="button" id="reset-button" class="btn-reset font-medium px-4 py-2 rounded-r-md" data-tooltip="Clear all search terms and reset filters">RESET</button>
                             </div>
-                            </div>
+                        </div>
 
                         <div>
                             <label for="dept-select" class="block text-sm font-medium text-gray-700 mb-1">
@@ -428,7 +419,6 @@
         const loadingOverlay = document.getElementById('loading-overlay'); 
 		const resultsCount = document.getElementById('results-count');
         const filterForm = document.getElementById('filter-form'); // For preventing Enter submit
-        const clearSearchButton = document.getElementById('clear-search-btn'); // <-- ADD THIS
 
         // --- Locate Modal Elements ---
         const locateModalOverlay = document.getElementById('locate-modal');
@@ -899,26 +889,12 @@
             initializeFirebaseApp(); // Start_firebase_initialization_and_auth
 
     
-            // === MODIFIED & NEW EVENT LISTENERS ===
-            
             // Add filter event listeners
-            searchInput.addEventListener('input', () => {
-                filterAndRender(); // Run the filter as usual
-                
-                // Show or hide the clear button based on input value
-                if (searchInput.value.length > 0) {
-                    clearSearchButton.classList.remove('hidden');
-                } else {
-                    clearSearchButton.classList.add('hidden');
-                }
-            });
-
+            searchInput.addEventListener('input', filterAndRender);
             deptSelect.addEventListener('change', filterAndRender);
-            
             resetButton.addEventListener('click', (e) => {
                 e.preventDefault(); // Stop potential form submission
                 resetFilters();
-                clearSearchButton.classList.add('hidden'); // <-- Hide 'X' button
             });
 
             // --- NEW: Stop the form from submitting on 'Enter' ---
@@ -926,16 +902,6 @@
                 event.preventDefault(); // This stops the page refresh
             });
             // --- END NEW ---
-
-            // --- NEW: Clear search input text when 'X' is clicked ---
-            clearSearchButton.addEventListener('click', () => {
-                searchInput.value = ''; // Clear the input
-                clearSearchButton.classList.add('hidden'); // Hide the button
-                filterAndRender(); // Re-run the filter
-                searchInput.focus(); // Focus the input again
-            });
-            // --- END NEW ---
-
 
             // Add ONE event listener to the results container for delegation
             resultsContainer.addEventListener('click', handleResultsClick);
