@@ -646,9 +646,9 @@
             filterAndRender();
             
             // --- NEW: Focus on search input on load (with mobile workaround) ---
-            setTimeout(() => {
+          
                 searchInput.focus();
-            }, 100); // 100ms delay
+         
             // --- END NEW ---
         }
 
@@ -883,9 +883,12 @@
             populateDepartments();
             initializeFirebaseApp(); // Start_firebase_initialization_and_auth
 
-            // --- NEW: Focus on search input on load ---
-            searchInput.focus();
+            // --- NEW: Focus on search input on load (with mobile workaround) ---
+            setTimeout(() => {
+                searchInput.focus();
+            }, 100); // 100ms delay
             // --- END NEW ---
+
 
             // Add filter event listeners
             searchInput.addEventListener('input', filterAndRender);
