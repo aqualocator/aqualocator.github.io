@@ -883,13 +883,7 @@
             populateDepartments();
             initializeFirebaseApp(); // Start_firebase_initialization_and_auth
 
-            // --- NEW: Focus on search input on load (with mobile workaround) ---
-            setTimeout(() => {
-                searchInput.focus();
-            }, 100); // 100ms delay
-            // --- END NEW ---
-
-
+    
             // Add filter event listeners
             searchInput.addEventListener('input', filterAndRender);
             deptSelect.addEventListener('change', filterAndRender);
@@ -915,6 +909,11 @@
 
              // Initial render call removed - will be triggered by onSnapshot
              //console.log("App initialization complete. Waiting for Firebase data...");
+                // --- NEW: Focus on search input on load (with mobile workaround) ---
+            setTimeout(() => {
+                searchInput.focus();
+            }, 1000); // 100ms delay
+            // --- END NEW ---
 
         });
 
