@@ -1,3 +1,7 @@
 python "C:\Users\CKonkol\Documents\GitHub\aqualocator.github.io\welcome\resize.py"
 
 python "C:\resize\resize.py"
+
+python combine_pdf_pages_to_png('new.pdf', 'new.png', target_width=800)
+
+ 

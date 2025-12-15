@@ -100,6 +100,12 @@
                             <label for="edit-name" class="block text-sm font-medium text-gray-700">Full Name</label>
                             <input type="text" id="edit-name" class="mt-1 block w-full border border-gray-300 rounded-md p-2" required>
                         </div>
+
+<div>
+        <label for="edit-initials" class="block text-sm font-medium text-gray-700">Initials</label>
+        <input type="text" id="edit-initials" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+    </div>
+
                         <div>
                             <label for="edit-title" class="block text-sm font-medium text-gray-700">Job Title</label>
                             <input type="text" id="edit-title" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
@@ -240,7 +246,7 @@
         let loginView, loginForm, loginEmail, loginPassword, loginButton, loginButtonText, loginLoader, loginError;
         let adminPanel, userEmail, logoutButton, addNewButton, adminListContainer, adminLoader;
         let editModal, modalTitle, editForm, modalCloseBtn, modalCancelBtn, modalSaveBtn;
-        let editEmployeeId, editName, editFirst, editLast, editTitle, editDept, editExt, editEmail, editResponsibilities, editImageUrl, editFloorMap, editUrl;
+        let editEmployeeId, editName, editInitials, editFirst, editLast, editTitle, editDept, editExt, editEmail, editResponsibilities, editImageUrl, editFloorMap, editUrl;
         let mapLinks;
         let editCubicleSelect; // <-- ADDED
         let departmentDataList; // <-- ADDED
@@ -458,6 +464,8 @@
             // Populate the form
             editEmployeeId.value = employee.id;
             editName.value = employee.name || '';
+            // ADD THIS LINE:
+            editInitials.value = employee.initials || '';
             editFirst.value = employee.First || ''; // <-- ADDED
             editLast.value = employee.Last || ''; // <-- ADDED
             editTitle.value = employee.title || '';
@@ -523,6 +531,7 @@
 
             const employeeData = {
                 name: editName.value || '',
+                initials: editInitials.value || '',
                 title: editTitle.value || '',
                 dept: editDept.value || '',
                 ext: editExt.value || '',
@@ -620,6 +629,7 @@
             
             editEmployeeId = document.getElementById('edit-employee-id');
             editName = document.getElementById('edit-name');
+editInitials = document.getElementById('edit-initials');
             editFirst = document.getElementById('edit-first');
             editLast = document.getElementById('edit-last');
             editTitle = document.getElementById('edit-title');
