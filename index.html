@@ -155,7 +155,8 @@
             margin-bottom: 0; margin-top: 6px;
         }
         @media (hover: hover) {
-            [data-tooltip]:hover::after {
+            [data-tooltip]:hover::after,
+            [data-tooltip]:focus-visible::after {
                 opacity: 1; visibility: visible; transform: translateX(-50%) scale(1);
             }
         }
@@ -271,6 +272,7 @@
         // --- Global Variables ---
         let allEmployees = []; // This will hold our data from Firebase
         let db, auth;
+        let searchDebounceTimeout;
 
         // --- Image Base URL ---
         const imageBaseUrl = "https://aqualocator.github.io/photos/";
@@ -364,7 +366,7 @@
 
         // --- Render Results ---
         function renderResults(filteredEmployees) {
-            resultsContainer.innerHTML = '';
+            let htmlContent = '';
             const count = filteredEmployees.length;
 
             noResultsMessage.classList.toggle('hidden', count > 0);
@@ -445,8 +447,10 @@
                         </div>
                     </div>
                 `;
-                resultsContainer.insertAdjacentHTML('beforeend', card);
+                htmlContent += card;
             });
+
+            resultsContainer.innerHTML = htmlContent;
 
             loadingOverlay.classList.add('hidden');
             loadingOverlay.classList.remove('flex');
@@ -459,7 +463,8 @@
             loadingOverlay.classList.remove('hidden');
             loadingOverlay.classList.add('flex');
 
-            setTimeout(() => {
+            clearTimeout(searchDebounceTimeout);
+            searchDebounceTimeout = setTimeout(() => {
                 const searchText = searchInput.value.toLowerCase().trim();
                 const searchTerms = searchText.split(' ').filter(Boolean);
                 const selectedDept = deptSelect.value;
@@ -527,13 +532,13 @@
                                 await signInAnonymously(auth);
                             }
                         } catch (signInError) {
-                            resultsContainer.innerHTML = `<div class="text-red-600 text-center p-4 font-semibold">Error: Could not sign in to Firebase. ${signInError.message}</div>`;
+                            resultsContainer.innerHTML = `<div class="text-center p-4"><p class="text-red-600 font-semibold text-lg">We are having trouble accessing the employee directory right now. Please try again later.</p><p class="text-sm text-gray-500 mt-2">Technical details: Could not sign in to Firebase. ${signInError.message}</p></div>`;
                             allEmployees = [];
                         }
                     }
                 });
             } catch (error) {
-                resultsContainer.innerHTML = `<div class="text-red-600 text-center p-4 font-semibold">Error: Could not initialize Firebase. ${error.message}</div>`;
+                resultsContainer.innerHTML = `<div class="text-center p-4"><p class="text-red-600 font-semibold text-lg">We are having trouble initializing the application. Please try again later.</p><p class="text-sm text-gray-500 mt-2">Technical details: Could not initialize Firebase. ${error.message}</p></div>`;
             }
         }
 
@@ -568,7 +573,7 @@
 
                 filterAndRender();
             }, (error) => {
-                resultsContainer.innerHTML = `<div class="text-red-500 text-center p-4">Error: Could not fetch employee data. ${error.message}</div>`;
+                resultsContainer.innerHTML = `<div class="text-center p-4"><p class="text-red-600 font-semibold text-lg">We are having trouble loading the employee directory right now. Please try again later.</p><p class="text-sm text-gray-500 mt-2">Technical details: Could not fetch employee data. ${error.message}</p></div>`;
                 loadingOverlay.classList.add('hidden');
                 loadingOverlay.classList.remove('flex');
                 resultsContainer.classList.remove('hidden');
@@ -647,6 +652,18 @@
             locateModalOverlay.addEventListener('click', (e) => { if (e.target === locateModalOverlay) closeLocateModal(); });
             knowMeCloseBtn.addEventListener('click', closeKnowMeModal);
             knowMeModalOverlay.addEventListener('click', (e) => { if (e.target === knowMeModalOverlay) closeKnowMeModal(); });
+
+            // Keyboard accessibility for modals
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (!locateModalOverlay.classList.contains('hidden')) {
+                        closeLocateModal();
+                    }
+                    if (!knowMeModalOverlay.classList.contains('hidden')) {
+                        closeKnowMeModal();
+                    }
+                }
+            });
 
             // --- NEW: Clear (✕) button show/hide + action ---
             // show only when typing (non-empty)
