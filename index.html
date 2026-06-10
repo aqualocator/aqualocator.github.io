@@ -460,7 +460,11 @@
         // --- Render Results ---
         function renderResults(filteredEmployees) {
             let htmlContent = '';
-            const count = filteredEmployees.length;
+            // Only count employees that will actually render a card (non-empty, non-N/A name)
+            const renderable = filteredEmployees.filter(emp =>
+                emp.name && emp.name.trim() !== '' && emp.name.trim().toLowerCase() !== 'n/a'
+            );
+            const count = renderable.length;
 
             noResultsMessage.classList.toggle('hidden', count > 0);
 
