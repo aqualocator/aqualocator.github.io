@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AQUALocator → CSV Extractor</title>
+<style>
+  :root{ --blue:#35a2c4; --violet:#5d3587; --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb; }
+  *{ box-sizing:border-box; }
+  body{ font-family:Inter,system-ui,Segoe UI,sans-serif; background:#fafafa; color:var(--ink); margin:0; padding:2rem 1rem; }
+  .wrap{ max-width:1000px; margin:0 auto; }
+  h1{ font-size:1.5rem; margin:0 0 .25rem; color:var(--blue); }
+  p.sub{ margin:0 0 1.5rem; color:var(--muted); font-size:.9rem; }
+  .card{ background:#fff; border:1px solid var(--line); border-radius:10px; padding:1.25rem; box-shadow:0 1px 2px rgba(0,0,0,.04); margin-bottom:1.25rem; }
+  .controls{ display:flex; flex-wrap:wrap; gap:1rem 1.5rem; align-items:center; }
+  label.opt{ display:flex; align-items:center; gap:.5rem; font-size:.9rem; color:#374151; cursor:pointer; }
+  button{ font:inherit; font-weight:600; border:none; border-radius:8px; padding:.6rem 1.1rem; cursor:pointer; color:#fff; transition:background .15s; }
+  button:disabled{ opacity:.5; cursor:not-allowed; }
+  .btn-primary{ background:var(--violet); }
+  .btn-primary:hover:not(:disabled){ background:#4a2d6b; }
+  .btn-blue{ background:var(--blue); }
+  .btn-blue:hover:not(:disabled){ background:#2a8faf; }
+  #status{ font-size:.9rem; color:var(--muted); margin-top:.75rem; min-height:1.2em; }
+  #status.error{ color:#dc2626; font-weight:600; }
+  #status.ok{ color:#059669; font-weight:600; }
+  .tablewrap{ overflow:auto; max-height:480px; border:1px solid var(--line); border-radius:8px; }
+  table{ border-collapse:collapse; width:100%; font-size:.82rem; }
+  th,td{ text-align:left; padding:.45rem .6rem; border-bottom:1px solid var(--line); white-space:nowrap; }
+  th{ position:sticky; top:0; background:#f9fafb; font-weight:600; color:#374151; z-index:1; }
+  tr:hover td{ background:#fafafa; }
+  .count{ font-weight:600; color:var(--ink); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>AQUALocator → CSV Extractor</h1>
+  <p class="sub">Reads the live employee directory from Firestore (anonymous auth, same as the site) and exports it as CSV. Everything runs locally in your browser.</p>
+
+  <div class="card">
+    <div class="controls">
+      <button id="loadBtn" class="btn-blue">Load directory</button>
+      <label class="opt"><input type="checkbox" id="peopleOnly" checked> People only (drop blank/N/A names &amp; "XXX" rows)</label>
+      <label class="opt"><input type="checkbox" id="allFields"> Include all raw fields</label>
+      <button id="dlBtn" class="btn-primary" disabled>Download CSV</button>
+    </div>
+    <div id="status">Click <strong>Load directory</strong> to begin.</div>
+  </div>
+
+  <div class="card" id="previewCard" style="display:none;">
+    <div style="margin-bottom:.75rem;"><span class="count" id="countLabel"></span></div>
+    <div class="tablewrap"><table id="preview"></table></div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore, collection, getDocs, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyABeCFheLuS08mxfWjCSS2ugXFbLDgnpIE",
+  authDomain: "aqualocator-23714.firebaseapp.com",
+  projectId: "aqualocator-23714",
+  storageBucket: "aqualocator-23714.appspot.com",
+  messagingSenderId: "654848563347",
+  appId: "1:654848563347:web:4702a6f55ccbf7d5edd566"
+};
+const COLLECTION_PATH = "artifacts/default-app-id/public/data/employees";
+
+// Curated directory columns (order matters). "Include all raw fields" overrides this.
+const PERSON_COLS = ["name","First","Last","title","initials","dept","ext","email","responsibilities"];
+// Bulky/app-internal fields excluded from the curated export
+const HEAVY_FIELDS = new Set(["imageUrl","url","FloorMap","id"]);
+
+const $ = id => document.getElementById(id);
+const statusEl = $("status");
+let rawRecords = [];
+
+function setStatus(msg, cls=""){ statusEl.textContent = msg; statusEl.className = cls; }
+
+function isRealPerson(emp){
+  if (emp.responsibilities === "XXX") return false;
+  const n = (emp.name || "").trim().toLowerCase();
+  return n !== "" && n !== "n/a";
+}
+
+function currentRows(){
+  let rows = rawRecords.slice();
+  if ($("peopleOnly").checked) rows = rows.filter(isRealPerson);
+  return rows;
+}
+
+function currentColumns(rows){
+  if ($("allFields").checked){
+    const keys = new Set();
+    rows.forEach(r => Object.keys(r).forEach(k => keys.add(k)));
+    // id first, then everything else sorted
+    const rest = [...keys].filter(k => k !== "id").sort();
+    return ["id", ...rest];
+  }
+  return PERSON_COLS.filter(c => rows.some(r => r[c] !== undefined && r[c] !== null && String(r[c]).trim() !== ""));
+}
+
+function csvCell(v){
+  if (v === undefined || v === null) return "";
+  let s = String(v);
+  if (/[",\n\r]/.test(s)) s = '"' + s.replace(/"/g,'""') + '"';
+  return s;
+}
+
+function buildCSV(rows, cols){
+  const head = cols.map(csvCell).join(",");
+  const body = rows.map(r => cols.map(c => csvCell(r[c])).join(",")).join("\r\n");
+  return head + "\r\n" + body;
+}
+
+function renderPreview(){
+  const rows = currentRows();
+  const cols = currentColumns(rows);
+  $("previewCard").style.display = rows.length ? "block" : "none";
+  $("countLabel").textContent = `${rows.length} record(s) · ${cols.length} column(s)`;
+  const t = $("preview");
+  const showCols = cols; // show all chosen columns
+  const head = "<thead><tr>" + showCols.map(c=>`<th>${c}</th>`).join("") + "</tr></thead>";
+  const limit = Math.min(rows.length, 200);
+  let bodyRows = "";
+  for (let i=0;i<limit;i++){
+    bodyRows += "<tr>" + showCols.map(c=>{
+      let v = rows[i][c]; v = (v===undefined||v===null)?"":String(v);
+      if (v.length > 80) v = v.slice(0,80) + "…";
+      return `<td>${v.replace(/</g,"&lt;")}</td>`;
+    }).join("") + "</tr>";
+  }
+  t.innerHTML = head + "<tbody>" + bodyRows + "</tbody>";
+  $("dlBtn").disabled = rows.length === 0;
+  if (rows.length > limit) $("countLabel").textContent += ` (previewing first ${limit})`;
+}
+
+async function loadDirectory(){
+  $("loadBtn").disabled = true;
+  setStatus("Initializing Firebase…");
+  try{
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    setLogLevel("error");
+    setStatus("Signing in anonymously…");
+    await signInAnonymously(auth);
+    setStatus("Fetching employee records…");
+    const snap = await getDocs(collection(db, COLLECTION_PATH));
+    rawRecords = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+    rawRecords.sort((a,b)=>{
+      const la=(a.Last||(a.name||"").split(" ").pop()||"").split(",")[0].trim().toLowerCase();
+      const lb=(b.Last||(b.name||"").split(" ").pop()||"").split(",")[0].trim().toLowerCase();
+      if (la!==lb) return la.localeCompare(lb);
+      const fa=(a.First||(a.name||"").split(" ")[0]||"").toLowerCase();
+      const fb=(b.First||(b.name||"").split(" ")[0]||"").toLowerCase();
+      return fa.localeCompare(fb);
+    });
+    setStatus(`Loaded ${rawRecords.length} total record(s).`, "ok");
+    renderPreview();
+  }catch(err){
+    console.error(err);
+    setStatus("Failed: " + (err && err.message ? err.message : err), "error");
+  }finally{
+    $("loadBtn").disabled = false;
+  }
+}
+
+function download(){
+  const rows = currentRows();
+  const cols = currentColumns(rows);
+  const csv = "\uFEFF" + buildCSV(rows, cols); // BOM for Excel
+  const blob = new Blob([csv], { type:"text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const stamp = new Date().toISOString().slice(0,10);
+  a.href = url; a.download = `aqualocator-employees-${stamp}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+
+$("loadBtn").addEventListener("click", loadDirectory);
+$("dlBtn").addEventListener("click", download);
+$("peopleOnly").addEventListener("change", () => rawRecords.length && renderPreview());
+$("allFields").addEventListener("change", () => rawRecords.length && renderPreview());
+</script>
+</body>
+</html>
