@@ -1,0 +1,342 @@
+﻿Textbox19,Textbox17,Textbox18,Textbox11
+37 = New Employees < Year,47 = MAX Years Tenured,6 = AVG Years Tenured,"6 years average tenure for selected dept(s).
+150% of U.S. average**
+
+**4 Years is average for U.S. companies***.
+
+***2024 U.S. Bureau of Labor Statistics"
+
+Emp ID_label,Emp ID_Chart1_CategoryGroup_label,Emp ID_Chart1_CategoryGroup_Value_Y
+Emp ID,Accounting/Finance,12
+Emp ID,Administration,5
+Emp ID,Aftermarket Sales,15
+Emp ID,Applications Eng,23
+Emp ID,Contract Administration,8
+Emp ID,Customer Service,16
+Emp ID,Dom Sales-East,1
+Emp ID,Dom Sales-Midwest,1
+Emp ID,Dom Sales-Southeast,1
+Emp ID,Dom Sales-West,1
+Emp ID,Eng-Admin,4
+Emp ID,Eng-Electrical,22
+Emp ID,Eng-Estimating,8
+Emp ID,Eng-Mechanical,18
+Emp ID,Eng-Standards,19
+Emp ID,Field Services,30
+Emp ID,Human Resources,5
+Emp ID,Industrial Sales,1
+Emp ID,Information Services,7
+Emp ID,International Sales,4
+Emp ID,Manufacturing,27
+Emp ID,Marketing/PR,4
+Emp ID,Prod Mgmt-Aeration/Mixing,4
+Emp ID,Prod Mgmt-Bio/Membrane,8
+Emp ID,Prod Mgmt-Filtration,5
+Emp ID,Production Control,24
+Emp ID,Project Management,15
+Emp ID,Research & Development,11
+
+RadialGauge1_RadialScale1_MinimumValue,RadialGauge1_RadialScale1_MaximumValue,RadialGauge1_RadialPointer1_GaugeInputValue
+1,4,6
+
+FIRSTNM,LASTNM,Department1,USERACCOUNTSTATUS,COMPANYHIREDTM,YearsOfService,HireDate,HireDate1
+Sophia,Gall,Human Resources,Active,6/8/26,2 day(s),   ---,6/8/26
+Robin,Kurshinsky,Customer Service,Active,6/8/26,2 day(s),   ---,6/8/26
+Sergio,Salcedo,Manufacturing,Active,6/8/26,2 day(s),   ---,6/8/26
+Cory,Bolduc,Project Management,Active,6/1/26,9 day(s),   ---,6/1/26
+Timothy,Brown,Customer Service,Active,6/1/26,9 day(s),   ---,6/1/26
+Jacob,Hindenburg,Eng-Electrical,Active,6/1/26,9 day(s),   ---,6/1/26
+Annabella,Leston,Accounting/Finance,Active,6/1/26,9 day(s),   ---,6/1/26
+Mitchell,Meichtry,Prod Mgmt-Bio/Membrane,Active,6/1/26,9 day(s),   ---,6/1/26
+Ledger,Groen,Production Control,Active,5/18/26,23 day(s),   ---,5/18/26
+Krystal,Hegg,Accounting/Finance,Active,5/18/26,23 day(s),   ---,5/18/26
+Joseph,Reed,Eng-Mechanical,Active,5/18/26,23 day(s),   ---,5/18/26
+Johnny,Chandler,Manufacturing,Active,5/11/26,30 day(s),   ---,5/11/26
+Nathan,Cook,Production Control,Active,5/4/26,1 mo.,   ---,5/4/26
+Brandon,Kern,Manufacturing,Active,5/4/26,1 mo.,   ---,5/4/26
+Carlos,Rodriguez,Manufacturing,Active,5/4/26,1 mo.,   ---,5/4/26
+James,Bragg,Project Management,Active,4/27/26,2 mos.,   ---,4/27/26
+James,Ebert,Research & Development,Active,4/27/26,2 mos.,   ---,4/27/26
+Joshuah,Harris,Manufacturing,Active,4/27/26,2 mos.,   ---,4/27/26
+Patrick,Mackey,Eng-Mechanical,Active,4/20/26,2 mos.,   ---,4/20/26
+Andrea,Nyberg,Human Resources,Active,4/13/26,2 mos.,   ---,4/13/26
+Ian,Haehnlein,Eng-Electrical,Active,4/6/26,2 mos.,   ---,4/6/26
+Stephanie,Wiltfang,Contract Administration,Active,4/6/26,2 mos.,   ---,4/6/26
+Brian,Bates,International Sales,Active,3/30/26,3 mos.,   ---,3/30/26
+Elvis,Paramo,Production Control,Active,3/30/26,3 mos.,   ---,3/30/26
+David,Salzman,Manufacturing,Active,3/23/26,3 mos.,   ---,3/23/26
+Michael,Stoecklin,Eng-Estimating,Active,3/9/26,3 mos.,   ---,3/9/26
+Deja,Sandkam,Aftermarket Sales,Active,3/2/26,3 mos.,   ---,3/2/26
+Kaley,Wollslair,Customer Service,Active,3/2/26,3 mos.,   ---,3/2/26
+Anthony,Xiong,Eng-Standards,Active,2/16/26,4 mos.,   ---,2/16/26
+Donovan,Reed,Eng-Standards,Active,2/2/26,4 mos.,   ---,2/2/26
+Ryan,Hollis,Manufacturing,Active,1/26/26,5 mos.,   ---,1/26/26
+Thomas,Schultz,Eng-Standards,Active,1/26/26,5 mos.,   ---,1/26/26
+Vang,Lor,Eng-Mechanical,Active,1/12/26,5 mos.,   ---,1/12/26
+Melissa,Shaw,Project Management,Active,1/12/26,5 mos.,   ---,1/12/26
+Tucker,Stone,Applications Eng,Active,1/12/26,5 mos.,   ---,1/12/26
+Ramiro,Gonzalez,Eng-Estimating,Active,1/5/26,5 mos.,   ---,1/5/26
+Juan,Hernandez,Eng-Mechanical,Active,1/5/26,5 mos.,   ---,1/5/26
+Samantha,Symonds,Eng-Electrical,Active,12/1/25,6 mos.,   ---,12/1/25
+Matthew,Gustafson,Aftermarket Sales,Active,11/17/25,7 mos.,   ---,11/17/25
+Jack,Kern,Manufacturing,Active,11/10/25,7 mos.,   ---,11/10/25
+Rainbow,Kaelin,Accounting/Finance,Active,11/3/25,7 mos.,   ---,11/3/25
+Justin,Palmer,Manufacturing,Active,11/3/25,7 mos.,   ---,11/3/25
+Ruby,Wilhelm,Project Management,Active,11/3/25,7 mos.,   ---,11/3/25
+Scott,Hynds,Customer Service,Active,10/13/25,8 mos.,   ---,10/13/25
+Tanzina,Azad,Applications Eng,Active,10/6/25,8 mos.,   ---,10/6/25
+Edward,Black,Field Services,Active,10/6/25,8 mos.,   ---,10/6/25
+Joseph,Gergets,Customer Service,Active,10/6/25,8 mos.,   ---,10/6/25
+Gregory,Hernandez,Field Services,Active,10/6/25,8 mos.,   ---,10/6/25
+Andres,Hernandez,Field Services,Active,10/6/25,8 mos.,   ---,10/6/25
+Caleb,Morse,Field Services,Active,10/6/25,8 mos.,   ---,10/6/25
+Ignar,Pimentel-Rivera,Field Services,Active,10/6/25,8 mos.,   ---,10/6/25
+Jasmine,Rawls,Field Services,Active,10/6/25,8 mos.,   ---,10/6/25
+Willow,Gustin,Accounting/Finance,Active,9/29/25,9 mos.,   ---,9/29/25
+Alex,Kuhl,Eng-Standards,Active,9/29/25,9 mos.,   ---,9/29/25
+Pawel,Szul,Research & Development,Active,9/10/25,9 mos.,   ---,9/10/25
+Lauren,Maggi,Contract Administration,Active,8/25/25,10 mos.,   ---,8/25/25
+David,Sanchez,Eng-Electrical,Active,8/25/25,10 mos.,   ---,8/25/25
+Nolan,Dwenger,Applications Eng,Active,8/18/25,10 mos.,   ---,8/18/25
+Josh,Nilles,Eng-Electrical,Active,8/18/25,10 mos.,   ---,8/18/25
+Krista,Robinson,Aftermarket Sales,Active,8/18/25,10 mos.,   ---,8/18/25
+Megan,Jacob,Project Management,Active,8/4/25,10 mos.,   ---,8/4/25
+Duane,Introwitz II,Eng-Electrical,Active,7/28/25,11 mos.,   ---,7/28/25
+Kosta,Zafiropoulos,Production Control,Active,7/21/25,11 mos.,   ---,7/21/25
+Denitia,Shelley,Production Control,Active,7/14/25,11 mos.,   ---,7/14/25
+Andrea,Andrew,Aftermarket Sales,Active,7/7/25,11 mos.,   ---,7/7/25
+Aundrea,Baker,Customer Service,Active,7/7/25,11 mos.,   ---,7/7/25
+Joseph,Blankenship,Customer Service,Active,7/7/25,11 mos.,   ---,7/7/25
+Aaron,Jacobs,Customer Service,Active,7/7/25,11 mos.,   ---,7/7/25
+Timothy,Lynch,Production Control,Active,6/30/25,1 yr.,   ---,6/30/25
+Ashley,Travis,Production Control,Active,6/9/25,1 yr.,   ---,6/9/25
+Lucia,Horton,Marketing/PR,Active,6/2/25,1 yr.,   ---,6/2/25
+Sam,Hryszczuk,Eng-Standards,Active,6/2/25,1 yr.,   ---,6/2/25
+Madison,Karamagianis,Applications Eng,Active,6/2/25,1 yr.,   ---,6/2/25
+Eric,Umlauf,Production Control,Active,6/2/25,1 yr.,   ---,6/2/25
+Kadin,Woods-Canfield,Research & Development,Active,6/2/25,1 yr.,   ---,6/2/25
+Brian,Blake-Collins,Research & Development,Active,5/19/25,1 yr.,   ---,5/19/25
+Benjamin,Gargani,Eng-Standards,Active,5/19/25,1 yr.,   ---,5/19/25
+Todd,Neiber,Field Services,Active,5/19/25,1 yr.,   ---,5/19/25
+Zachary,Pirro,Field Services,Active,5/19/25,1 yr.,   ---,5/19/25
+Kevin,Shelby,Customer Service,Active,5/19/25,1 yr.,   ---,5/19/25
+Anna,Proulx,Applications Eng,Active,5/12/25,1 yr.,   ---,5/12/25
+Sam,Smith,Research & Development,Active,5/12/25,1 yr.,   ---,5/12/25
+Kelsey,Beaird,Customer Service,Active,4/21/25,1 yr.,   ---,4/21/25
+Michael,Cagle,Customer Service,Active,4/21/25,1 yr.,   ---,4/21/25
+Kyle,Olson,Eng-Admin,Active,4/21/25,1 yr.,   ---,4/21/25
+Joseph,Colombi,Manufacturing,Active,4/7/25,1 yr.,   ---,4/7/25
+Aaron,Woods,Manufacturing,Active,4/7/25,1 yr.,   ---,4/7/25
+Michael,Beair,Production Control,Active,3/31/25,1 yr.,   ---,3/31/25
+Terrance,Schwandt,Production Control,Active,3/31/25,1 yr.,   ---,3/31/25
+Lucas,Enser,Eng-Standards,Active,3/24/25,1 yr.,   ---,3/24/25
+James,Hamilton,Production Control,Active,3/24/25,1 yr.,   ---,3/24/25
+Mariano,Rosado,Aftermarket Sales,Active,3/17/25,1 yr.,   ---,3/17/25
+Francesco,Cascio,Eng-Standards,Active,3/10/25,1 yr.,   ---,3/10/25
+William,Lenz JR,Industrial Sales,Active,3/1/25,1 yr.,   ---,3/1/25
+Ryan,Steele,Manufacturing,Active,2/11/25,1 yr.,   ---,2/11/25
+Aldo,Ramirez,Manufacturing,Active,1/27/25,1 yr.,   ---,1/27/25
+Eduardo,Torres,Manufacturing,Active,1/27/25,1 yr.,   ---,1/27/25
+Timothy,Gill,Project Management,Active,1/13/25,1 yr.,   ---,1/13/25
+Daniel,Rodriguez,Eng-Standards,Active,1/13/25,1 yr.,   ---,1/13/25
+Richard,Willard,Project Management,Active,1/13/25,1 yr.,   ---,1/13/25
+Samuel,Costa,Eng-Electrical,Active,1/6/25,1 yr.,   ---,1/6/25
+Daniel,Gazinski,Applications Eng,Active,1/6/25,1 yr.,   ---,1/6/25
+Drew,Johnston,Aftermarket Sales,Active,1/6/25,1 yr.,   ---,1/6/25
+Thomas,Kubalewski,Eng-Mechanical,Active,1/6/25,1 yr.,   ---,1/6/25
+Nachelle,Osorio,Customer Service,Active,1/6/25,1 yr.,   ---,1/6/25
+Gabriel,Ramirez,Manufacturing,Active,1/6/25,1 yr.,   ---,1/6/25
+Ethan,Wicks,Eng-Standards,Active,1/6/25,1 yr.,   ---,1/6/25
+Brian,Crannell,Field Services,Active,12/9/24,1 yr.,   ---,12/9/24
+Marcos,Soto,Manufacturing,Active,11/20/24,1 yr.,   ---,11/20/24
+Charles,Petrie,Production Control,Active,10/14/24,1 yr.,   ---,10/14/24
+Leeroy,Majewicz,Eng-Standards,Active,10/7/24,1 yr.,   ---,10/7/24
+Meera,Manoharan,Applications Eng,Active,10/7/24,1 yr.,   ---,10/7/24
+Steven,Saichek,Eng-Electrical,Active,9/16/24,1 yr.,   ---,9/16/24
+Richard,Santos,Research & Development,Active,9/9/24,1 yr.,   ---,9/9/24
+Michael,Brown,Dom Sales-East,Active,9/1/24,1 yr.,   ---,9/1/24
+James,Steffen,Dom Sales-Southeast,Active,9/1/24,1 yr.,   ---,9/1/24
+Faten,Hussein,Applications Eng,Active,8/8/24,1 yr.,   ---,8/8/24
+Joshua,Gable,Prod Mgmt-Filtration,Active,8/5/24,1 yr.,   ---,8/5/24
+Aidan,Morrison-Stafford,Eng-Electrical,Active,7/22/24,1 yr.,   ---,7/22/24
+Kayla,Donahoe,Applications Eng,Active,7/15/24,1 yr.,   ---,7/15/24
+Jeremy,Finnel,Aftermarket Sales,Active,7/15/24,1 yr.,   ---,7/15/24
+Joshua,Layman,Eng-Estimating,Active,7/1/24,1 yr.,   ---,7/1/24
+Alla,Vongsiri,Contract Administration,Active,6/25/24,2 yrs.,   ---,6/25/24
+Nathan,Haug,Eng-Mechanical,Active,6/3/24,2 yrs.,   ---,6/3/24
+Ryan,Maldonado,Field Services,Active,6/3/24,2 yrs.,   ---,6/3/24
+Nishant,Patel,Eng-Electrical,Active,6/3/24,2 yrs.,   ---,6/3/24
+Charlene,Kepler,Contract Administration,Active,5/29/24,2 yrs.,   ---,5/29/24
+Sharri,Greenlee,Customer Service,Active,5/28/24,2 yrs.,   ---,5/28/24
+Jonah,Carlson,Eng-Estimating,Active,5/20/24,2 yrs.,   ---,5/20/24
+Joshua,Long,Manufacturing,Active,5/7/24,2 yrs.,   ---,5/7/24
+Michael,McKenna,Applications Eng,Active,4/15/24,2 yrs.,   ---,4/15/24
+Marcus,Ippolito,Eng-Standards,Active,3/25/24,2 yrs.,   ---,3/25/24
+Richard,Rutherford,Field Services,Active,3/18/24,2 yrs.,   ---,3/18/24
+Eric,Johnson,Manufacturing,Active,3/11/24,2 yrs.,   ---,3/11/24
+Micah,Carlson,Eng-Electrical,Active,2/26/24,2 yrs.,   ---,2/26/24
+Michael,Swartz,Project Management,Active,2/19/24,2 yrs.,   ---,2/19/24
+Ian,Stohr,Production Control,Active,2/12/24,2 yrs.,   ---,2/12/24
+Christine,Reyes,Marketing/PR,Active,2/5/24,2 yrs.,   ---,2/5/24
+William,Smith,Field Services,Active,2/5/24,2 yrs.,   ---,2/5/24
+Jeff,Alaniz,Project Management,Active,12/11/23,2 yrs.,   ---,12/11/23
+Carmen,Evans,Project Management,Active,12/11/23,2 yrs.,   ---,12/11/23
+Raymond,Ayala Jr,Field Services,Active,11/27/23,2 yrs.,   ---,11/27/23
+Aaron,Halloway,Eng-Standards,Active,11/27/23,2 yrs.,   ---,11/27/23
+Paul,Gurin,Contract Administration,Active,11/13/23,2 yrs.,   ---,11/13/23
+Robert,Morgan,Production Control,Active,10/30/23,2 yrs.,   ---,10/30/23
+Christopher,White,Field Services,Active,10/30/23,2 yrs.,   ---,10/30/23
+Christapher,Flud,Manufacturing,Active,10/2/23,2 yrs.,   ---,10/2/23
+Jacob,Hatch,Research & Development,Active,9/18/23,2 yrs.,   ---,9/18/23
+Camilo,Rodriguez,Field Services,Active,9/18/23,2 yrs.,   ---,9/18/23
+Michael,Van Hauen,Manufacturing,Active,9/18/23,2 yrs.,   ---,9/18/23
+Jeffrey,Johnson,Eng-Electrical,Active,9/11/23,2 yrs.,   ---,9/11/23
+Carmen,Shields,Information Services,Active,8/30/23,2 yrs.,   ---,8/30/23
+Zachery,Swanson,Prod Mgmt-Aeration/Mixing,Active,8/14/23,2 yrs.,   ---,8/14/23
+Kenta,Cojerian,Applications Eng,Active,7/11/23,2 yrs.,   ---,7/11/23
+Connor,Johnson,Eng-Electrical,Active,6/26/23,3 yrs.,   ---,6/26/23
+Joseph,Wakefield,Eng-Mechanical,Active,6/19/23,3 yrs.,   ---,6/19/23
+Ray,Watkins,Eng-Mechanical,Active,6/19/23,3 yrs.,   ---,6/19/23
+Chelsey,Matthews,Accounting/Finance,Active,6/7/23,3 yrs.,   ---,6/7/23
+Stephanie,Duchow,Customer Service,Active,5/30/23,3 yrs.,   ---,5/30/23
+Nicholas,Schiavo,Applications Eng,Active,5/30/23,3 yrs.,   ---,5/30/23
+Natalie,Watson,Applications Eng,Active,5/30/23,3 yrs.,   ---,5/30/23
+Mark,Milligan,Information Services,Active,5/23/23,3 yrs.,   ---,5/23/23
+Nicholas,Schroeder,Information Services,Active,5/23/23,3 yrs.,   ---,5/23/23
+Gordon,Bates,Manufacturing,Active,5/22/23,3 yrs.,   ---,5/22/23
+Alexander,Neisewander,Eng-Estimating,Active,4/24/23,3 yrs.,   ---,4/24/23
+Carrie,Hunter,Eng-Admin,Active,4/18/23,3 yrs.,   ---,4/18/23
+Gabriela,Alvarado,Prod Mgmt-Aeration/Mixing,Active,4/4/23,3 yrs.,   ---,4/4/23
+Catherine,Johnson,Contract Administration,Active,3/27/23,3 yrs.,   ---,3/27/23
+Bryn,Larson,Production Control,Active,3/27/23,3 yrs.,   ---,3/27/23
+David,Fisher,International Sales,Active,3/20/23,3 yrs.,   ---,3/20/23
+Dave,Lamphere Jr,Prod Mgmt-Bio/Membrane,Active,3/1/23,3 yrs.,   ---,3/1/23
+Zachary,Dal Pra,Eng-Estimating,Active,2/27/23,3 yrs.,   ---,2/27/23
+Tina,Graham,Project Management,Active,2/27/23,3 yrs.,   ---,2/27/23
+Anthony,Hart,Field Services,Active,2/27/23,3 yrs.,   ---,2/27/23
+Monica,Alfano,Marketing/PR,Active,1/9/23,3 yrs.,   ---,1/9/23
+Brian,Huyge,Applications Eng,Active,1/3/23,3 yrs.,   ---,1/3/23
+Christopher,Guntermann,Eng-Electrical,Active,12/19/22,3 yrs.,   ---,12/19/22
+Mitchell,McMahon,Applications Eng,Active,12/19/22,3 yrs.,   ---,12/19/22
+Aridane,Rodriguez,Field Services,Active,11/28/22,3 yrs.,   ---,11/28/22
+Takuya,Sakomoto,Applications Eng,Active,10/18/22,3 yrs.,   ---,10/18/22
+Sarah,Gamble,Contract Administration,Active,9/26/22,3 yrs.,   ---,9/26/22
+Traci,Kreitzmann,Project Management,Active,9/20/22,3 yrs.,   ---,9/20/22
+Dion,Jones,Manufacturing,Active,9/19/22,3 yrs.,   ---,9/19/22
+Bryce,Hatfield,Applications Eng,Active,9/13/22,3 yrs.,   ---,9/13/22
+Matthew,Martineau,Eng-Mechanical,Active,6/20/22,4 yrs.,   ---,6/20/22
+Darshil,Choksi,Eng-Mechanical,Active,6/6/22,4 yrs.,   ---,6/6/22
+Justin,Smith,Accounting/Finance,Active,5/23/22,4 yrs.,   ---,5/23/22
+Jeff,Wheaton III,Field Services,Active,5/2/22,4 yrs.,   ---,5/2/22
+Jackson,Blacketer,Field Services,Active,3/14/22,4 yrs.,   ---,3/14/22
+Thomas,Mangione,Aftermarket Sales,Active,3/14/22,4 yrs.,   ---,3/14/22
+Kevin,Bursell II,Manufacturing,Active,2/21/22,4 yrs.,   ---,2/21/22
+Eduard,Schardl,Eng-Electrical,Active,1/17/22,4 yrs.,   ---,1/17/22
+Vedansh,Gupta,Prod Mgmt-Filtration,Active,12/13/21,4 yrs.,   ---,12/13/21
+Carol,Fields,Production Control,Active,11/2/21,4 yrs.,   ---,11/2/21
+Yusuke,Saito,Applications Eng,Active,10/26/21,4 yrs.,   ---,10/26/21
+Brant,Uppenkamp,Eng-Mechanical,Active,9/20/21,4 yrs.,   ---,9/20/21
+Michael,Rushing,Field Services,Active,9/13/21,4 yrs.,   ---,9/13/21
+James,Casey,Production Control,Active,7/6/21,4 yrs.,   ---,7/6/21
+Bryce,Worley,Eng-Mechanical,Active,7/6/21,4 yrs.,   ---,7/6/21
+Harrison,DeBruler,Prod Mgmt-Bio/Membrane,Active,5/24/21,5 yrs.,   ---,5/24/21
+Loryn,Martin,Prod Mgmt-Aeration/Mixing,Active,4/19/21,5 yrs.,   ---,4/19/21
+Sarah,Villacorta,Applications Eng,Active,10/13/20,5 yrs.,   ---,10/13/20
+Dean,Woyak,Field Services,Active,6/1/20,6 yrs.,   ---,6/1/20
+William,Douglas,Eng-Electrical,Active,5/4/20,6 yrs.,   ---,5/4/20
+Joseph,Tardio,Administration,Active,3/2/20,6 yrs.,   ---,3/2/20
+Edward,Sanchez,Field Services,Active,12/2/19,6 yrs.,   ---,12/2/19
+Vivek K,Singh,International Sales,Active,12/1/19,6 yrs.,   ---,12/1/19
+Michael,Spragg,Customer Service,Active,10/21/19,6 yrs.,   ---,10/21/19
+Noah,Dellamater,Eng-Standards,Active,8/12/19,6 yrs.,   ---,8/12/19
+Nicholas,Fortsas,Prod Mgmt-Filtration,Active,5/20/19,7 yrs.,   ---,5/20/19
+Kenton,Campbell,Eng-Electrical,Active,3/4/19,7 yrs.,   ---,3/4/19
+Thea,Davis,Prod Mgmt-Bio/Membrane,Active,1/28/19,7 yrs.,   ---,1/28/19
+Kristy,Chycota,Prod Mgmt-Filtration,Active,1/7/19,7 yrs.,   ---,1/7/19
+Blake,Hoffmann,Project Management,Active,11/12/18,7 yrs.,   ---,11/12/18
+Malcolm,Aylward,Production Control,Active,7/23/18,7 yrs.,   ---,7/23/18
+Paul,Stanek,Information Services,Active,7/16/18,7 yrs.,   ---,7/16/18
+Brady,Burk,Production Control,Active,6/25/18,8 yrs.,   ---,6/25/18
+Joshua,Frieze,Field Services,Active,6/25/18,8 yrs.,   ---,6/25/18
+Michaela,Villarreal,Aftermarket Sales,Active,5/22/18,8 yrs.,   ---,5/22/18
+Paula,Dorn,Prod Mgmt-Bio/Membrane,Active,4/9/18,8 yrs.,   ---,4/9/18
+Emily,Kullberg,Aftermarket Sales,Active,4/2/18,8 yrs.,   ---,4/2/18
+Evan,Price,Field Services,Active,3/5/18,8 yrs.,   ---,3/5/18
+Shawn,Butterfield,Project Management,Active,2/12/18,8 yrs.,   ---,2/12/18
+Michael,Barber,Production Control,Active,2/5/18,8 yrs.,   ---,2/5/18
+Jay,Patch,Production Control,Active,12/18/17,8 yrs.,   ---,12/18/17
+Scott,Kelly,Dom Sales-West,Active,9/12/17,8 yrs.,   ---,9/12/17
+Kevin,Bursell,Manufacturing,Active,8/28/17,8 yrs.,   ---,8/28/17
+John,Edelen,Field Services,Active,8/28/17,8 yrs.,   ---,8/28/17
+Christian,Kurshinsky,Research & Development,Active,7/31/17,8 yrs.,   ---,7/31/17
+Leann,Torrisi,Aftermarket Sales,Active,6/26/17,9 yrs.,   ---,6/26/17
+Gennie,Ustich,Human Resources,Active,10/17/16,9 yrs.,   ---,10/17/16
+Pamela,Appino,Human Resources,Active,9/6/16,9 yrs.,   ---,9/6/16
+Bradley,Christian,Eng-Electrical,Active,8/22/16,9 yrs.,   ---,8/22/16
+Benjamin,Morton,Field Services,Active,7/11/16,9 yrs.,   ---,7/11/16
+John,Dyson,Prod Mgmt-Filtration,Active,6/20/16,10 yrs.,   ---,6/20/16
+Mondi,Anderson,Eng-Electrical,Active,5/1/16,10 yrs.,   ---,5/1/16
+Joseph,Campanaro,Research & Development,Active,5/1/16,10 yrs.,   ---,5/1/16
+Junji,Sakashita,Eng-Standards,Active,5/1/16,10 yrs.,   ---,5/1/16
+Anthony,Smith,Field Services,Active,5/1/16,10 yrs.,   ---,5/1/16
+Barry,Miller,Manufacturing,Active,4/18/16,10 yrs.,   ---,4/18/16
+Brett,Quimby,Prod Mgmt-Bio/Membrane,Active,4/4/16,10 yrs.,   ---,4/4/16
+Carla,Morrison,Production Control,Active,3/21/16,10 yrs.,   ---,3/21/16
+Denise,Uchacz,Aftermarket Sales,Active,10/5/15,10 yrs.,   ---,10/5/15
+Darryl,Gravagno,Research & Development,Active,9/28/15,10 yrs.,   ---,9/28/15
+Denise,Boehm,Aftermarket Sales,Active,3/16/15,11 yrs.,   ---,3/16/15
+Steven,Stanish,Dom Sales-Midwest,Active,11/10/14,11 yrs.,   ---,11/10/14
+Steven,Williams,Information Services,Active,9/8/14,11 yrs.,   ---,9/8/14
+Elizabeth,Barber,Accounting/Finance,Active,5/20/14,12 yrs.,   ---,5/20/14
+Tatiana,Mazzei,Applications Eng,Active,9/23/13,12 yrs.,   ---,9/23/13
+Angelica,Davila,Applications Eng,Active,4/22/13,13 yrs.,   ---,4/22/13
+Sandra,Arbisi,Human Resources,Active,4/15/13,13 yrs.,   ---,4/15/13
+Ranee,Anderson,Eng-Admin,Active,4/18/11,15 yrs.,   ---,4/18/11
+Mark,Hughes,Administration,Active,2/21/11,15 yrs.,   ---,2/21/11
+Tyrone,Pratt,Customer Service,Active,2/21/11,15 yrs.,   ---,2/21/11
+Rose,Melody,Administration,Active,1/4/10,16 yrs.,   ---,1/4/10
+Charles,Konkol Jr.,Information Services,Active,1/5/09,17 yrs.,   ---,1/5/09
+James R,Howell,Field Services,Active,11/10/08,17 yrs.,   ---,11/10/08
+Velvet,Lange,Accounting/Finance,Active,7/21/08,17 yrs.,   ---,7/21/08
+Jeremy,Try,Eng-Electrical,Active,5/19/08,18 yrs.,   ---,5/19/08
+Michael,Schmitz,Eng-Standards,Active,3/3/08,18 yrs.,   ---,3/3/08
+Alicia,Groen,Eng-Estimating,Active,2/4/08,18 yrs.,   ---,2/4/08
+Ruth,Huber,Project Management,Active,12/10/07,18 yrs.,   ---,12/10/07
+Michael,Zaphel,Production Control,Active,6/11/07,19 yrs.,   ---,6/11/07
+Christopher,Carlson,Eng-Mechanical,Active,5/14/07,19 yrs.,   ---,5/14/07
+Thomas,Mowery,Field Services,Active,5/7/07,19 yrs.,   ---,5/7/07
+Scott,Tripp,Eng-Estimating,Active,1/9/07,19 yrs.,   ---,1/9/07
+David,Holland,Prod Mgmt-Bio/Membrane,Active,1/2/07,19 yrs.,   ---,1/2/07
+Scott,Howarth,Eng-Mechanical,Active,6/12/06,20 yrs.,   ---,6/12/06
+Timothy,Austin,Eng-Mechanical,Active,6/7/06,20 yrs.,   ---,6/7/06
+Curt,Larson,Field Services,Active,4/3/06,20 yrs.,   ---,4/3/06
+Barbara,Kinroth,Contract Administration,Active,8/8/05,20 yrs.,   ---,8/8/05
+Daniel,Burns,Information Services,Active,5/31/05,21 yrs.,   ---,5/31/05
+Daniel,Durdan,Eng-Mechanical,Active,3/7/05,21 yrs.,   ---,3/7/05
+Rungrod,Jittawattanarat,Applications Eng,Active,3/7/05,21 yrs.,   ---,3/7/05
+Tamera,Knapp,Applications Eng,Active,11/1/04,21 yrs.,   ---,11/1/04
+Gerald,Schneider,Eng-Standards,Active,6/21/04,22 yrs.,   ---,6/21/04
+Georgia,Van Laeke,Accounting/Finance,Active,5/12/03,23 yrs.,   ---,5/12/03
+Michael,Hevey,Eng-Standards,Active,2/10/03,23 yrs.,   ---,2/10/03
+Manuel,De Los Santos,Prod Mgmt-Bio/Membrane,Active,8/19/02,23 yrs.,   ---,8/19/02
+Joseph,Massari,Eng-Mechanical,Active,4/29/02,24 yrs.,   ---,4/29/02
+Todd,Welsh,Accounting/Finance,Active,3/4/02,24 yrs.,   ---,3/4/02
+Daniel,Anderson Jr.,Manufacturing,Active,9/17/01,24 yrs.,   ---,9/17/01
+Beth,Bahr,Eng-Mechanical,Active,5/7/01,25 yrs.,   ---,5/7/01
+James,Horton,Administration,Active,11/13/00,25 yrs.,   ---,11/13/00
+Kevin,Heasley,Administration,Active,11/7/00,25 yrs.,   ---,11/7/00
+David,Smith,Eng-Standards,Active,10/30/00,25 yrs.,   ---,10/30/00
+David,Johnson,Eng-Electrical,Active,9/29/00,25 yrs.,   ---,9/29/00
+Brian,Pass,Eng-Electrical,Active,9/25/00,25 yrs.,   ---,9/25/00
+Timothy,Lamont,Aftermarket Sales,Active,8/10/00,25 yrs.,   ---,8/10/00
+Robert,Wiegand,Eng-Admin,Active,3/13/00,26 yrs.,   ---,3/13/00
+Patricea,Meyer,Accounting/Finance,Active,8/25/97,28 yrs.,   ---,8/25/97
+Staci,Lyman,Production Control,Active,1/23/97,29 yrs.,   ---,1/23/97
+Paul,Klebs,Aftermarket Sales,Active,6/24/96,30 yrs.,   ---,6/24/96
+Scott,Willis,Accounting/Finance,Active,8/7/95,30 yrs.,   ---,8/7/95
+Deborah,Heasley,International Sales,Active,11/16/92,33 yrs.,   ---,11/16/92
+Terence,Reid,Research & Development,Active,6/13/89,37 yrs.,   ---,6/13/89
+Cheryl,Kunz,Marketing/PR,Active,4/3/89,37 yrs.,   ---,4/3/89
+Michael,Jenkins,Manufacturing,Active,7/24/78,47 yrs.,   ---,7/24/78
+James,Knight,Prod Mgmt-Aeration/Mixing,Active,4/28/75,51 yrs.,   ---,4/28/75
+

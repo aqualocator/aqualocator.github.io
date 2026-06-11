@@ -1,0 +1,582 @@
+﻿Textbox19,Textbox17,Textbox18,Textbox11
+2 = New Employees < Year,50 = MAX Years Tenured,8 = AVG Years Tenured,"8 years average tenure for selected dept(s).
+200% of U.S. average**
+
+**4 Years is average for U.S. companies***.
+
+***2024 U.S. Bureau of Labor Statistics"
+
+Emp ID_label,Emp ID_Chart1_CategoryGroup_label,Emp ID_Chart1_CategoryGroup_Value_Y
+Emp ID,Accounting/Finance,12
+Emp ID,Administration,21
+Emp ID,Aftermarket Sales,10
+Emp ID,Applications Eng,82
+Emp ID,Contract Administration,9
+Emp ID,Customer Service,11
+Emp ID,Dom Sales-East,5
+Emp ID,Dom Sales-Midwest,3
+Emp ID,Dom Sales-Southeast,1
+Emp ID,Dom Sales-West,3
+Emp ID,Eng-Admin,15
+Emp ID,Eng-Electrical,23
+Emp ID,Eng-Estimating,9
+Emp ID,Eng-Mechanical,30
+Emp ID,Eng-Standards,25
+Emp ID,Field Services,32
+Emp ID,Human Resources,16
+Emp ID,Industrial Sales,3
+Emp ID,Information Services,10
+Emp ID,International Sales,3
+Emp ID,Manufacturing,58
+Emp ID,Marketing/PR,9
+Emp ID,Pilot Programs,1
+Emp ID,Prod Mgmt-Aeration/Mixing,10
+Emp ID,Prod Mgmt-Bio/Membrane,7
+Emp ID,Prod Mgmt-Disinfection,6
+Emp ID,Prod Mgmt-Filtration,10
+Emp ID,Production Control,46
+Emp ID,Project Management,18
+Emp ID,Research & Development,14
+Emp ID,Sales Administration,11
+Emp ID,Service School,2
+Emp ID,zzAftermarket Sales,7
+Emp ID,zzAKD Operations,4
+Emp ID,zzContract Admin,1
+Emp ID,zzIntl Sales-Asia Pacific,1
+Emp ID,zzIntl Sales-Latin America,2
+
+RadialGauge1_RadialScale1_MinimumValue,RadialGauge1_RadialScale1_MaximumValue,RadialGauge1_RadialPointer1_GaugeInputValue
+1,4,8
+
+FIRSTNM,LASTNM,Department1,USERACCOUNTSTATUS,COMPANYHIREDTM,YearsOfService,HireDate,HireDate1
+Rachel,Konefes,Human Resources,Inactive,10/28/24,1 yr.,5/22/26,5/22/26
+Robin,Cartter,Field Services,Inactive,9/8/25,8 mos.,5/1/26,5/1/26
+John,Summers,Information Services,Inactive,12/29/14,11 yrs.,4/22/26,4/22/26
+Edward,Wright,Eng-Standards,Inactive,7/1/24,1 yr.,3/12/26,3/12/26
+Seth,Antczak,Research & Development,Inactive,4/22/24,1 yr.,3/11/26,3/11/26
+William,Osorio,Manufacturing,Inactive,5/27/25,9 mos.,2/20/26,2/20/26
+Patricia,Carlson,Customer Service,Inactive,12/6/21,4 yrs.,1/30/26,1/30/26
+Danita,Podraza,Accounting/Finance,Inactive,11/17/14,11 yrs.,1/30/26,1/30/26
+Kendall,King,Manufacturing,Inactive,12/1/25,1 mo.,1/27/26,1/27/26
+Albert,Marquez,Manufacturing,Inactive,11/3/25,2 mos.,1/26/26,1/26/26
+Ramiro,Verastegui,Eng-Estimating,Inactive,4/7/25,9 mos.,1/23/26,1/23/26
+Thomas,Fenton Jr.,Project Management,Inactive,4/22/02,23 yrs.,1/5/26,1/5/26
+Marilyn,Ngoma,Eng-Electrical,Inactive,6/2/25,6 mos.,12/12/25,12/12/25
+Jordan,Van Barriger,Eng-Estimating,Inactive,4/28/25,8 mos.,12/11/25,12/11/25
+Xu,Ye,Applications Eng,Inactive,11/29/21,4 yrs.,12/8/25,12/8/25
+Cristen,Jones,Field Services,Inactive,12/9/24,11 mos.,11/17/25,11/17/25
+Devon,Bockhop,Eng-Standards,Inactive,6/3/19,6 yrs.,11/14/25,11/14/25
+Matthew,Busse,Eng-Standards,Inactive,9/15/25,1 mo.,10/31/25,10/31/25
+John,McLeod,Manufacturing,Inactive,5/14/25,5 mos.,10/24/25,10/24/25
+Richard,Rossi,Field Services,Inactive,5/5/25,5 mos.,10/24/25,10/24/25
+Xzavier,Alexander-Rawhoof,Manufacturing,Inactive,7/7/25,3 mos.,10/10/25,10/10/25
+Leslie,Vandre,Eng-Electrical,Inactive,3/10/25,6 mos.,9/30/25,9/30/25
+Jameson,Jochheim,Eng-Estimating,Inactive,6/3/24,1 yr.,9/26/25,9/26/25
+Clarence,Greer III,Manufacturing,Inactive,7/22/24,1 yr.,9/24/25,9/24/25
+Noor,Guron,Applications Eng,Inactive,7/29/24,1 yr.,9/12/25,9/12/25
+Troy,Lieb,Eng-Mechanical,Inactive,6/19/23,2 yrs.,8/27/25,8/27/25
+Krista,Bennett,Contract Administration,Inactive,6/11/18,7 yrs.,8/19/25,8/19/25
+Erik,Gamon,Manufacturing,Inactive,3/3/25,5 mos.,8/15/25,8/15/25
+Matthew,Ekberg,Information Services,Inactive,5/19/25,3 mos.,8/8/25,8/8/25
+Audrey,Hammer,Applications Eng,Inactive,5/19/25,3 mos.,8/7/25,8/7/25
+Bjorn,Carlson,Production Control,Inactive,7/21/25,15 day(s),8/5/25,8/5/25
+Stephen,Yalung,Project Management,Inactive,5/20/19,6 yrs.,7/25/25,7/25/25
+Deborah,Lewis,Eng-Electrical,Inactive,1/18/21,4 yrs.,7/18/25,7/18/25
+Keith,Wolfe,Manufacturing,Inactive,6/14/76,49 yrs.,7/1/25,7/1/25
+Ryan,Rawhoof,Manufacturing,Inactive,2/11/25,4 mos.,6/20/25,6/20/25
+Stephen,Chady,Production Control,Inactive,3/14/22,3 yrs.,6/5/25,6/5/25
+Christopher,Roegner,Research & Development,Inactive,11/1/21,3 yrs.,5/20/25,5/20/25
+Michael,Fritze,Eng-Mechanical,Inactive,10/28/24,7 mos.,5/8/25,5/8/25
+Mary Beth,Hensley,Production Control,Inactive,4/30/25,0 day(s),4/30/25,4/30/25
+June,Johnson,Production Control,Inactive,4/14/25,14 day(s),4/28/25,4/28/25
+Peter,Baumann,Administration,Inactive,6/28/99,25 yrs.,3/28/25,3/28/25
+Carey,Hampton,Field Services,Inactive,9/16/24,6 mos.,3/28/25,3/28/25
+Paul,Nelson,Dom Sales-Southeast,Inactive,7/26/78,46 yrs.,1/31/25,1/31/25
+Justin,Brown,Field Services,Inactive,7/29/24,6 mos.,1/24/25,1/24/25
+Michael,Harris,Manufacturing,Inactive,10/21/74,50 yrs.,1/22/25,1/22/25
+Todd,Harrington,Manufacturing,Inactive,12/2/24,1 mo.,1/15/25,1/15/25
+Gary,Lightfoot,Eng-Electrical,Inactive,11/8/04,20 yrs.,1/3/25,1/3/25
+Jeffrey,Ogle,Aftermarket Sales,Inactive,8/28/17,7 yrs.,1/2/25,1/2/25
+Dylan,Heitter,Customer Service,Inactive,2/8/22,2 yrs.,11/8/24,11/8/24
+Asim,Arshad,Production Control,Inactive,10/14/24,22 day(s),11/5/24,11/5/24
+Craig,Harbin,Manufacturing,Inactive,6/18/24,5 mos.,11/1/24,11/1/24
+Mark,Hopkins,Production Control,Inactive,7/9/18,6 yrs.,10/11/24,10/11/24
+Jeffrey,McCormick,Industrial Sales,Inactive,11/23/20,3 yrs.,7/11/24,7/11/24
+John,Seper,Eng-Standards,Inactive,6/17/24,24 day(s),7/11/24,7/11/24
+Jeffrey,Carlson,Production Control,Inactive,2/2/04,20 yrs.,6/12/24,6/12/24
+Jeffrey,McGee,Eng-Mechanical,Inactive,5/22/23,1 yr.,5/29/24,5/29/24
+John,Mizik,Customer Service,Inactive,11/27/23,6 mos.,5/24/24,5/24/24
+Stephen,Napadow,Eng-Electrical,Inactive,2/27/23,1 yr.,5/24/24,5/24/24
+Joel,Mosebach,Field Services,Inactive,3/18/24,2 mos.,5/22/24,5/22/24
+Benjamin,Donaldson,Manufacturing,Inactive,5/7/24,6 day(s),5/13/24,5/13/24
+Michael,McCormick,Eng-Standards,Inactive,2/15/10,14 yrs.,5/3/24,5/3/24
+Thomas,Miles,Dom Sales-East,Inactive,1/1/18,6 yrs.,4/30/24,4/30/24
+Jennifer,Jameson,Manufacturing,Inactive,1/29/24,3 mos.,4/24/24,4/24/24
+Garrett,Ralston,Contract Administration,Inactive,2/12/24,2 mos.,4/17/24,4/17/24
+Kacey,King McRae,Field Services,Inactive,11/15/21,2 yrs.,3/13/24,3/13/24
+Terry,Sandage,Manufacturing,Inactive,8/23/04,19 yrs.,1/24/24,1/24/24
+Glorianne,Nimmer,Project Management,Inactive,11/27/23,2 mos.,1/19/24,1/19/24
+Michael,Brockway,Manufacturing,Inactive,5/15/23,8 mos.,1/18/24,1/18/24
+Donnelle,Herron,Contract Administration,Inactive,4/3/95,28 yrs.,1/2/24,1/2/24
+Amber,Steder,Applications Eng,Inactive,8/16/21,2 yrs.,1/2/24,1/2/24
+Todd,Riding,Eng-Estimating,Inactive,4/11/23,8 mos.,12/20/23,12/20/23
+Corey,Goldman,Field Services,Inactive,2/27/23,10 mos.,12/8/23,12/8/23
+Christopher,Cox,Production Control,Inactive,10/30/23,16 day(s),11/15/23,11/15/23
+Erich,DeLang,Prod Mgmt-Disinfection,Inactive,6/6/16,7 yrs.,10/20/23,10/20/23
+Sally,Dulyea,Contract Administration,Inactive,9/13/21,2 yrs.,10/13/23,10/13/23
+Zachary,Tait,Field Services,Inactive,9/19/22,1 yr.,10/13/23,10/13/23
+Elijah,Atkins,Manufacturing,Inactive,5/22/23,3 mos.,8/21/23,8/21/23
+Brandon,Culp,Field Services,Inactive,11/28/22,9 mos.,8/18/23,8/18/23
+Michael,Lewis,Field Services,Inactive,2/14/22,1 yr.,8/11/23,8/11/23
+Julie,Torgersen,Production Control,Inactive,8/12/19,4 yrs.,8/11/23,8/11/23
+Tristan,Morrison,Manufacturing,Inactive,5/16/23,2 mos.,7/14/23,7/14/23
+Michael,Jacobson,Applications Eng,Inactive,9/28/20,2 yrs.,7/7/23,7/7/23
+Chelsey,Eklund,Accounting/Finance,Inactive,11/9/22,7 mos.,6/6/23,6/6/23
+Randy,Naruz,Information Services,Inactive,12/3/08,14 yrs.,5/19/23,5/19/23
+Anthony,Bielarz,Manufacturing,Inactive,8/29/22,8 mos.,4/17/23,4/17/23
+Alex,Krapas,Prod Mgmt-Filtration,Inactive,2/27/23,2 mos.,4/14/23,4/14/23
+Cleda,Hodes,Applications Eng,Inactive,1/3/23,3 mos.,4/5/23,4/5/23
+William,Decker,Customer Service,Inactive,10/4/10,12 yrs.,3/10/23,3/10/23
+Alexander,Harris,Manufacturing,Inactive,1/23/23,2 mos.,3/9/23,3/9/23
+Hui,Lin,International Sales,Inactive,7/17/02,20 yrs.,2/28/23,2/28/23
+Shareef,Khoga,Project Management,Inactive,12/18/17,5 yrs.,2/17/23,2/17/23
+Cynthia,Pippel,Contract Administration,Inactive,9/19/88,34 yrs.,1/3/23,1/3/23
+Vance,Arnold,Manufacturing,Inactive,5/18/20,2 yrs.,12/5/22,12/5/22
+Gordon,Brown,Eng-Estimating,Inactive,4/1/96,26 yrs.,12/2/22,12/2/22
+Monica,Gunderson,Marketing/PR,Inactive,6/15/15,7 yrs.,11/4/22,11/4/22
+Veronica,Myers,Eng-Admin,Inactive,6/20/22,5 mos.,11/4/22,11/4/22
+Dawn,Brady,Prod Mgmt-Disinfection,Inactive,4/21/14,8 yrs.,10/14/22,10/14/22
+Jessica,Johnson,Accounting/Finance,Inactive,8/29/22,2 mos.,10/14/22,10/14/22
+Jakob,Nowicki,Applications Eng,Inactive,7/17/17,5 yrs.,9/26/22,9/26/22
+Michael,Haller,Eng-Estimating,Inactive,11/8/21,9 mos.,8/10/22,8/10/22
+Toshiki,Watson,Field Services,Inactive,5/1/16,6 yrs.,7/30/22,7/30/22
+Caitlyn,Anderson,Eng-Admin,Inactive,5/16/22,2 mos.,7/29/22,7/29/22
+Deborah,Hyke,Applications Eng,Inactive,4/18/22,3 mos.,7/27/22,7/27/22
+Taylor,Willis,Manufacturing,Inactive,2/21/22,5 mos.,7/27/22,7/27/22
+James,Claus,Manufacturing,Inactive,9/10/18,3 yrs.,7/11/22,7/11/22
+Corey,O'Brien,Applications Eng,Inactive,1/6/20,2 yrs.,6/21/22,6/21/22
+David,Meyer II,Production Control,Inactive,7/22/13,8 yrs.,4/8/22,4/8/22
+Donald,Woody,Field Services,Inactive,3/21/22,4 day(s),3/25/22,3/25/22
+Natasha,Ruggles,Accounting/Finance,Inactive,11/21/16,5 yrs.,3/11/22,3/11/22
+Mitchell,Cook,Eng-Mechanical,Inactive,8/23/21,6 mos.,2/24/22,2/24/22
+David,Cornford,Project Management,Inactive,1/14/85,37 yrs.,2/22/22,2/22/22
+Geoffrey,Smith III,Field Services,Inactive,9/11/17,4 yrs.,2/4/22,2/4/22
+Daniel,Crews,Eng-Electrical,Inactive,7/20/09,12 yrs.,2/1/22,2/1/22
+William,Brundige Jr.,Eng-Standards,Inactive,4/30/01,20 yrs.,1/4/22,1/4/22
+Michael,Gray,Manufacturing,Inactive,9/5/95,26 yrs.,1/4/22,1/4/22
+Lynn,Hood,Customer Service,Inactive,5/9/01,20 yrs.,1/4/22,1/4/22
+Lynn,Peterson,Research & Development,Inactive,11/23/15,6 yrs.,1/4/22,1/4/22
+Debra,Stiles,Eng-Admin,Inactive,5/12/14,7 yrs.,1/4/22,1/4/22
+William,Sims,Field Services,Inactive,1/11/16,5 yrs.,12/17/21,12/17/21
+Jerry,Tucker,Field Services,Inactive,7/16/18,3 yrs.,12/3/21,12/3/21
+Gerald,Machula,Eng-Standards,Inactive,9/16/02,19 yrs.,10/1/21,10/1/21
+Kathleen,Disbrow,Production Control,Inactive,12/19/16,4 yrs.,9/10/21,9/10/21
+Jonathon,Kelsey,Applications Eng,Inactive,9/21/20,11 mos.,8/27/21,8/27/21
+Cheryl,Bell,Applications Eng,Inactive,9/14/15,5 yrs.,8/13/21,8/13/21
+Sara,Sudds,Accounting/Finance,Inactive,7/5/90,31 yrs.,7/23/21,7/23/21
+Mark,Herbig,Prod Mgmt-Aeration/Mixing,Inactive,5/19/75,46 yrs.,7/2/21,7/2/21
+Marisa,Grubb,Applications Eng,Inactive,4/24/20,1 yr.,6/11/21,6/11/21
+Alan,Rice,Prod Mgmt-Aeration/Mixing,Inactive,4/2/18,3 yrs.,6/4/21,6/4/21
+Rebecca,Zajac,Contract Administration,Inactive,7/26/10,10 yrs.,6/1/21,6/1/21
+SooMin,Loh,Eng-Electrical,Inactive,5/1/16,5 yrs.,5/28/21,5/28/21
+Graham,Lenox,Eng-Mechanical,Inactive,7/24/95,25 yrs.,5/21/21,5/21/21
+Sydney,Shaffer,Applications Eng,Inactive,4/27/20,1 yr.,4/23/21,4/23/21
+Karen,Spurlock,Administration,Inactive,12/1/11,9 yrs.,1/29/21,1/29/21
+Alicia,Gentner,Manufacturing,Inactive,2/13/17,3 yrs.,1/4/21,1/4/21
+Dennis,Teeters,Eng-Electrical,Inactive,9/11/06,14 yrs.,11/30/20,11/30/20
+Sara,Altimimi,Applications Eng,Inactive,10/17/16,4 yrs.,11/27/20,11/27/20
+Viridiana,Moreno,Applications Eng,Inactive,4/27/20,6 mos.,10/2/20,10/2/20
+Daniel,Binder,Research & Development,Inactive,8/17/92,28 yrs.,9/18/20,9/18/20
+Aislen,Kelly,Applications Eng,Inactive,5/20/19,1 yr.,8/20/20,8/20/20
+Douglas,See,Field Services,Inactive,3/25/96,24 yrs.,8/18/20,8/18/20
+Austin,Doak,Applications Eng,Inactive,4/27/20,4 mos.,8/14/20,8/14/20
+James,Kellogg,Field Services,Inactive,9/5/95,24 yrs.,7/17/20,7/17/20
+John,Pasterczyk,Industrial Sales,Inactive,9/11/17,2 yrs.,6/23/20,6/23/20
+Daniel,Lockhart,Aftermarket Sales,Inactive,6/29/15,4 yrs.,5/29/20,5/29/20
+Sherry L,Pike,Aftermarket Sales,Inactive,4/17/01,19 yrs.,5/1/20,5/1/20
+Rebecca,Johnson,Marketing/PR,Inactive,7/15/19,8 mos.,3/24/20,3/24/20
+Allan,Rivers,Eng-Electrical,Inactive,7/29/19,8 mos.,3/20/20,3/20/20
+Joshua,Rennell,Applications Eng,Inactive,5/29/18,1 yr.,1/24/20,1/24/20
+Hironori,Shimada,Service School,Inactive,6/6/16,3 yrs.,12/31/19,12/31/19
+Aaron,Glauch,Prod Mgmt-Bio/Membrane,Inactive,5/4/15,4 yrs.,12/23/19,12/23/19
+Michael,Nora,Applications Eng,Inactive,2/20/17,2 yrs.,12/6/19,12/6/19
+Luke,Stockton,Customer Service,Inactive,11/13/17,1 yr.,8/30/19,8/30/19
+Humza,Ahmad,Applications Eng,Inactive,5/20/19,3 mos.,8/16/19,8/16/19
+Levi,Bickle,Eng-Standards,Inactive,8/1/16,2 yrs.,5/31/19,5/31/19
+Julie,Claus,Production Control,Inactive,10/1/01,17 yrs.,5/20/19,5/20/19
+Tyler,Hammerle,Applications Eng,Inactive,3/7/16,3 yrs.,5/8/19,5/8/19
+Magdalena,Luke,Marketing/PR,Inactive,2/4/19,3 mos.,5/3/19,5/3/19
+Diana,Vedder,Eng-Admin,Inactive,5/1/16,2 yrs.,4/7/19,4/7/19
+Michael,Walworth,Service School,Inactive,4/4/16,2 yrs.,2/15/19,2/15/19
+Frank,Schmitz,Eng-Standards,Inactive,7/25/16,2 yrs.,2/8/19,2/8/19
+Rebecca,Gernetzke,Eng-Mechanical,Inactive,5/1/16,2 yrs.,2/1/19,2/1/19
+Valeria,Oteri,Marketing/PR,Inactive,3/5/18,10 mos.,1/25/19,1/25/19
+Zachary,Hendrix,Eng-Standards,Inactive,3/12/18,10 mos.,1/10/19,1/10/19
+Michael,O'Neil,Project Management,Inactive,8/1/16,2 yrs.,11/9/18,11/9/18
+Randy,Johnson,Eng-Electrical,Inactive,1/9/17,1 yr.,9/28/18,9/28/18
+Joann L,Riedl,Applications Eng,Inactive,4/28/03,15 yrs.,8/21/18,8/21/18
+Korrina,Baird,Applications Eng,Inactive,5/29/18,3 mos.,8/17/18,8/17/18
+Craig D,Beachey,Production Control,Inactive,8/14/00,18 yrs.,8/16/18,8/16/18
+Benjamin,Cohen,Applications Eng,Inactive,5/29/18,3 mos.,8/16/18,8/16/18
+Cynthia M,Borcherts,Prod Mgmt-Aeration/Mixing,Inactive,6/1/87,31 yrs.,6/29/18,6/29/18
+Kent E,Drews,Customer Service,Inactive,11/30/09,8 yrs.,6/8/18,6/8/18
+Sophia,Bainbridge,Applications Eng,Inactive,3/16/15,3 yrs.,5/25/18,5/25/18
+Karen S,Schmoll,Production Control,Inactive,11/8/99,18 yrs.,5/11/18,5/11/18
+Laurie,Breit,Prod Mgmt-Aeration/Mixing,Inactive,1/18/82,36 yrs.,3/30/18,3/30/18
+Eric,Harweger,Research & Development,Inactive,6/13/16,1 yr.,2/16/18,2/16/18
+William A,Moore,Dom Sales-West,Inactive,9/23/02,15 yrs.,2/2/18,2/2/18
+Bernard C,Eiswert,Dom Sales-East,Inactive,3/2/98,19 yrs.,1/5/18,1/5/18
+Susan B,Stralow,Production Control,Inactive,6/9/86,31 yrs.,1/2/18,1/2/18
+Leslie E,Zimmerman,Eng-Standards,Inactive,1/6/86,32 yrs.,1/2/18,1/2/18
+Yinlun,Xu,Applications Eng,Inactive,9/15/14,2 yrs.,7/20/17,7/20/17
+David,Rath,Field Services,Inactive,10/10/16,4 mos.,2/17/17,2/17/17
+Benjamin,Prewitt,Prod Mgmt-Aeration/Mixing,Inactive,6/13/16,8 mos.,2/16/17,2/16/17
+Roger,Anderson,Customer Service,Inactive,2/28/00,16 yrs.,1/20/17,1/20/17
+Sandra K,Lindvall,Accounting/Finance,Inactive,10/14/02,14 yrs.,12/30/16,12/30/16
+Kellie,Murphy-Borden,Prod Mgmt-Disinfection,Inactive,5/1/16,7 mos.,12/30/16,12/30/16
+Robert J,Wimmer,Administration,Inactive,8/24/98,18 yrs.,12/30/16,12/30/16
+Kenneth A,Mikkelson,Research & Development,Inactive,6/1/87,29 yrs.,12/21/16,12/21/16
+Brenda,Dessauer,Prod Mgmt-Disinfection,Inactive,5/1/16,6 mos.,11/30/16,11/30/16
+Andy,Mitchell,Prod Mgmt-Disinfection,Inactive,5/1/16,6 mos.,11/30/16,11/30/16
+Vicki S,Rekemeyer,Eng-Electrical,Inactive,6/4/07,9 yrs.,10/28/16,10/28/16
+Dawn,Johnson,Human Resources,Inactive,2/2/04,12 yrs.,9/9/16,9/9/16
+Gacob,Lenox,Prod Mgmt-Aeration/Mixing,Inactive,5/23/16,3 mos.,8/10/16,8/10/16
+Christopher V,Korab,Human Resources,Inactive,12/16/02,13 yrs.,8/5/16,8/5/16
+Jenna,Jarvis,Applications Eng,Inactive,4/4/16,3 mos.,7/20/16,7/20/16
+Michael D,Bukowski,Customer Service,Inactive,12/5/05,10 yrs.,5/27/16,5/27/16
+Marsha S,Elliott,Contract Administration,Inactive,3/6/00,16 yrs.,4/20/16,4/20/16
+Jeffrey A,Byrne,Production Control,Inactive,6/1/99,16 yrs.,2/12/16,2/12/16
+John W,Duncan Jr.,Production Control,Inactive,8/20/01,14 yrs.,1/29/16,1/29/16
+Julian,Rodriguez,Applications Eng,Inactive,7/14/14,1 yr.,1/29/16,1/29/16
+John D,Brubaker,Administration,Inactive,7/1/64,51 yrs.,1/14/16,1/14/16
+Thomas M,Miller,Field Services,Inactive,3/28/88,27 yrs.,1/4/16,1/4/16
+Andrew,Wait,Research & Development,Inactive,2/9/15,9 mos.,11/6/15,11/6/15
+Terry A,Johnson,Prod Mgmt-Aeration/Mixing,Inactive,2/25/13,2 yrs.,10/9/15,10/9/15
+Jia,Ma,Prod Mgmt-Filtration,Inactive,4/15/13,2 yrs.,8/7/15,8/7/15
+John,Fuhrman,Prod Mgmt-Aeration/Mixing,Inactive,11/17/14,8 mos.,7/31/15,7/31/15
+Leslie R,Stanford,Aftermarket Sales,Inactive,3/30/09,6 yrs.,6/19/15,6/19/15
+Tari L,Taylor,Marketing/PR,Inactive,4/20/98,17 yrs.,6/5/15,6/5/15
+Kenneth W,Wolfe Sr.,Manufacturing,Inactive,12/8/69,45 yrs.,5/5/15,5/5/15
+Gail F,Diehl,Accounting/Finance,Inactive,4/20/92,22 yrs.,1/30/15,1/30/15
+Christopher,Thieman,Field Services,Inactive,10/6/14,3 mos.,1/29/15,1/29/15
+Thomas,Matus,Aftermarket Sales,Inactive,9/23/13,1 yr.,1/16/15,1/16/15
+Steven A,Schupbach,Prod Mgmt-Aeration/Mixing,Inactive,8/21/72,42 yrs.,1/6/15,1/6/15
+Gary L,York,Information Services,Inactive,6/1/04,10 yrs.,12/31/14,12/31/14
+Thomas H,Sichz,Dom Sales-Midwest,Inactive,12/4/97,16 yrs.,11/10/14,11/10/14
+Matthew C,Castillo,Research & Development,Inactive,5/31/05,9 yrs.,10/31/14,10/31/14
+Jessica M,Hardy,Applications Eng,Inactive,3/4/13,1 yr.,9/5/14,9/5/14
+Dean A,Livingston,Eng-Estimating,Inactive,7/8/02,12 yrs.,7/11/14,7/11/14
+Walter C,Frazier,Manufacturing,Inactive,5/8/78,36 yrs.,5/2/14,5/2/14
+Kira P,Mangione,Eng-Admin,Inactive,4/18/11,3 yrs.,5/2/14,5/2/14
+Laurel,McEachran,Prod Mgmt-Disinfection,Inactive,11/21/11,2 yrs.,5/2/14,5/2/14
+Edward W,Fritz Jr,Applications Eng,Inactive,8/30/10,3 yrs.,4/18/14,4/18/14
+Eric T,Roundy,Applications Eng,Inactive,1/5/09,5 yrs.,4/4/14,4/4/14
+Jerrel R,Holloway,Manufacturing,Inactive,9/9/74,39 yrs.,3/13/14,3/13/14
+James J,Willson,Information Services,Inactive,3/12/01,12 yrs.,2/24/14,2/24/14
+Kathleen J,Wenzel,Production Control,Inactive,1/20/92,22 yrs.,2/7/14,2/7/14
+James J,Woodard,Field Services,Inactive,4/18/05,8 yrs.,1/25/14,1/25/14
+Jay A,Baker,Accounting/Finance,Inactive,12/19/94,19 yrs.,12/31/13,12/31/13
+Richard J,Reiland,Production Control,Inactive,7/12/99,14 yrs.,12/31/13,12/31/13
+Shannon L,Murphy,Production Control,Inactive,11/1/04,8 yrs.,10/18/13,10/18/13
+Shannon K,McMahon,Prod Mgmt-Bio/Membrane,Inactive,8/19/13,2 mos.,10/17/13,10/17/13
+James F,Woodcock,Manufacturing,Inactive,2/10/86,27 yrs.,9/27/13,9/27/13
+Kimberly J,Kane,Marketing/PR,Inactive,5/1/00,13 yrs.,9/13/13,9/13/13
+Brandon E.,Thomas,Prod Mgmt-Bio/Membrane,Inactive,5/3/04,9 yrs.,9/13/13,9/13/13
+Sharon K,Dedoncker,Administration,Inactive,4/27/71,42 yrs.,9/6/13,9/6/13
+Leslie D,Hanson,Information Services,Inactive,2/27/95,18 yrs.,8/16/13,8/16/13
+Edward W,Lang,Prod Mgmt-Filtration,Inactive,3/15/99,14 yrs.,7/26/13,7/26/13
+Donald R,Roberts,Manufacturing,Inactive,8/23/67,45 yrs.,5/31/13,5/31/13
+Ni,Ma,Applications Eng,Inactive,2/23/09,4 yrs.,4/17/13,4/17/13
+Linda G,Gilbert,Human Resources,Inactive,7/31/00,12 yrs.,3/31/13,3/31/13
+Dennis E,Straw,Field Services,Inactive,12/22/08,4 yrs.,3/15/13,3/15/13
+Gerald J,Dalsanto,Manufacturing,Inactive,10/22/90,22 yrs.,2/1/13,2/1/13
+Dennis R,Holder,Prod Mgmt-Aeration/Mixing,Inactive,11/15/76,36 yrs.,1/25/13,1/25/13
+John D.,Gresh,Eng-Estimating,Inactive,1/28/08,5 yrs.,1/15/13,1/15/13
+Jeffrey T,Adas,Eng-Standards,Inactive,6/18/07,5 yrs.,1/11/13,1/11/13
+James R,Aitkenhead,Applications Eng,Inactive,6/30/98,14 yrs.,1/11/13,1/11/13
+Robert,Batek,Prod Mgmt-Filtration,Inactive,11/17/03,9 yrs.,1/11/13,1/11/13
+John F,Filz,Eng-Standards,Inactive,9/1/08,4 yrs.,1/11/13,1/11/13
+Ramiro,Gonzalez Jr.,Eng-Mechanical,Inactive,9/13/00,12 yrs.,1/11/13,1/11/13
+Daniel W,Lanning,Project Management,Inactive,9/1/08,4 yrs.,1/11/13,1/11/13
+James E,McFarlane,Eng-Standards,Inactive,1/30/06,7 yrs.,1/11/13,1/11/13
+Lloyd W,Johnson,Research & Development,Inactive,12/18/89,23 yrs.,12/31/12,12/31/12
+Lorna Y,Carter,Prod Mgmt-Filtration,Inactive,9/24/03,9 yrs.,12/21/12,12/21/12
+Aleksandar,Todic,Eng-Standards,Inactive,5/14/12,3 mos.,8/24/12,8/24/12
+Andrew R,Eden,Eng-Electrical,Inactive,11/13/06,5 yrs.,7/6/12,7/6/12
+Sara M.,Miller,Marketing/PR,Inactive,3/7/05,7 yrs.,6/18/12,6/18/12
+Kathleen A,Basha,Aftermarket Sales,Inactive,12/5/05,6 yrs.,4/25/12,4/25/12
+Deborah K,Lavelle,Applications Eng,Inactive,8/18/86,25 yrs.,3/2/12,3/2/12
+Kimberly K.,Ward,Contract Administration,Inactive,12/5/05,6 yrs.,1/27/12,1/27/12
+Brandon M,Laing,Eng-Mechanical,Inactive,2/8/10,1 yr.,12/13/11,12/13/11
+Bryan T,Blum,Customer Service,Inactive,9/8/98,13 yrs.,11/19/11,11/19/11
+Sandra,Sincox,Eng-Standards,Inactive,10/9/06,5 yrs.,11/4/11,11/4/11
+Jiajie,He,Applications Eng,Inactive,5/27/10,1 yr.,10/21/11,10/21/11
+Steven D,Spoon,Eng-Mechanical,Inactive,5/16/05,6 yrs.,10/18/11,10/18/11
+Robert,Colehour,Research & Development,Inactive,2/4/08,3 yrs.,10/7/11,10/7/11
+Gregory,Gann,Production Control,Inactive,8/23/99,12 yrs.,9/21/11,9/21/11
+John,Szeluga,Manufacturing,Inactive,1/4/10,1 yr.,7/30/11,7/30/11
+Brian,Blascoe,Manufacturing,Inactive,6/24/02,9 yrs.,7/27/11,7/27/11
+Jeffrey L,Neiger,Eng-Electrical,Inactive,4/21/08,3 yrs.,5/13/11,5/13/11
+Anna,Triest,Eng-Admin,Inactive,4/1/98,13 yrs.,5/4/11,5/4/11
+Gina,Teders,Eng-Admin,Inactive,4/23/07,4 yrs.,4/29/11,4/29/11
+Sylvetta M,Clark,Eng-Admin,Inactive,6/19/06,4 yrs.,4/22/11,4/22/11
+Mark,Woestman,Applications Eng,Inactive,6/4/07,3 yrs.,1/26/11,1/26/11
+David F,Marell,Field Services,Inactive,4/23/07,3 yrs.,1/24/11,1/24/11
+Melissa,Horner,Manufacturing,Inactive,5/22/06,4 yrs.,1/3/11,1/3/11
+Michael,Butterfield,Manufacturing,Inactive,8/21/95,15 yrs.,9/27/10,9/27/10
+Rebecca,Brekke,Contract Administration,Inactive,7/22/96,14 yrs.,8/27/10,8/27/10
+Lenka,Dixon,Applications Eng,Inactive,3/7/05,5 yrs.,8/18/10,8/18/10
+Miguel,Merlin,Manufacturing,Inactive,12/3/07,2 yrs.,8/10/10,8/10/10
+Timothy,Brekke,Prod Mgmt-Bio/Membrane,Inactive,5/15/06,4 yrs.,7/2/10,7/2/10
+Larry,Fry,Customer Service,Inactive,3/27/00,10 yrs.,6/18/10,6/18/10
+Robert,Brillhart,Applications Eng,Inactive,9/23/09,7 mos.,4/2/10,4/2/10
+Scott,Braspenninx,Applications Eng,Inactive,4/7/08,1 yr.,3/15/10,3/15/10
+Scott,Braspenninx,Applications Eng,Inactive,4/7/08,1 yr.,3/15/10,3/15/10
+Jerry J.,Mekeel,Project Management,Inactive,6/21/04,5 yrs.,10/30/09,10/30/09
+Robert,Webb,Manufacturing,Inactive,6/17/76,33 yrs.,8/27/09,8/27/09
+Andrew,Altman,Eng-Standards,Inactive,5/18/09,3 mos.,8/14/09,8/14/09
+Amanda,Shott,Aftermarket Sales,Inactive,3/22/04,4 yrs.,2/27/09,2/27/09
+Linda A.,Coughlin,Administration,Inactive,9/8/08,5 mos.,2/20/09,2/20/09
+Robert,Kocher,Field Services,Inactive,12/30/96,12 yrs.,12/31/08,12/31/08
+Benjamin,Meyer,Human Resources,Inactive,12/26/01,7 yrs.,12/31/08,12/31/08
+Catherine,Wilmer,Dom Sales-East,Inactive,2/4/02,6 yrs.,12/31/08,12/31/08
+Rade,Mitrovic,Manufacturing,Inactive,12/3/07,11 mos.,11/24/08,11/24/08
+Donald,Clapper,Information Services,Inactive,10/26/98,10 yrs.,10/31/08,10/31/08
+Stanley,Thomas,Applications Eng,Inactive,1/2/07,1 yr.,5/9/08,5/9/08
+Sue,Kukla,Production Control,Inactive,3/10/08,14 day(s),3/24/08,3/24/08
+Brady,Johnson,Field Services,Inactive,4/8/02,5 yrs.,3/1/08,3/1/08
+Amy,Andrews,Production Control,Inactive,2/4/08,18 day(s),2/22/08,2/22/08
+Richard,Moake Jr.,Manufacturing,Inactive,10/10/88,19 yrs.,1/14/08,1/14/08
+Mark,Woestman,Applications Eng,Inactive,6/4/07,7 mos.,1/11/08,1/11/08
+Mark,Woestman,Applications Eng,Inactive,6/4/07,7 mos.,1/11/08,1/11/08
+Kenneth,Valentine,Eng-Standards,Inactive,5/1/02,5 yrs.,12/31/07,12/31/07
+Raymond H.,Pearson,Eng-Mechanical,Inactive,12/5/06,11 mos.,11/30/07,11/30/07
+Marianne,Bridgeland,Human Resources,Inactive,10/20/03,4 yrs.,10/26/07,10/26/07
+Preston,Tish,Manufacturing,Inactive,8/20/95,12 yrs.,10/15/07,10/15/07
+Mark,Drake,Prod Mgmt-Bio/Membrane,Inactive,5/2/99,8 yrs.,9/7/07,9/7/07
+James B.,Hearne,Aftermarket Sales,Inactive,8/22/05,2 yrs.,9/1/07,9/1/07
+Lloyd L.,Taylor,Aftermarket Sales,Inactive,1/2/06,1 yr.,9/1/07,9/1/07
+Douglas,Abrahamson,Eng-Electrical,Inactive,9/12/05,1 yr.,8/3/07,8/3/07
+Fred,Langdon,Field Services,Inactive,6/2/70,37 yrs.,6/1/07,6/1/07
+Philip,West,Manufacturing,Inactive,8/28/06,9 mos.,5/16/07,5/16/07
+Scott A.,Straley,Manufacturing,Inactive,4/19/04,3 yrs.,5/9/07,5/9/07
+Cynthia,Morgan,Eng-Admin,Inactive,12/9/85,21 yrs.,4/30/07,4/30/07
+Russell D.,Andersen,Eng-Mechanical,Inactive,11/13/06,4 mos.,3/5/07,3/5/07
+Kelly,Hildreth,Research & Development,Inactive,5/2/88,18 yrs.,9/29/06,9/29/06
+Laura,Hanson,Human Resources,Inactive,6/5/06,2 mos.,8/26/06,8/26/06
+Jesse,Johnson,Human Resources,Inactive,6/9/03,3 yrs.,8/26/06,8/26/06
+Jeremiah,Johnson,Human Resources,Inactive,3/16/06,5 mos.,8/26/06,8/26/06
+Ryan,Bommer,Human Resources,Inactive,6/5/06,2 mos.,8/11/06,8/11/06
+Mary,Breen,Human Resources,Inactive,6/5/06,2 mos.,8/11/06,8/11/06
+Steven,Korab,Human Resources,Inactive,6/5/06,2 mos.,8/11/06,8/11/06
+Walter,Lee,Research & Development,Inactive,9/6/05,10 mos.,7/28/06,7/28/06
+Anna,Triest,Eng-Admin,Inactive,4/1/98,8 yrs.,6/30/06,6/30/06
+Jeremy,Ross,Eng-Mechanical,Inactive,3/20/00,6 yrs.,6/9/06,6/9/06
+Mark,Perry,Applications Eng,Inactive,4/26/04,2 yrs.,5/26/06,5/26/06
+Robert,Tish,Manufacturing,Inactive,2/7/72,34 yrs.,5/23/06,5/23/06
+Kelley,Kreger,Production Control,Inactive,3/22/04,2 yrs.,5/12/06,5/12/06
+Maxine,Lenker,zzContract Admin,Inactive,10/11/00,5 yrs.,4/27/06,4/27/06
+David,Niemann,Manufacturing,Inactive,3/24/86,20 yrs.,3/31/06,3/31/06
+Jimmy Lee,Baldock,Manufacturing,Inactive,3/30/04,1 yr.,1/6/06,1/6/06
+Jason,Sanders,Eng-Electrical,Inactive,12/15/03,2 yrs.,1/5/06,1/5/06
+Roger,Mowery,Project Management,Inactive,12/3/90,15 yrs.,12/31/05,12/31/05
+Marvin,Smith,Eng-Electrical,Inactive,10/23/00,5 yrs.,12/31/05,12/31/05
+Patrick,Whedon,Eng-Mechanical,Inactive,5/6/91,14 yrs.,12/31/05,12/31/05
+Brian,Greenlee,Eng-Standards,Inactive,9/16/02,3 yrs.,10/14/05,10/14/05
+Laura,Krupinsky,Aftermarket Sales,Inactive,12/31/02,2 yrs.,10/6/05,10/6/05
+Alexandra,Baumann,Human Resources,Inactive,7/30/03,2 yrs.,8/14/05,8/14/05
+Jeffrey,Arnold,Sales Administration,Inactive,9/10/01,3 yrs.,8/12/05,8/12/05
+Burk J.,Glogowski,zzAKD Operations,Inactive,6/21/04,1 yr.,8/8/05,8/8/05
+Timothy,Brekke,Prod Mgmt-Filtration,Inactive,6/4/01,4 yrs.,7/29/05,7/29/05
+Kurt,Plache,Research & Development,Inactive,7/1/00,4 yrs.,6/30/05,6/30/05
+Michelle,Verstrate,Applications Eng,Inactive,8/1/99,5 yrs.,6/10/05,6/10/05
+Nikhil,Kapani,Eng-Electrical,Inactive,6/28/02,2 yrs.,5/6/05,5/6/05
+Steve,McDonald,zzAKD Operations,Inactive,9/28/01,3 yrs.,5/6/05,5/6/05
+Eleanor,Shinn,Production Control,Inactive,5/20/03,1 yr.,3/21/05,3/21/05
+Meredith,Wimmer,Human Resources,Inactive,6/9/03,1 yr.,2/27/05,2/27/05
+Joseph,Tinto,Administration,Inactive,1/22/01,4 yrs.,2/18/05,2/18/05
+Raymond,Konieczny,Field Services,Inactive,2/6/03,2 yrs.,2/4/05,2/4/05
+Kenneth,Carter,Manufacturing,Inactive,8/1/95,9 yrs.,1/21/05,1/21/05
+Robert,Ritter,Manufacturing,Inactive,5/30/89,15 yrs.,1/17/05,1/17/05
+Donna,Bergner,Project Management,Inactive,8/11/81,23 yrs.,1/4/05,1/4/05
+Ronald,Scott,Administration,Inactive,2/25/03,1 yr.,11/19/04,11/19/04
+Mark,Ludois,Eng-Mechanical,Inactive,6/21/04,5 mos.,11/5/04,11/5/04
+Danny,Moore,Eng-Mechanical,Inactive,6/18/01,3 yrs.,10/25/04,10/25/04
+Eric,Paul,Field Services,Inactive,2/17/03,1 yr.,10/8/04,10/8/04
+Nicole,Coogan,Production Control,Inactive,3/4/02,2 yrs.,9/30/04,9/30/04
+David,Roskowic,Dom Sales-Midwest,Inactive,12/31/00,3 yrs.,9/10/04,9/10/04
+Sharon,O'Sullivan,Human Resources,Inactive,12/31/97,6 yrs.,7/31/04,7/31/04
+Michael,Olivier,Prod Mgmt-Filtration,Inactive,6/15/98,6 yrs.,7/2/04,7/2/04
+Amy,Berry,zzAftermarket Sales,Inactive,10/27/03,8 mos.,6/30/04,6/30/04
+Jerry J.,Mekeel,Pilot Programs,Inactive,6/21/04,0 day(s),6/21/04,6/21/04
+Michael,Smith,zzAKD Operations,Inactive,10/4/01,2 yrs.,6/16/04,6/16/04
+Gary,York,Information Services,Inactive,6/1/04,0 day(s),6/1/04,6/1/04
+Peter,Bugg,International Sales,Inactive,5/1/00,3 yrs.,4/30/04,4/30/04
+Ted,Hollensteiner,Manufacturing,Inactive,7/28/87,16 yrs.,4/2/04,4/2/04
+Larry,Flood,zzAKD Operations,Inactive,10/15/01,2 yrs.,3/22/04,3/22/04
+Steve,Christianson,Accounting/Finance,Inactive,12/19/88,15 yrs.,3/11/04,3/11/04
+Jason,Street,Applications Eng,Inactive,5/31/02,1 yr.,3/5/04,3/5/04
+Timothy,Moore,zzAftermarket Sales,Inactive,10/27/03,4 mos.,2/5/04,2/5/04
+Brady,Johnson,Field Services,Inactive,4/8/02,1 yr.,10/27/03,10/27/03
+Tonya,Hill,zzAftermarket Sales,Inactive,3/3/03,7 mos.,10/17/03,10/17/03
+Joshua,Reese,Applications Eng,Inactive,8/31/01,2 yrs.,9/15/03,9/15/03
+Curtis,Simmons,Administration,Inactive,10/16/01,1 yr.,9/15/03,9/15/03
+Matthew,Streeter,Dom Sales-West,Inactive,9/24/01,2 yrs.,9/5/03,9/5/03
+Denise,Guetschow,Administration,Inactive,8/1/98,4 yrs.,6/16/03,6/16/03
+Sherry,Fry,Production Control,Inactive,9/27/99,3 yrs.,6/6/03,6/6/03
+Stephan,Sendelbach,Field Services,Inactive,6/25/01,1 yr.,5/2/03,5/2/03
+Gary,Rollinger,Applications Eng,Inactive,12/16/02,3 mos.,3/12/03,3/12/03
+Lorraine,Day,Administration,Inactive,5/21/01,1 yr.,2/18/03,2/18/03
+Christopher,Longman,Eng-Electrical,Inactive,6/1/02,8 mos.,2/10/03,2/10/03
+Mary,Motycka,zzAftermarket Sales,Inactive,4/22/02,9 mos.,1/31/03,1/31/03
+Kimberly,Larson,zzAftermarket Sales,Inactive,9/23/02,3 mos.,12/6/02,12/6/02
+Calvin,Wong,Applications Eng,Inactive,11/27/00,1 yr.,9/23/02,9/23/02
+Betty,Ralston,Accounting/Finance,Inactive,2/17/92,10 yrs.,9/10/02,9/10/02
+Willis,Miller,Manufacturing,Inactive,12/1/86,15 yrs.,9/3/02,9/3/02
+Robin,Denby,zzAftermarket Sales,Inactive,10/18/99,2 yrs.,8/9/02,8/9/02
+Sharon,Cooper,Applications Eng,Inactive,6/28/02,1 mo.,7/30/02,7/30/02
+Terry,Johnson,Eng-Standards,Inactive,1/4/88,14 yrs.,5/10/02,5/10/02
+Dominic,Janssen,Applications Eng,Inactive,7/12/99,2 yrs.,4/5/02,4/5/02
+Steve,Truitt,Prod Mgmt-Bio/Membrane,Inactive,12/31/97,4 yrs.,3/28/02,3/28/02
+Ronald,Hubenthal,Eng-Standards,Inactive,6/22/98,3 yrs.,3/19/02,3/19/02
+Craig,Zack,Prod Mgmt-Bio/Membrane,Inactive,12/14/92,9 yrs.,2/8/02,2/8/02
+Nikolaj,Meshenny,Production Control,Inactive,1/16/02,20 day(s),2/5/02,2/5/02
+Bruce,Oertell,Manufacturing,Inactive,6/11/74,27 yrs.,1/11/02,1/11/02
+Patrick,McRill,Manufacturing,Inactive,7/10/89,12 yrs.,1/9/02,1/9/02
+Sharyl,Fenrick,Applications Eng,Inactive,8/16/93,8 yrs.,1/3/02,1/3/02
+Richard,Fry,Research & Development,Inactive,2/6/89,12 yrs.,1/3/02,1/3/02
+Lucretia,Hohenfield,Applications Eng,Inactive,10/12/98,3 yrs.,1/3/02,1/3/02
+Teresa,Jarvis,Marketing/PR,Inactive,8/3/87,14 yrs.,1/3/02,1/3/02
+Leon,Lighthart,Production Control,Inactive,6/10/69,32 yrs.,1/3/02,1/3/02
+Bill,Petrozzi,zzIntl Sales-Latin America,Inactive,12/31/00,1 yr.,1/3/02,1/3/02
+Steve,Sewell,Production Control,Inactive,8/14/00,1 yr.,1/3/02,1/3/02
+David,Pratt,zzIntl Sales-Asia Pacific,Inactive,12/1/99,2 yrs.,12/31/01,12/31/01
+Linda,Conley,Manufacturing,Inactive,10/10/01,2 mos.,12/14/01,12/14/01
+Barbara,Bredeson,Production Control,Inactive,9/28/01,2 mos.,11/29/01,11/29/01
+Matt,Henderson,Accounting/Finance,Inactive,2/9/01,9 mos.,11/28/01,11/28/01
+Paul,Hughes,Dom Sales-West,Inactive,6/3/96,5 yrs.,10/30/01,10/30/01
+Carl,Campo,Project Management,Inactive,12/1/99,1 yr.,10/23/01,10/23/01
+Tom,Koeppen,Applications Eng,Inactive,6/7/95,6 yrs.,10/23/01,10/23/01
+Jeff,Ziemendorf,Eng-Mechanical,Inactive,3/1/93,8 yrs.,10/23/01,10/23/01
+Louis,Freeman,Administration,Inactive,5/15/00,1 yr.,10/1/01,10/1/01
+Darrell,Templin,Eng-Mechanical,Inactive,8/5/86,15 yrs.,9/27/01,9/27/01
+Sharon,Miller,Production Control,Inactive,2/22/99,2 yrs.,9/7/01,9/7/01
+Cheri,Hinerichson,Production Control,Inactive,5/29/73,28 yrs.,7/13/01,7/13/01
+Ryan,Matzen,Applications Eng,Inactive,6/1/98,3 yrs.,6/13/01,6/13/01
+Mohamed,Salah,Applications Eng,Inactive,12/4/00,4 mos.,4/27/01,4/27/01
+Bridget,Creswell,Project Management,Inactive,11/27/00,5 mos.,4/20/01,4/20/01
+Tracy,Masterson,Eng-Mechanical,Inactive,10/1/97,3 yrs.,3/30/01,3/30/01
+Cassie,Altenbernd,Administration,Inactive,6/5/00,9 mos.,3/8/01,3/8/01
+Raymond,South,Information Services,Inactive,8/28/95,5 yrs.,1/24/01,1/24/01
+Lynn,Hollingshed,Manufacturing,Inactive,1/27/86,15 yrs.,1/15/01,1/15/01
+Peggy,Bosell,Sales Administration,Inactive,2/16/88,12 yrs.,1/2/01,1/2/01
+Damone,Supica,Applications Eng,Inactive,7/1/96,4 yrs.,1/2/01,1/2/01
+Jim,Gault,Administration,Inactive,5/4/77,23 yrs.,12/31/00,12/31/00
+TJ,Vincetich,Eng-Mechanical,Inactive,9/24/91,9 yrs.,11/4/00,11/4/00
+Kevin,Janisse,Eng-Electrical,Inactive,7/1/99,1 yr.,11/1/00,11/1/00
+Jandre,Doulenns,zzIntl Sales-Latin America,Inactive,7/22/96,4 yrs.,10/31/00,10/31/00
+David,Meyer,Production Control,Inactive,12/5/88,11 yrs.,10/6/00,10/6/00
+Diana,Beasley,Prod Mgmt-Filtration,Inactive,11/19/97,2 yrs.,8/4/00,8/4/00
+Steve,Ueck,Production Control,Inactive,8/25/86,14 yrs.,8/3/00,8/3/00
+Justin,Krohn,Applications Eng,Inactive,1/12/98,2 yrs.,7/28/00,7/28/00
+Wendy,Phillips,Eng-Admin,Inactive,2/28/00,5 mos.,7/10/00,7/10/00
+Sandra,Compton,Applications Eng,Inactive,3/29/99,1 yr.,6/30/00,6/30/00
+Ken,Welty,Eng-Standards,Inactive,1/20/93,7 yrs.,6/30/00,6/30/00
+Frank,Rice,Production Control,Inactive,1/31/89,11 yrs.,6/29/00,6/29/00
+Dale,Baraks,Eng-Mechanical,Inactive,9/13/99,8 mos.,5/24/00,5/24/00
+Jack,Whetsel,Eng-Mechanical,Inactive,12/1/86,13 yrs.,4/11/00,4/11/00
+Jeremey,Lay,Applications Eng,Inactive,5/27/98,1 yr.,2/28/00,2/28/00
+Marcy,McConnell,Applications Eng,Inactive,2/15/99,1 yr.,2/25/00,2/25/00
+Kim,Eaton,Applications Eng,Inactive,2/21/00,3 day(s),2/24/00,2/24/00
+Chris,Crustals,Administration,Inactive,5/26/97,2 yrs.,2/18/00,2/18/00
+Joseph,Patete,Manufacturing,Inactive,10/29/97,2 yrs.,1/20/00,1/20/00
+Carla,Sowell,Manufacturing,Inactive,11/20/95,4 yrs.,1/20/00,1/20/00
+Jill,Harper,Production Control,Inactive,3/19/96,3 yrs.,1/18/00,1/18/00
+Gordon,Astrom,Eng-Mechanical,Inactive,8/6/80,19 yrs.,12/3/99,12/3/99
+Tereasa,Perkins,Sales Administration,Inactive,4/13/98,1 yr.,10/27/99,10/27/99
+Ed,Wildrick,Project Management,Inactive,3/2/98,1 yr.,10/15/99,10/15/99
+Kathy,Brickey,Production Control,Inactive,3/20/95,4 yrs.,10/13/99,10/13/99
+Mary,Friedley,Administration,Inactive,8/1/99,1 mo.,9/30/99,9/30/99
+Julie,Fisher,Production Control,Inactive,9/7/99,22 day(s),9/29/99,9/29/99
+Dennis,Barker,Production Control,Inactive,6/1/87,12 yrs.,9/22/99,9/22/99
+Paul,Pocs,Eng-Electrical,Inactive,2/15/88,11 yrs.,8/7/99,8/7/99
+Richard J,Reiland,Production Control,Inactive,7/12/99,0 day(s),7/12/99,7/12/99
+Chris,Wilson,Eng-Standards,Inactive,8/1/94,4 yrs.,7/9/99,7/9/99
+Ronald,Korabik,Production Control,Inactive,5/15/95,4 yrs.,7/1/99,7/1/99
+Mike,Caso,Applications Eng,Inactive,4/19/93,6 yrs.,6/28/99,6/28/99
+Chris,Hedgecock,Eng-Mechanical,Inactive,6/8/99,3 day(s),6/11/99,6/11/99
+Dawn,Ewald,Administration,Inactive,8/17/98,10 mos.,6/4/99,6/4/99
+Robert,Larson,Eng-Electrical,Inactive,11/17/97,1 yr.,6/1/99,6/1/99
+Gary,McMaster,Eng-Electrical,Inactive,7/27/98,11 mos.,6/1/99,6/1/99
+Kurt,Lindsley,Project Management,Inactive,6/1/93,5 yrs.,5/10/99,5/10/99
+Mark,Drake,Applications Eng,Inactive,5/2/99,0 day(s),5/2/99,5/2/99
+Andrea,Thompson,Project Management,Inactive,7/24/95,3 yrs.,4/21/99,4/21/99
+Robert,Woody,Eng-Estimating,Inactive,4/1/96,3 yrs.,4/8/99,4/8/99
+Satish,Kamaraju,Applications Eng,Inactive,3/7/94,5 yrs.,4/1/99,4/1/99
+Jim,Beer,Prod Mgmt-Filtration,Inactive,2/3/97,2 yrs.,2/25/99,2/25/99
+Nicole,Grossen,Sales Administration,Inactive,12/31/97,1 yr.,2/12/99,2/12/99
+James,Ungerer,Sales Administration,Inactive,4/1/98,9 mos.,1/9/99,1/9/99
+Trena,Ramirez,Project Management,Inactive,7/31/95,3 yrs.,10/2/98,10/2/98
+Robert,Dash,Prod Mgmt-Filtration,Inactive,7/21/98,2 mos.,9/18/98,9/18/98
+Michelle,DeMarb,Administration,Inactive,5/1/98,3 mos.,8/28/98,8/28/98
+Robert J,Wimmer,Administration,Inactive,8/24/98,0 day(s),8/24/98,8/24/98
+Jeredean,Hightower,Sales Administration,Inactive,6/2/97,1 yr.,8/6/98,8/6/98
+Vonda,Mains,Administration,Inactive,8/7/92,5 yrs.,6/3/98,6/3/98
+Kam,Law,Applications Eng,Inactive,12/22/95,2 yrs.,5/7/98,5/7/98
+Brad,Miller,Eng-Standards,Inactive,2/2/88,10 yrs.,4/3/98,4/3/98
+Dan,Wallis,Applications Eng,Inactive,3/6/96,2 yrs.,3/30/98,3/30/98
+Leon,Dahlberg,Eng-Electrical,Inactive,9/10/97,6 mos.,3/27/98,3/27/98
+Alan,Grooms,Applications Eng,Inactive,5/20/96,1 yr.,3/27/98,3/27/98
+Janis,Bakke,Applications Eng,Inactive,7/1/96,1 yr.,3/25/98,3/25/98
+Wendey,Larson,Applications Eng,Inactive,9/14/89,8 yrs.,3/23/98,3/23/98
+Rhett,Brown-Funk,Project Management,Inactive,1/16/89,9 yrs.,3/13/98,3/13/98
+Bernard C,Eiswert,Dom Sales-East,Inactive,3/2/98,0 day(s),3/2/98,3/2/98
+Bernard C,Eiswert,Dom Sales-East,Inactive,3/2/98,0 day(s),3/2/98,3/2/98
+Walt,Modliszewski,Applications Eng,Inactive,2/7/95,2 yrs.,1/15/98,1/15/98
+Sandy,Furlong,Eng-Admin,Inactive,5/1/89,8 yrs.,1/14/98,1/14/98
+Doug,Spencer,Human Resources,Inactive,10/25/96,1 yr.,1/9/98,1/9/98
+Mike,Keegan,Manufacturing,Inactive,6/2/86,11 yrs.,12/11/97,12/11/97
+Thomas H,Sichz,Dom Sales-Midwest,Inactive,12/4/97,0 day(s),12/4/97,12/4/97
+John,Cheline,Manufacturing,Inactive,9/22/47,50 yrs.,9/29/97,9/29/97
+George,Mohr,Eng-Admin,Inactive,7/28/97,0 day(s),7/28/97,7/28/97
+Michelle,Lavelle,Applications Eng,Inactive,6/2/97,0 day(s),6/2/97,6/2/97
+Gary,Stahl,Eng-Mechanical,Inactive,2/1/97,0 day(s),2/1/97,2/1/97
+Marty,Statz,Applications Eng,Inactive,1/1/97,0 day(s),1/1/97,1/1/97
+Shannon,Delgado,International Sales,Inactive,11/18/96,0 day(s),11/18/96,11/18/96
+Rhonda,Moore,Applications Eng,Inactive,8/13/96,0 day(s),8/13/96,8/13/96
+Anne,Sautman,Sales Administration,Inactive,7/29/96,0 day(s),7/29/96,7/29/96
+Edward,Herman,Eng-Admin,Inactive,7/22/96,0 day(s),7/22/96,7/22/96
+Margaret,Cole,Production Control,Inactive,7/11/96,0 day(s),7/11/96,7/11/96
+Crystal,Kilgore,Sales Administration,Inactive,5/13/96,0 day(s),5/13/96,5/13/96
+Darrel,Rippon,Eng-Standards,Inactive,4/15/96,0 day(s),4/15/96,4/15/96
+Jennifer,Schonoff,Eng-Mechanical,Inactive,4/8/96,0 day(s),4/8/96,4/8/96
+Douglas W,See,Field Services,Inactive,3/25/96,0 day(s),3/25/96,3/25/96
+Glenn,Calltharp,Industrial Sales,Inactive,1/15/96,0 day(s),1/15/96,1/15/96
+Chantell,Lipps,Sales Administration,Inactive,12/18/95,0 day(s),12/18/95,12/18/95
+Tess,Gregorich,Production Control,Inactive,11/23/95,0 day(s),11/23/95,11/23/95
+Carmen,Lee,Sales Administration,Inactive,10/9/95,0 day(s),10/9/95,10/9/95
+Cheryl,Reynolds,Sales Administration,Inactive,10/9/95,0 day(s),10/9/95,10/9/95
+Greg,Rouse,Applications Eng,Inactive,8/7/95,0 day(s),8/7/95,8/7/95
+Bipin,Patel,Eng-Mechanical,Inactive,7/17/95,0 day(s),7/17/95,7/17/95
+Sonya,Crites,Applications Eng,Inactive,6/5/95,0 day(s),6/5/95,6/5/95
+John,Berryman,Information Services,Inactive,4/24/95,0 day(s),4/24/95,4/24/95
+Dan,Kraut,Marketing/PR,Inactive,4/10/95,0 day(s),4/10/95,4/10/95
+Bill,Dey,zzAftermarket Sales,Inactive,8/8/94,0 day(s),8/8/94,8/8/94
+Mike,Brodzic,Eng-Mechanical,Inactive,8/4/93,0 day(s),8/4/93,8/4/93
+John,Koch,Applications Eng,Inactive,3/10/93,0 day(s),3/10/93,3/10/93
+Scott,Kafka,Applications Eng,Inactive,8/7/92,0 day(s),8/7/92,8/7/92
+Kevin,Moler,Applications Eng,Inactive,1/13/92,0 day(s),1/13/92,1/13/92
+Mike,Roth,Eng-Mechanical,Inactive,1/6/92,0 day(s),1/6/92,1/6/92
+Nick,Schwartzhoff,Eng-Mechanical,Inactive,6/10/91,0 day(s),6/10/91,6/10/91
+Nick,Feira,Applications Eng,Inactive,6/3/91,0 day(s),6/3/91,6/3/91
+Mark,Roland,Production Control,Inactive,3/1/90,0 day(s),3/1/90,3/1/90
+Diana,Mooney,Applications Eng,Inactive,2/26/90,0 day(s),2/26/90,2/26/90
+Sandy,Deemer,Administration,Inactive,9/27/89,0 day(s),9/27/89,9/27/89
+Sylvester,Dunlap,Manufacturing,Inactive,2/6/89,0 day(s),2/6/89,2/6/89
+Margo,Brown,Accounting/Finance,Inactive,8/6/86,0 day(s),8/6/86,8/6/86
+Ron,Weis,Eng-Admin,Inactive,12/5/83,0 day(s),12/5/83,12/5/83
+Sharlee,Rawes,Production Control,Inactive,3/24/80,0 day(s),3/24/80,3/24/80
+Alice,Hale,Applications Eng,Inactive,3/28/79,0 day(s),3/28/79,3/28/79
+Lou,Pace,Project Management,Inactive,9/14/70,0 day(s),9/14/70,9/14/70
+Mark,Ludois,Eng-Mechanical,Inactive,,---,---,---
+

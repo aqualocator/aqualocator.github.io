@@ -84,10 +84,21 @@ function isRealPerson(emp){
   return n !== "" && n !== "n/a";
 }
 
+function sortByLastFirst(rows){
+  return rows.slice().sort((a,b)=>{
+    const la=(a.Last||(a.name||"").split(" ").pop()||"").split(",")[0].trim().toLowerCase();
+    const lb=(b.Last||(b.name||"").split(" ").pop()||"").split(",")[0].trim().toLowerCase();
+    if (la!==lb) return la.localeCompare(lb);
+    const fa=(a.First||(a.name||"").split(" ")[0]||"").toLowerCase();
+    const fb=(b.First||(b.name||"").split(" ")[0]||"").toLowerCase();
+    return fa.localeCompare(fb);
+  });
+}
+
 function currentRows(){
   let rows = rawRecords.slice();
   if ($("peopleOnly").checked) rows = rows.filter(isRealPerson);
-  return rows;
+  return sortByLastFirst(rows);
 }
 
 function currentColumns(rows){
@@ -149,14 +160,7 @@ async function loadDirectory(){
     setStatus("Fetching employee records…");
     const snap = await getDocs(collection(db, COLLECTION_PATH));
     rawRecords = snap.docs.map(d => ({ id:d.id, ...d.data() }));
-    rawRecords.sort((a,b)=>{
-      const la=(a.Last||(a.name||"").split(" ").pop()||"").split(",")[0].trim().toLowerCase();
-      const lb=(b.Last||(b.name||"").split(" ").pop()||"").split(",")[0].trim().toLowerCase();
-      if (la!==lb) return la.localeCompare(lb);
-      const fa=(a.First||(a.name||"").split(" ")[0]||"").toLowerCase();
-      const fb=(b.First||(b.name||"").split(" ")[0]||"").toLowerCase();
-      return fa.localeCompare(fb);
-    });
+    // Sorting is handled in currentRows() via sortByLastFirst()
     setStatus(`Loaded ${rawRecords.length} total record(s).`, "ok");
     renderPreview();
   }catch(err){
