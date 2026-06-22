@@ -1,0 +1,9 @@
+Commit Steps Commit to Github
+
+1) create (if does not exist) or update a Changelog and name Changelog.md. 
+(The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html))
+
+2) Make sure and add date and show latest change at top. 
+3)git add . && git commit -m "See Changelog.md" && git push
+
