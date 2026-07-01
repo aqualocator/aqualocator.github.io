@@ -68,8 +68,8 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { getFirestore, collection, getDocs, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore, collection, onSnapshot, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
 // Same Firebase config as the live AQUALocator site
 const FIREBASE_CONFIG = {
@@ -81,13 +81,14 @@ const FIREBASE_CONFIG = {
   appId: "1:654848563347:web:4702a6f55ccbf7d5edd566"
 };
 
-// Correct Firestore collection path from the existing extractor
-const COLLECTION_PATH = "artifacts/default-app-id/public/data/employees";
+// Use the same appId resolution as index.html
+const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
 const $ = id => document.getElementById(id);
 
 function setStatus(msg, cls = '') {
-  $(  'status').className = cls;
+  $('status').className = cls;
   $('status').innerHTML = msg;
 }
 
@@ -97,6 +98,76 @@ function toUsername(first, last) {
   const l = last.trim().toLowerCase().replace(/[^a-z]/g, '');
   if (!f || !l) return null;
   return f[0] + l;
+}
+
+function processAndRender(rawRecords) {
+  setStatus(`Loaded ${rawRecords.length} total records. Processing…`);
+
+  // Filter and process into CSV rows
+  const csvRows = [];
+  const seen = new Set();
+
+  for (const emp of rawRecords) {
+    // Skip blank/placeholder rows
+    if (emp.responsibilities === 'XXX') continue;
+    const name = (emp.name || '').trim();
+    if (!name || name.toLowerCase() === 'n/a') continue;
+
+    // Get first/last name from dedicated fields, fall back to parsing name
+    let firstName = (emp.First || '').trim();
+    let lastName = (emp.Last || '').trim();
+
+    if (!firstName || !lastName) {
+      const parts = name.split(/\s+/);
+      if (parts.length < 2) continue;
+      firstName = firstName || parts[0];
+      lastName = lastName || parts[parts.length - 1];
+    }
+
+    // Handle "Last, First" format in Last field
+    if (lastName.includes(',')) {
+      lastName = lastName.split(',')[0].trim();
+    }
+
+    const username = toUsername(firstName, lastName);
+    if (!username) continue;
+
+    // Skip duplicates
+    if (seen.has(username)) continue;
+    seen.add(username);
+
+    const email = (emp.email || '').trim() || (username + '@aqua-aerobic.com');
+    const fullName = firstName + ' ' + lastName;
+
+    csvRows.push({ username, email, fullName, dept: emp.dept || '' });
+  }
+
+  // Sort by last name
+  csvRows.sort((a, b) => {
+    const aLast = a.fullName.split(' ').pop().toLowerCase();
+    const bLast = b.fullName.split(' ').pop().toLowerCase();
+    return aLast.localeCompare(bLast);
+  });
+
+  // Generate CSV text (username,email,Full Name)
+  const csvText = csvRows.map(r => `${r.username},${r.email},${r.fullName}`).join('\n');
+
+  // Show CSV output
+  $('csvCard').style.display = '';
+  $('csvOutput').value = csvText;
+  $('countLabel').textContent = `${csvRows.length} users ready for Gitea`;
+
+  // Show preview table
+  $('previewCard').style.display = '';
+  const table = $('preview');
+  table.innerHTML = '<thead><tr><th>#</th><th>Username</th><th>Email</th><th>Full Name</th><th>Department</th></tr></thead><tbody>' +
+    csvRows.map((r, i) =>
+      `<tr><td>${i + 1}</td><td>${r.username}</td><td>${r.email}</td><td>${r.fullName}</td><td>${r.dept}</td></tr>`
+    ).join('') + '</tbody>';
+
+  $('dlBtn').disabled = false;
+  $('copyBtn').disabled = false;
+  setStatus(`✓ Found ${csvRows.length} employees (from ${rawRecords.length} records). Download or copy the CSV.`, 'ok');
 }
 
 $('loadBtn').addEventListener('click', async () => {
@@ -109,80 +180,48 @@ $('loadBtn').addEventListener('click', async () => {
     const db = getFirestore(app);
     setLogLevel('error');
 
-    setStatus('Signing in anonymously…');
-    await signInAnonymously(auth);
+    setStatus('Signing in…');
 
-    setStatus('Fetching employee records…');
-    const snap = await getDocs(collection(db, COLLECTION_PATH));
-    const rawRecords = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-
-    setStatus(`Loaded ${rawRecords.length} total records. Processing…`);
-
-    // Filter and process into CSV rows
-    const csvRows = [];
-    const seen = new Set();
-
-    for (const emp of rawRecords) {
-      // Skip blank/placeholder rows
-      if (emp.responsibilities === 'XXX') continue;
-      const name = (emp.name || '').trim();
-      if (!name || name.toLowerCase() === 'n/a') continue;
-
-      // Get first/last name from dedicated fields, fall back to parsing name
-      let firstName = (emp.First || '').trim();
-      let lastName = (emp.Last || '').trim();
-
-      if (!firstName || !lastName) {
-        const parts = name.split(/\s+/);
-        if (parts.length < 2) continue;
-        firstName = firstName || parts[0];
-        lastName = lastName || parts[parts.length - 1];
-      }
-
-      // Handle "Last, First" format in Last field
-      if (lastName.includes(',')) {
-        lastName = lastName.split(',')[0].trim();
-      }
-
-      const username = toUsername(firstName, lastName);
-      if (!username) continue;
-
-      // Skip duplicates
-      if (seen.has(username)) continue;
-      seen.add(username);
-
-      const email = (emp.email || '').trim() || (username + '@aqua-aerobic.com');
-      const fullName = firstName + ' ' + lastName;
-
-      csvRows.push({ username, email, fullName, dept: emp.dept || '' });
-    }
-
-    // Sort by last name
-    csvRows.sort((a, b) => {
-      const aLast = a.fullName.split(' ').pop().toLowerCase();
-      const bLast = b.fullName.split(' ').pop().toLowerCase();
-      return aLast.localeCompare(bLast);
+    // Use the same auth pattern as index.html
+    await new Promise((resolve, reject) => {
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          resolve();
+        } else {
+          try {
+            if (initialAuthToken) {
+              await signInWithCustomToken(auth, initialAuthToken);
+            } else {
+              await signInAnonymously(auth);
+            }
+            // onAuthStateChanged will fire again with the user
+          } catch (err) {
+            reject(err);
+          }
+        }
+      });
     });
 
-    // Generate CSV text (username,email,Full Name)
-    const csvText = csvRows.map(r => `${r.username},${r.email},${r.fullName}`).join('\n');
+    setStatus('Fetching employee records…');
 
-    // Show CSV output
-    $('csvCard').style.display = '';
-    $('csvOutput').value = csvText;
-    $('countLabel').textContent = `${csvRows.length} users ready for Gitea`;
+    const collectionPath = `artifacts/${appId}/public/data/employees`;
 
-    // Show preview table
-    $('previewCard').style.display = '';
-    const table = $('preview');
-    table.innerHTML = '<thead><tr><th>#</th><th>Username</th><th>Email</th><th>Full Name</th><th>Department</th></tr></thead><tbody>' +
-      csvRows.map((r, i) =>
-        `<tr><td>${i + 1}</td><td>${r.username}</td><td>${r.email}</td><td>${r.fullName}</td><td>${r.dept}</td></tr>`
-      ).join('') + '</tbody>';
-
-    $('dlBtn').disabled = false;
-    $('copyBtn').disabled = false;
-    setStatus(`✓ Found ${csvRows.length} employees (from ${rawRecords.length} records). Download or copy the CSV.`, 'ok');
+    // Use onSnapshot (like index.html) for a reliable one-time read, then unsubscribe
+    await new Promise((resolve, reject) => {
+      const unsubscribe = onSnapshot(
+        collection(db, collectionPath),
+        (snapshot) => {
+          unsubscribe(); // Only need the first snapshot
+          const rawRecords = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+          processAndRender(rawRecords);
+          resolve();
+        },
+        (error) => {
+          unsubscribe();
+          reject(error);
+        }
+      );
+    });
 
   } catch (err) {
     console.error(err);
