@@ -1,400 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AQUALocator → Gitea Users CSV</title>
-    <style>
-        :root {
-            --blue: #35a2c4;
-            --violet: #5d3587;
-            --green: #059669;
-            --ink: #1f2937;
-            --muted: #6b7280;
-            --line: #e5e7eb;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Inter, system-ui, Segoe UI, sans-serif;
-            background: #fafafa;
-            color: var(--ink);
-            margin: 0;
-            padding: 2rem 1rem;
-        }
-
-        .wrap {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            font-size: 1.5rem;
-            margin: 0 0 .25rem;
-            color: var(--blue);
-        }
-
-        p.sub {
-            margin: 0 0 1.5rem;
-            color: var(--muted);
-            font-size: .9rem;
-        }
-
-        .card {
-            background: #fff;
-            border: 1px solid var(--line);
-            border-radius: 10px;
-            padding: 1.25rem;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
-            margin-bottom: 1.25rem;
-        }
-
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem 1.5rem;
-            align-items: center;
-        }
-
-        button {
-            font: inherit;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            padding: .6rem 1.1rem;
-            cursor: pointer;
-            color: #fff;
-            transition: background .15s;
-        }
-
-        button:disabled {
-            opacity: .5;
-            cursor: not-allowed;
-        }
-
-        .btn-primary {
-            background: var(--violet);
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            background: #4a2d6b;
-        }
-
-        .btn-blue {
-            background: var(--blue);
-        }
-
-        .btn-blue:hover:not(:disabled) {
-            background: #2a8faf;
-        }
-
-        .btn-green {
-            background: var(--green);
-        }
-
-        .btn-green:hover:not(:disabled) {
-            background: #047857;
-        }
-
-        #status {
-            font-size: .9rem;
-            color: var(--muted);
-            margin-top: .75rem;
-            min-height: 1.2em;
-        }
-
-        #status.error {
-            color: #dc2626;
-            font-weight: 600;
-        }
-
-        #status.ok {
-            color: var(--green);
-            font-weight: 600;
-        }
-
-        .tablewrap {
-            overflow: auto;
-            max-height: 480px;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            font-size: .82rem;
-        }
-
-        th,
-        td {
-            text-align: left;
-            padding: .45rem .6rem;
-            border-bottom: 1px solid var(--line);
-            white-space: nowrap;
-        }
-
-        th {
-            position: sticky;
-            top: 0;
-            background: #f9fafb;
-            font-weight: 600;
-            color: #374151;
-            z-index: 1;
-        }
-
-        tr:hover td {
-            background: #fafafa;
-        }
-
-        .count {
-            font-weight: 600;
-            color: var(--ink);
-        }
-
-        textarea {
-            width: 100%;
-            height: 200px;
-            font-family: 'Cascadia Code', Consolas, monospace;
-            font-size: .8rem;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            padding: .75rem;
-            resize: vertical;
-        }
-
-        .info {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            border-radius: 8px;
-            padding: 1rem;
-            font-size: .85rem;
-            color: #1e40af;
-            margin-bottom: 1rem;
-        }
-
-        .info code {
-            background: #dbeafe;
-            padding: 2px 5px;
-            border-radius: 4px;
-            font-size: .8rem;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AQUALocator → Gitea Users CSV</title>
+<style>
+  :root{ --blue:#35a2c4; --violet:#5d3587; --green:#059669; --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb; }
+  *{ box-sizing:border-box; }
+  body{ font-family:Inter,system-ui,Segoe UI,sans-serif; background:#fafafa; color:var(--ink); margin:0; padding:2rem 1rem; }
+  .wrap{ max-width:1000px; margin:0 auto; }
+  h1{ font-size:1.5rem; margin:0 0 .25rem; color:var(--blue); }
+  p.sub{ margin:0 0 1.5rem; color:var(--muted); font-size:.9rem; }
+  .card{ background:#fff; border:1px solid var(--line); border-radius:10px; padding:1.25rem; box-shadow:0 1px 2px rgba(0,0,0,.04); margin-bottom:1.25rem; }
+  .controls{ display:flex; flex-wrap:wrap; gap:1rem 1.5rem; align-items:center; }
+  button{ font:inherit; font-weight:600; border:none; border-radius:8px; padding:.6rem 1.1rem; cursor:pointer; color:#fff; transition:background .15s; }
+  button:disabled{ opacity:.5; cursor:not-allowed; }
+  .btn-primary{ background:var(--violet); }
+  .btn-primary:hover:not(:disabled){ background:#4a2d6b; }
+  .btn-blue{ background:var(--blue); }
+  .btn-blue:hover:not(:disabled){ background:#2a8faf; }
+  .btn-green{ background:var(--green); }
+  .btn-green:hover:not(:disabled){ background:#047857; }
+  #status{ font-size:.9rem; color:var(--muted); margin-top:.75rem; min-height:1.2em; }
+  #status.error{ color:#dc2626; font-weight:600; }
+  #status.ok{ color:var(--green); font-weight:600; }
+  .tablewrap{ overflow:auto; max-height:480px; border:1px solid var(--line); border-radius:8px; }
+  table{ border-collapse:collapse; width:100%; font-size:.82rem; }
+  th,td{ text-align:left; padding:.45rem .6rem; border-bottom:1px solid var(--line); white-space:nowrap; }
+  th{ position:sticky; top:0; background:#f9fafb; font-weight:600; color:#374151; z-index:1; }
+  tr:hover td{ background:#fafafa; }
+  .count{ font-weight:600; color:var(--ink); }
+  textarea{ width:100%; height:200px; font-family:'Cascadia Code',Consolas,monospace; font-size:.8rem; border:1px solid var(--line); border-radius:8px; padding:.75rem; resize:vertical; }
+  .info{ background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:1rem; font-size:.85rem; color:#1e40af; margin-bottom:1rem; }
+  .info code{ background:#dbeafe; padding:2px 5px; border-radius:4px; font-size:.8rem; }
+</style>
 </head>
-
 <body>
-    <div class="wrap">
-        <h1>AQUALocator → Gitea Users CSV</h1>
-        <p class="sub">Reads employee directory from Firestore and generates a CSV ready for
-            <code>create_users.js</code>. Runs locally in your browser.</p>
+<div class="wrap">
+  <h1>AQUALocator → Gitea Users CSV</h1>
+  <p class="sub">Reads employee directory from Firestore and generates a CSV ready for <code>create_users.js</code>. Runs locally in your browser.</p>
 
-        <div class="info">
-            <strong>Output format:</strong> <code>username,email,Full Name</code><br>
-            Username = first initial + last name (lowercase). Save the output as <code>users.csv</code> on
-            <code>F:\gitea\</code> then run:<br>
-            <code>node create_users.js users.csv</code>
-        </div>
+  <div class="info">
+    <strong>Output format:</strong> <code>username,email,Full Name</code><br>
+    Username = first initial + last name (lowercase). Save the output as <code>users.csv</code> on <code>F:\gitea\</code> then run:<br>
+    <code>node create_users.js users.csv</code>
+  </div>
 
-        <div class="card">
-            <div class="controls">
-                <button id="loadBtn" class="btn-blue">Load Employee Directory</button>
-                <button id="dlBtn" class="btn-primary" disabled>Download users.csv</button>
-                <button id="copyBtn" class="btn-green" disabled>Copy to Clipboard</button>
-            </div>
-            <div id="status">Click <strong>Load Employee Directory</strong> to begin.</div>
-        </div>
-
-        <div class="card" id="csvCard" style="display:none;">
-            <div style="margin-bottom:.75rem;"><span class="count" id="countLabel"></span></div>
-            <textarea id="csvOutput" readonly></textarea>
-        </div>
-
-        <div class="card" id="previewCard" style="display:none;">
-            <div style="margin-bottom:.75rem;"><strong>Preview</strong></div>
-            <div class="tablewrap">
-                <table id="preview"></table>
-            </div>
-        </div>
+  <div class="card">
+    <div class="controls">
+      <button id="loadBtn" class="btn-blue">Load Employee Directory</button>
+      <button id="dlBtn" class="btn-primary" disabled>Download users.csv</button>
+      <button id="copyBtn" class="btn-green" disabled>Copy to Clipboard</button>
     </div>
+    <div id="status">Click <strong>Load Employee Directory</strong> to begin.</div>
+  </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  <div class="card" id="csvCard" style="display:none;">
+    <div style="margin-bottom:.75rem;"><span class="count" id="countLabel"></span></div>
+    <textarea id="csvOutput" readonly></textarea>
+  </div>
 
-        const FIREBASE_CONFIG = {
-            apiKey: "AIzaSyABeCFheLuS08mxfWjCSS2ugXFbLDgnpIE",
-            authDomain: "aqualocator-23714.firebaseapp.com",
-            projectId: "aqualocator-23714",
-            storageBucket: "aqualocator-23714.appspot.com",
-            messagingSenderId: "732498344784",
-            appId: "1:732498344784:web:4a1b5e3c2f8d9a6e7b1234"
-        };
+  <div class="card" id="previewCard" style="display:none;">
+    <div style="margin-bottom:.75rem;"><strong>Preview</strong></div>
+    <div class="tablewrap"><table id="preview"></table></div>
+  </div>
+</div>
 
-        const app = initializeApp(FIREBASE_CONFIG);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore, collection, getDocs, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const statusEl = document.getElementById('status');
-        const loadBtn = document.getElementById('loadBtn');
-        const dlBtn = document.getElementById('dlBtn');
-        const copyBtn = document.getElementById('copyBtn');
+// Same Firebase config as the live AQUALocator site
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyABeCFheLuS08mxfWjCSS2ugXFbLDgnpIE",
+  authDomain: "aqualocator-23714.firebaseapp.com",
+  projectId: "aqualocator-23714",
+  storageBucket: "aqualocator-23714.appspot.com",
+  messagingSenderId: "654848563347",
+  appId: "1:654848563347:web:4702a6f55ccbf7d5edd566"
+};
 
-        function setStatus(msg, cls = '') {
-            statusEl.className = cls;
-            statusEl.innerHTML = msg;
-        }
+// Correct Firestore collection path from the existing extractor
+const COLLECTION_PATH = "artifacts/default-app-id/public/data/employees";
 
-        function toUsername(firstName, lastName) {
-            if (!firstName || !lastName) return null;
-            const first = firstName.trim().toLowerCase().replace(/[^a-z]/g, '');
-            const last = lastName.trim().toLowerCase().replace(/[^a-z]/g, '');
-            if (!first || !last) return null;
-            return first[0] + last;
-        }
+const $ = id => document.getElementById(id);
 
-        function toEmail(firstName, lastName) {
-            if (!firstName || !lastName) return null;
-            const first = firstName.trim().toLowerCase().replace(/[^a-z]/g, '');
-            const last = lastName.trim().toLowerCase().replace(/[^a-z]/g, '');
-            if (!first || !last) return null;
-            return first[0] + last + '@aqua-aerobic.com';
-        }
+function setStatus(msg, cls = '') {
+  $(  'status').className = cls;
+  $('status').innerHTML = msg;
+}
 
-        loadBtn.addEventListener('click', async () => {
-            loadBtn.disabled = true;
-            setStatus('Authenticating with Firestore...');
+function toUsername(first, last) {
+  if (!first || !last) return null;
+  const f = first.trim().toLowerCase().replace(/[^a-z]/g, '');
+  const l = last.trim().toLowerCase().replace(/[^a-z]/g, '');
+  if (!f || !l) return null;
+  return f[0] + l;
+}
 
-            try {
-                await signInAnonymously(auth);
-                setStatus('Loading employee directory...');
+$('loadBtn').addEventListener('click', async () => {
+  $('loadBtn').disabled = true;
+  setStatus('Initializing Firebase…');
 
-                // Try common collection names
-                const collectionNames = ['emps', 'employees', 'people', 'users', 'directory', 'staff'];
-                let employees = [];
+  try {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    setLogLevel('error');
 
-                for (const name of collectionNames) {
-                    try {
-                        const snap = await getDocs(collection(db, name));
-                        if (snap.size > 0) {
-                            setStatus(`Found ${snap.size} records in "${name}" collection...`);
-                            snap.forEach(doc => {
-                                const d = doc.data();
-                                employees.push(d);
-                            });
-                            break;
-                        }
-                    } catch (e) {
-                        // Try next collection
-                    }
-                }
+    setStatus('Signing in anonymously…');
+    await signInAnonymously(auth);
 
-                if (employees.length === 0) {
-                    setStatus('No employee data found. Trying all root collections...', 'error');
-                    return;
-                }
+    setStatus('Fetching employee records…');
+    const snap = await getDocs(collection(db, COLLECTION_PATH));
+    const rawRecords = snap.docs.map(d => ({ id: d.id, ...d.data() }));
 
-                // Process employees into CSV rows
-                const csvRows = [];
-                const seen = new Set();
+    setStatus(`Loaded ${rawRecords.length} total records. Processing…`);
 
-                for (const emp of employees) {
-                    // Try to find name fields - common field names in Firestore
-                    const firstName = emp.firstName || emp.first_name || emp.fname || emp.First || emp.first || '';
-                    const lastName = emp.lastName || emp.last_name || emp.lname || emp.Last || emp.last || '';
-                    const fullName = emp.name || emp.fullName || emp.full_name ||
-                        (firstName && lastName ? `${firstName.trim()} ${lastName.trim()}` : '');
-                    const email = emp.email || emp.Email || emp.emailAddress || '';
+    // Filter and process into CSV rows
+    const csvRows = [];
+    const seen = new Set();
 
-                    if (!fullName || fullName.trim().length < 2) continue;
-                    if (fullName.includes('XXX') || fullName === 'N/A') continue;
+    for (const emp of rawRecords) {
+      // Skip blank/placeholder rows
+      if (emp.responsibilities === 'XXX') continue;
+      const name = (emp.name || '').trim();
+      if (!name || name.toLowerCase() === 'n/a') continue;
 
-                    // Derive username
-                    let username;
-                    let derivedEmail;
+      // Get first/last name from dedicated fields, fall back to parsing name
+      let firstName = (emp.First || '').trim();
+      let lastName = (emp.Last || '').trim();
 
-                    if (firstName && lastName) {
-                        username = toUsername(firstName, lastName);
-                        derivedEmail = email || toEmail(firstName, lastName);
-                    } else {
-                        // Parse from full name
-                        const parts = fullName.trim().split(/\s+/);
-                        if (parts.length < 2) continue;
-                        const fn = parts[0];
-                        const ln = parts[parts.length - 1];
-                        username = toUsername(fn, ln);
-                        derivedEmail = email || toEmail(fn, ln);
-                    }
+      if (!firstName || !lastName) {
+        const parts = name.split(/\s+/);
+        if (parts.length < 2) continue;
+        firstName = firstName || parts[0];
+        lastName = lastName || parts[parts.length - 1];
+      }
 
-                    if (!username || seen.has(username)) continue;
-                    seen.add(username);
+      // Handle "Last, First" format in Last field
+      if (lastName.includes(',')) {
+        lastName = lastName.split(',')[0].trim();
+      }
 
-                    csvRows.push({
-                        username,
-                        email: derivedEmail,
-                        fullName: fullName.trim()
-                    });
-                }
+      const username = toUsername(firstName, lastName);
+      if (!username) continue;
 
-                // Sort by last name
-                csvRows.sort((a, b) => {
-                    const aLast = a.fullName.split(' ').pop().toLowerCase();
-                    const bLast = b.fullName.split(' ').pop().toLowerCase();
-                    return aLast.localeCompare(bLast);
-                });
+      // Skip duplicates
+      if (seen.has(username)) continue;
+      seen.add(username);
 
-                // Generate CSV text
-                const csvText = csvRows.map(r => `${r.username},${r.email},${r.fullName}`).join('\n');
+      const email = (emp.email || '').trim() || (username + '@aqua-aerobic.com');
+      const fullName = firstName + ' ' + lastName;
 
-                // Show CSV
-                document.getElementById('csvCard').style.display = '';
-                document.getElementById('csvOutput').value = csvText;
-                document.getElementById('countLabel').textContent = `${csvRows.length} users ready for Gitea`;
+      csvRows.push({ username, email, fullName, dept: emp.dept || '' });
+    }
 
-                // Show preview table
-                const previewCard = document.getElementById('previewCard');
-                const table = document.getElementById('preview');
-                previewCard.style.display = '';
-                table.innerHTML = '<thead><tr><th>#</th><th>Username</th><th>Email</th><th>Full Name</th></tr></thead><tbody>' +
-                    csvRows.map((r, i) =>
-                        `<tr><td>${i + 1}</td><td>${r.username}</td><td>${r.email}</td><td>${r.fullName}</td></tr>`
-                    ).join('') + '</tbody>';
+    // Sort by last name
+    csvRows.sort((a, b) => {
+      const aLast = a.fullName.split(' ').pop().toLowerCase();
+      const bLast = b.fullName.split(' ').pop().toLowerCase();
+      return aLast.localeCompare(bLast);
+    });
 
-                dlBtn.disabled = false;
-                copyBtn.disabled = false;
-                setStatus(`✓ Loaded ${csvRows.length} employees. Download or copy the CSV.`, 'ok');
+    // Generate CSV text (username,email,Full Name)
+    const csvText = csvRows.map(r => `${r.username},${r.email},${r.fullName}`).join('\n');
 
-            } catch (err) {
-                setStatus(`Error: ${err.message}`, 'error');
-                console.error(err);
-            } finally {
-                loadBtn.disabled = false;
-            }
-        });
+    // Show CSV output
+    $('csvCard').style.display = '';
+    $('csvOutput').value = csvText;
+    $('countLabel').textContent = `${csvRows.length} users ready for Gitea`;
 
-        dlBtn.addEventListener('click', () => {
-            const csv = document.getElementById('csvOutput').value;
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'users.csv';
-            a.click();
-            URL.revokeObjectURL(url);
-        });
+    // Show preview table
+    $('previewCard').style.display = '';
+    const table = $('preview');
+    table.innerHTML = '<thead><tr><th>#</th><th>Username</th><th>Email</th><th>Full Name</th><th>Department</th></tr></thead><tbody>' +
+      csvRows.map((r, i) =>
+        `<tr><td>${i + 1}</td><td>${r.username}</td><td>${r.email}</td><td>${r.fullName}</td><td>${r.dept}</td></tr>`
+      ).join('') + '</tbody>';
 
-        copyBtn.addEventListener('click', () => {
-            const textarea = document.getElementById('csvOutput');
-            textarea.select();
-            navigator.clipboard.writeText(textarea.value).then(() => {
-                setStatus('✓ Copied to clipboard!', 'ok');
-            });
-        });
-    </script>
+    $('dlBtn').disabled = false;
+    $('copyBtn').disabled = false;
+    setStatus(`✓ Found ${csvRows.length} employees (from ${rawRecords.length} records). Download or copy the CSV.`, 'ok');
+
+  } catch (err) {
+    console.error(err);
+    setStatus('Error: ' + (err && err.message ? err.message : err), 'error');
+  } finally {
+    $('loadBtn').disabled = false;
+  }
+});
+
+$('dlBtn').addEventListener('click', () => {
+  const csv = $('csvOutput').value;
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'users.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+$('copyBtn').addEventListener('click', () => {
+  const textarea = $('csvOutput');
+  textarea.select();
+  navigator.clipboard.writeText(textarea.value).then(() => {
+    setStatus('✓ Copied to clipboard!', 'ok');
+  });
+});
+</script>
 </body>
-
 </html>
