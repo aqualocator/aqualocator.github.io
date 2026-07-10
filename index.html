@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <!-- version 3.6 (clear-button integration) -->
+    <!-- version 3.7 (url search param support) -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AQUALocator - The Aqua Employee Directory & Location Finder</title>
@@ -737,6 +737,13 @@
 
         // --- Init & Event Listeners ---
         document.addEventListener('DOMContentLoaded', () => {
+            // --- URL search param: pre-fill search input if ?search= is present ---
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlSearch = urlParams.get('search');
+            if (urlSearch && urlSearch.trim() !== '') {
+                searchInput.value = urlSearch.trim();
+            }
+
             // Seed the dropdown with pinned items while Firebase loads
             populateDepartments([]);
             initializeFirebaseApp();
@@ -766,7 +773,7 @@
                 }
             });
 
-            // --- NEW: Clear (✕) button show/hide + action ---
+            // --- Clear (✕) button show/hide + action ---
             // show only when typing (non-empty)
             const toggleClear = () => {
                 if (searchInput.value.trim() !== '') {
@@ -783,7 +790,7 @@
                 searchInput.focus();
             });
 
-            // Ensure correct initial state on load
+            // Ensure correct initial state on load (also handles URL param pre-fill)
             toggleClear();
         });
     </script>
