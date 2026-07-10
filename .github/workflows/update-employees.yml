@@ -1,0 +1,84 @@
+name: Update employees.json
+
+on:
+  schedule:
+    - cron: '0 7 * * *'   # Daily at 7 AM UTC (2 AM Central)
+  workflow_dispatch:        # Also runnable manually from GitHub Actions tab
+
+jobs:
+  update-employees:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write       # Needed to commit back to the repo
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install firebase
+        run: npm install firebase
+
+      - name: Generate employees.json
+        run: |
+          node --input-type=module <<'EOF'
+          import { initializeApp } from 'firebase/app';
+          import { getAuth, signInAnonymously } from 'firebase/auth';
+          import { getFirestore, collection, getDocs } from 'firebase/firestore';
+          import { writeFileSync } from 'node:fs';
+
+          const FIREBASE_CONFIG = {
+            apiKey:            'AIzaSyABeCFheLuS08mxfWjCSS2ugXFbLDgnpIE',
+            authDomain:        'aqualocator-23714.firebaseapp.com',
+            projectId:         'aqualocator-23714',
+            storageBucket:     'aqualocator-23714.appspot.com',
+            messagingSenderId: '654848563347',
+            appId:             '1:654848563347:web:4702a6f55ccbf7d5edd566',
+          };
+
+          const COLLECTION = 'artifacts/default-app-id/public/data/employees';
+          const KEEP = ['name','First','Last','title','initials','ext','dept','email','responsibilities'];
+
+          const app  = initializeApp(FIREBASE_CONFIG);
+          const auth = getAuth(app);
+          const db   = getFirestore(app);
+
+          await signInAnonymously(auth);
+          const snap = await getDocs(collection(db, COLLECTION));
+
+          const employees = snap.docs
+            .map(d => {
+              const data = d.data();
+              if (data.responsibilities === 'XXX') return null;
+              if (!data.name || data.name.trim().toLowerCase() === 'n/a') return null;
+              const out = {};
+              for (const f of KEEP) { if (data[f]) out[f] = data[f]; }
+              return out;
+            })
+            .filter(Boolean)
+            .sort((a, b) => {
+              const la = (a.Last || a.name.split(' ').pop()).toLowerCase();
+              const lb = (b.Last || b.name.split(' ').pop()).toLowerCase();
+              return la.localeCompare(lb);
+            });
+
+          writeFileSync('employees.json', JSON.stringify(employees, null, 2));
+          console.log(`Wrote ${employees.length} employees to employees.json`);
+          process.exit(0);
+          EOF
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add employees.json
+          if git diff --staged --quiet; then
+            echo "No changes — employees.json is up to date."
+          else
+            git commit -m "Auto-update employees.json [skip ci]"
+            git push
+          fi
