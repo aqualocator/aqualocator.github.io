@@ -20,47 +20,19 @@
     </style>
 
     <style>
-        /* --- Design tokens --- */
-        :root {
-            --brand: #29aae2;
-            --brand-dark: #1d8dbf;
-            --surface: #f1f5f9;
-            --card-border: #e5e7eb;
-        }
-
         /* Set default font for the page */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--surface);
-            color: #1f2937;
+            background-color: #fafafa;
+            /* Cleaner background */
         }
 
-        /* --- Modern pill buttons (Updated Theme) --- */
-        .btn-locate,
-        .btn-know-me,
-        .btn-reset {
-            transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-        }
-
-        .btn-locate:hover:not(:disabled),
-        .btn-know-me:hover:not(:disabled),
-        .btn-reset:hover:not(:disabled) {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-        }
-
-        .btn-locate:active:not(:disabled),
-        .btn-know-me:active:not(:disabled),
-        .btn-reset:active:not(:disabled) {
-            transform: translateY(0);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-        }
-
+        /* Custom button colors (Updated Theme) */
         .btn-locate {
             background-color: #5d3587;
             /* Richer Indigo/Violet */
             color: white;
+            transition: background-color 0.2s ease-in-out;
         }
 
         .btn-locate:hover {
@@ -71,6 +43,7 @@
             background-color: #ee2741;
             /* Red color */
             color: white;
+            transition: background-color 0.2s ease-in-out;
         }
 
         .btn-know-me:hover {
@@ -81,26 +54,16 @@
             background-color: #35a2c4;
             /* Blue */
             color: white;
+            transition: background-color 0.2s ease-in-out;
         }
 
         .btn-reset:hover {
             background-color: #2a8faf;
         }
 
-        /* --- Employee result card --- */
-        .employee-card {
-            transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-        }
-
-        .employee-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.15);
-            border-color: #cbd5e1;
-        }
-
         #search-input::placeholder {
-            font-size: 0.8rem;
-            color: #9ca3af;
+            font-size: 0.775rem;
+            /* ~12.4px */
         }
 
         /* --- Clear (✕) button that fades in/out and sits inside the input --- */
@@ -142,31 +105,25 @@
             /* Custom SVG arrow*/
             background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-13%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-13%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
             background-repeat: no-repeat;
-            background-position: right .75rem center;
+            background-position: right .5rem center;
             background-size: .65em auto;
             padding-right: 2.5rem;
             /* Make space for arrow */
 
-            /* Modern boxed control */
-            border: 1px solid #d1d5db;
-            border-radius: 0.5rem;
-            background-color: #fff;
-            padding-left: 0.75rem;
-            padding-top: 0.625rem;
-            padding-bottom: 0.625rem;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-            cursor: pointer;
+            /* Blue bottom border style */
+            border: none;
+            border-bottom: 2px solid #35a2c4;
+            border-radius: 0;
+            padding-left: 0;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
         }
 
-        /* Brand-colored focus ring */
+        /* Remove default focus ring and keep border */
         select:focus {
-            border-color: var(--brand);
-            box-shadow: 0 0 0 3px rgba(41, 170, 226, 0.25);
+            box-shadow: none;
+            border-bottom: 2px solid #35a2c4;
             outline: none;
-        }
-
-        select:hover {
-            border-color: #9ca3af;
         }
 
         /* Ensure modals are on top */
@@ -221,7 +178,7 @@
             width: 50px;
             height: 50px;
             border: 4px solid #e0e0e0;
-            border-top: 4px solid var(--brand);
+            border-top: 4px solid #5d3587;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -283,64 +240,51 @@
     </style>
 </head>
 
-<body class="bg-slate-100">
+<body class="bg-gray-100">
 
-    <!-- Sticky header with integrated utility links -->
-    <header class="bg-white/95 backdrop-blur border-b border-slate-200 mb-6 sticky top-0 z-30">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4 py-3 sm:py-4">
-            <div class="flex items-center space-x-3 sm:space-x-4 min-w-0">
-                <a href="index.html" data-tooltip="Go to Homepage" class="flex-shrink-0"><img src="aqua-aerobics-logo.png"
-                        alt="Aqua-Aerobic Systems Logo" class="h-9 sm:h-11"></a>
-                <div class="min-w-0">
-                    <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold custom-color-blue leading-tight">AQUALocator</h1>
-                    <p class="text-xs sm:text-sm text-gray-500 hidden sm:block">The Aqua employee directory &amp; location finder</p>
+    <div class="container mx-auto p-4 max-w-6xl">
+        <div class="w-full text-right text-sm">
+            <a href="https://form.jotform.com/193454652984168" target="_blank"
+                class="text-blue-600 hover:text-blue-800 hover:underline font-medium tooltip-bottom"
+                data-tooltip="Submit a request to update your profile details">Update Profile</a>
+            <a href="help.html"
+                class="text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4 tooltip-bottom"
+                data-tooltip="View the AQUALocator help guide">Help</a>
+            <a href="set-webex-default.html"
+                class="hidden sm:inline text-blue-600 hover:text-blue-800 hover:underline font-medium ml-4 tooltip-bottom"
+                data-tooltip="Instructions for setting up Webex Calling default">Set Up Webex Calling</a>
+        </div>
+    </div>
+
+    <header class="bg-white shadow-md mb-6 sticky top-0 z-10">
+        <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="index.html" data-tooltip="Go to Homepage"><img src="aqua-aerobics-logo.png"
+                        alt="Aqua-Aerobic Systems Logo" class="h-10 sm:h-12"></a>
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold custom-color-blue">AQUALocator</h1>
+                    <p class="text-sm text-gray-500 hidden sm:block">The Aqua employee directory & location finder</p>
                 </div>
             </div>
-            <nav class="flex items-center gap-1 sm:gap-2 text-sm flex-shrink-0 -ml-2 sm:ml-0">
-                <a href="https://form.jotform.com/193454652984168" target="_blank"
-                    class="px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition tooltip-bottom"
-                    data-tooltip="Submit a request to update your profile details">Update&nbsp;Profile</a>
-                <a href="help.html"
-                    class="px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition tooltip-bottom"
-                    data-tooltip="View the AQUALocator help guide">Help</a>
-                <a href="set-webex-default.html"
-                    class="hidden md:inline-block px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition tooltip-bottom"
-                    data-tooltip="Instructions for setting up Webex Calling default">Set&nbsp;Up&nbsp;Webex</a>
-            </nav>
         </div>
     </header>
 
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 pb-10 max-w-6xl">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl">
         <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
 
-            <aside class="md:col-span-5 lg:col-span-4">
-                <div class="bg-white p-5 rounded-2xl shadow-sm ring-1 ring-slate-200 sticky top-24 z-20">
-                    <h2 class="text-base font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 custom-color-blue" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
-                        </svg>
-                        Find an employee
-                    </h2>
+            <aside class="md:col-span-5 lg:col-span-5">
+                <div class="bg-white p-4 rounded-lg shadow-sm sticky custom-top-32 z-20">
                     <form id="filter-form">
                         <div class="mb-4">
-                            <label for="search-input" class="block text-sm font-medium text-slate-600 mb-1.5">
-                                Search by name, title, initials, responsibilities, dept, or email
+                            <label for="search-input" class="block text-sm font-medium text-gray-700 mb-1">
+                                Search by:<br>Name,title,initials,responsibilities,dept or email
                             </label>
 
-                            <div class="flex gap-2">
+                            <div class="flex">
                                 <div class="relative flex-grow">
-                                    <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
-                                        </svg>
-                                    </span>
                                     <input type="text" id="search-input"
-                                        class="w-full pl-9 pr-8 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#29aae2] focus:border-transparent transition"
-                                        placeholder="e.g., Carlson or AquaNereda or RJW" autofocus>
+                                        class="w-full px-3 py-2 pr-8 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-[0.775rem]"
+                                        placeholder="e.g.,Carlson or AquaNereda or RJW" autofocus>
                                     <button type="button" id="clear-search" class="text-gray-400"
                                         data-tooltip="Clear search text">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
@@ -352,47 +296,41 @@
                                 </div>
 
                                 <button type="button" id="reset-button"
-                                    class="btn-reset font-semibold px-4 py-2.5 rounded-lg flex-shrink-0"
+                                    class="btn-reset font-medium px-4 py-2 rounded-r-md"
                                     data-tooltip="Clear all search terms and reset filters">RESET</button>
                             </div>
                         </div>
 
                         <div>
-                            <label for="dept-select" class="block text-sm font-medium text-slate-600 mb-1.5">Filter by department</label>
+                            <label for="dept-select" class="block text-sm font-medium text-gray-700 mb-1">Filter
+                                by:</label>
                             <div data-tooltip="Limit results to a specific department group">
                                 <select id="dept-select"
-                                    class="w-full text-base font-medium text-gray-800"></select>
+                                    class="w-full text-lg font-medium text-gray-800 bg-white focus:outline-none"></select>
                             </div>
                         </div>
                     </form>
                 </div>
             </aside>
 
-            <main class="md:col-span-7 lg:col-span-8">
+            <main class="md:col-span-7 lg:col-span-7">
                 <div id="loading-overlay" class="hidden">
                     <div class="loader"></div>
                 </div>
-                <div id="results-count" class="text-sm font-medium text-slate-500 mb-3 hidden"></div>
+                <div id="results-count" class="text-sm font-medium text-gray-600 mb-2 hidden"></div>
                 <div id="results-container" class="space-y-4"></div>
-                <div id="no-results" class="hidden text-center p-10 bg-white rounded-2xl ring-1 ring-slate-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto text-slate-300 mb-3" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
-                    </svg>
-                    <p class="text-slate-600 font-medium">No employees found matching your criteria.</p>
-                    <p class="text-slate-400 text-sm mt-1">Try a different spelling, a last name only, or press RESET.</p>
-                </div>
+                <div id="no-results" class="hidden text-center text-gray-500 p-8">No employees found matching your
+                    criteria.</div>
             </main>
         </div>
     </div>
 
     <div id="locate-modal"
-        class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl h-full custom-max-h-600 flex flex-col overflow-hidden">
-            <div class="flex justify-between items-center p-3 border-b border-slate-200">
+        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl h-full custom-max-h-600 flex flex-col">
+            <div class="flex justify-between items-center p-3 border-b">
                 <h3 id="locate-modal-title" class="text-lg font-semibold text-gray-900">Location Viewer</h3>
-                <button id="locate-modal-close-btn" class="text-gray-400 hover:text-gray-600 hover:bg-slate-100 rounded-full p-1 transition"
+                <button id="locate-modal-close-btn" class="text-gray-400 hover:text-gray-600"
                     data-tooltip="Close this window">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -408,11 +346,11 @@
     </div>
 
     <div id="know-me-modal"
-        class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl h-full custom-max-h-800 flex flex-col overflow-hidden">
-            <div class="flex justify-between items-center p-3 border-b border-slate-200">
+        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-xl h-full custom-max-h-800 flex flex-col">
+            <div class="flex justify-between items-center p-3 border-b">
                 <h3 id="know-me-modal-title" class="text-lg font-semibold text-gray-900">Get to Know Me</h3>
-                <button id="know-me-modal-close-btn" class="text-gray-400 hover:text-gray-600 hover:bg-slate-100 rounded-full p-1 transition"
+                <button id="know-me-modal-close-btn" class="text-gray-400 hover:text-gray-600"
                     data-tooltip="Close this window">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -558,28 +496,28 @@
                 const showKnowMeButton = employee.FloorMap && employee.FloorMap.trim() !== '' && employee.FloorMap.toLowerCase() !== 'null';
 
                 const card = `
-                    <div class="employee-card flex flex-col sm:flex-row items-start sm:items-center bg-white p-4 sm:p-5 rounded-2xl shadow-sm ring-1 ring-slate-200">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center bg-white p-4 rounded-lg shadow-sm border border-gray-200">
                         <img
                             src="${finalImageUrl}"
                             alt="Profile photo of ${employee.name || 'Employee'}"
-                            class="w-20 h-20 rounded-full mr-0 sm:mr-5 mb-3 sm:mb-0 flex-shrink-0 object-cover ring-2 ring-slate-100 shadow-sm"
+                            class="w-20 h-20 rounded-full mr-0 sm:mr-4 mb-3 sm:mb-0 flex-shrink-0 object-cover border"
                             onerror="this.onerror=null; this.src='${errorUrl}';"
                         >
                         <div class="flex-1 min-w-0">
-                            <h3 class="text-xl font-bold text-slate-800 truncate">${employee.name || 'N/A'}</h3>
-                            <p class="text-slate-500 truncate">${employee.title || 'N/A'}</p>
-                            ${employee.initials ? `<p class="text-sm text-slate-400 mt-0.5"><strong class="font-medium text-slate-500">Initials:</strong> ${employee.initials}</p>` : ''}
+                            <h3 class="text-xl font-bold text-gray-800 truncate">${employee.name || 'N/A'}</h3>
+                            <p class="text-gray-600 truncate">${employee.title || 'N/A'}</p>
+                            ${employee.initials ? `<p class="text-sm text-gray-500"><strong class="font-medium">Initials:</strong> ${employee.initials}</p>` : ''}
 
-                            <div class="flex flex-wrap gap-2 mt-3 mb-2">
+                            <div class="flex flex-wrap gap-2 mt-2 mb-2">
                                 <button
-                                    class="btn-locate text-sm font-semibold py-1.5 px-4 rounded-full"
+                                    class="btn-locate text-sm font-medium py-1 px-3 rounded-md"
                                     data-employee-id="${employee.id}"
                                     type="button"
                                     ${!employee.url ? 'disabled title="Location URL missing"' : `data-tooltip="Show ${safeEmpName}'s office location on the map"`}
                                 >LOCATE</button>
                                 ${showKnowMeButton ? `
                                 <button
-                                    class="btn-know-me text-sm font-semibold py-1.5 px-4 rounded-full"
+                                    class="btn-know-me text-sm font-medium py-1 px-3 rounded-md"
                                     data-employee-id="${employee.id}"
                                     type="button"
                                     data-tooltip="View 'Get to Know Me' info for ${safeEmpName}"
@@ -587,20 +525,20 @@
                             </div>
 
                             ${employee.responsibilities ? `
-                            <div class="text-xs text-slate-500 mt-2 mb-2 break-words">
-                                <p><strong class="font-medium text-slate-600">Responsibilities:</strong> ${employee.responsibilities}</p>
+                            <div class="text-xs text-gray-600 mt-1 mb-2 break-words">
+                                <p><strong class="font-medium">Responsibilities:</strong> ${employee.responsibilities}</p>
                             </div>` : ''}
 
-                            <div class="text-sm text-slate-600 space-y-0.5 mt-3 pt-3 border-t border-slate-100">
-                                <p><strong class="font-medium text-slate-700">Ext:</strong>
+                            <div class="text-sm text-gray-700 space-y-0.5 mt-2">
+                                <p><strong class="font-medium">Ext:</strong>
                                     ${employee.ext ? `
-                                        <a href="tel:${employee.ext}" class="hidden sm:inline text-[#1d8dbf] hover:underline font-medium" data-tooltip="Call ${safeEmpName} at extension ${employee.ext} via Webex">${employee.ext}</a>
+                                        <a href="tel:${employee.ext}" class="hidden sm:inline text-blue-600 hover:underline" data-tooltip="Call ${safeEmpName} at extension ${employee.ext} via Webex">${employee.ext}</a>
                                         <span class="inline sm:hidden">${employee.ext}</span>
                                     ` : 'N/A'}
                                 </p>
-                                <p><strong class="font-medium text-slate-700">Dept:</strong> ${employee.dept || 'N/A'}</p>
+                                <p><strong class="font-medium">Dept:</strong> ${employee.dept || 'N/A'}</p>
                                 ${employee.email && employee.email.trim() !== '' ? `
-                                <a href="mailto:${employee.email.trim()}" class="text-[#1d8dbf] hover:underline break-words font-medium" data-tooltip="Send an email to ${safeEmpName}">${employee.email.trim()}</a>
+                                <a href="mailto:${employee.email.trim()}" class="text-blue-600 hover:underline break-words" data-tooltip="Send an email to ${safeEmpName}">${employee.email.trim()}</a>
                                 ` : '<p>N/A</p>'}
                             </div>
                         </div>

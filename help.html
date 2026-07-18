@@ -4,191 +4,229 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AQUALocator - Help Center</title>
-    <link rel="icon" href="data:,">
+    <link rel="icon" href="favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --brand: #29aae2;
+            --brand-dark: #1d8dbf;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #fafafa; /* Use a light gray background */
+            background-color: #f1f5f9;
+            color: #1f2937;
         }
-        /* Style for placeholder images - REMOVED */
 
-
-        .video-placeholder {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            overflow: hidden;
-            max-width: 100%;
-            background: #e5e7eb;
-            border-radius: 8px;
-            border: 2px dashed #9ca3af;
+        .custom-color-blue {
+            color: var(--brand);
         }
-        .video-placeholder-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            color: #4b5563;
-            font-style: italic;
-            font-weight: 500;
+
+        /* Colored inline "chips" that mirror the app's buttons */
+        .chip {
+            display: inline-block;
+            padding: 0.1rem 0.55rem;
+            border-radius: 9999px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        /* Smooth scrolling for the in-page table of contents */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Give anchored sections breathing room below the sticky header */
+        section[id] {
+            scroll-margin-top: 6rem;
         }
     </style>
-    <script>
-        // Configuration for TailwindCSS (if needed, e.g., for v4)
-        // tailwind.config = { ... }
-    </script>
 </head>
-<body class="bg-gray-100">
+<body class="bg-slate-100">
 
-    <header class="bg-white shadow-md mb-6 sticky top-0 z-10">
-        <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl flex flex-col sm:flex-row sm:items-center sm:justify-between">
-            <div class="flex items-center space-x-4">
-                <img src="aqua-aerobics-logo.png" alt="Aqua-Aerobic Systems Logo" class="h-10 sm:h-12">
-                <div>
-                    <h1 class="text-2xl sm:text-3xl font-bold" style="color: #29aae2;">AQUALocator Help Center</h1>
-                    <p class="text-sm text-gray-500 hidden sm:block">How to use the employee locator</p>
+    <!-- Sticky header (matches the main app) -->
+    <header class="bg-white/95 backdrop-blur border-b border-slate-200 mb-6 sticky top-0 z-30">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4 py-3 sm:py-4">
+            <div class="flex items-center space-x-3 sm:space-x-4 min-w-0">
+                <a href="index.html" class="flex-shrink-0"><img src="aqua-aerobics-logo.png"
+                        alt="Aqua-Aerobic Systems Logo" class="h-9 sm:h-11"></a>
+                <div class="min-w-0">
+                    <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold custom-color-blue leading-tight truncate">Help Center</h1>
+                    <p class="text-xs sm:text-sm text-gray-500 hidden sm:block">How to use the employee locator</p>
                 </div>
             </div>
-            <a href="index.html" class="mt-4 sm:mt-0 text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline">
-                &larr; Back to AquaLocator
+            <a href="index.html"
+                class="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 text-sm font-medium transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to AQUALocator
             </a>
         </div>
     </header>
 
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-4xl">
-        <main class="bg-white p-6 md:p-8 rounded-lg shadow-md space-y-8">
-            
-            <section>
-                <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">📍 How to Find an Employee</h2>
-                <p class="text-gray-700 mb-4">Use the search and filter tools to find employees.</p>
-                
-                
-                <img src="1.png" alt="Image of the left-hand search panel, showing the Search Bar, Department Filter, and Reset button" class="mb-4 block max-w-lg rounded-lg border border-gray-300">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 pb-12 max-w-4xl">
 
-                <div class="space-y-3">
-                    <h3 class="text-lg font-semibold">1. Use the Search Bar</h3>
-                    <p>Type directly into the search bar to find employees by:</p>
-                    <ul class="list-disc list-inside text-gray-600 pl-4">
-                        <li>Name (e.g., "John Davis")</li>
-                        <li>Job Title (e.g., "Engineer")</li>
-                        <li>Initials</li>
-                        <li>Email Address</li>
-                        <li>Department Name</li>
-                        <li>Responsibilities (e.g., "AquaNereda")</li>
-                    </ul>
+        <!-- Quick navigation -->
+        <nav class="mb-6 flex flex-wrap gap-2 text-sm">
+            <a href="#find" class="px-3 py-1.5 rounded-full bg-white ring-1 ring-slate-200 text-slate-600 hover:ring-[#29aae2] hover:text-slate-900 transition font-medium">📍 Find an employee</a>
+            <a href="#results" class="px-3 py-1.5 rounded-full bg-white ring-1 ring-slate-200 text-slate-600 hover:ring-[#29aae2] hover:text-slate-900 transition font-medium">📇 Reading results</a>
+            <a href="#buttons" class="px-3 py-1.5 rounded-full bg-white ring-1 ring-slate-200 text-slate-600 hover:ring-[#29aae2] hover:text-slate-900 transition font-medium">🖱️ Action buttons</a>
+            <a href="#video" class="px-3 py-1.5 rounded-full bg-white ring-1 ring-slate-200 text-slate-600 hover:ring-[#29aae2] hover:text-slate-900 transition font-medium">🎬 Video</a>
+            <a href="#faq" class="px-3 py-1.5 rounded-full bg-white ring-1 ring-slate-200 text-slate-600 hover:ring-[#29aae2] hover:text-slate-900 transition font-medium">❓ FAQ</a>
+        </nav>
 
-                    <h3 class="text-lg font-semibold">2. Filter by Department</h3>
-                    <p>Click the "All Departments" dropdown menu to select a specific department and instantly narrow the list.</p>
-                    
-                    <h3 class="text-lg font-semibold">3. Reset Your Search</h3>
-                    <p>Click the blue <strong class="py-0.5 px-2 rounded" style="background-color: #35a2c4; color: white;">RESET</strong> button at any time to clear your search terms and filters, showing all employees again.</p>
-                </div>
-            </section>
-            <hr>
+        <main class="space-y-6">
 
-            <section>
-                <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">📇 Understanding the Results</h2>
-                <p class="text-gray-700 mb-4">Matching employees appear on the right side in "cards." Each card provides a quick overview, displaying the employee's photo, name, title, extension, department, email, and key responsibilities.</p>
-                
-                <blockquote class="my-4 p-3 bg-green-50 border-l-4 border-green-500 text-green-800">
-                    <h4 class="font-bold text-lg mb-2">✨ New Feature: Webex Calling</h4>
-                    <p class="mb-2">You can now click an employee's 4-digit extension number (e.g., <strong class="font-mono">Ext: 1234</strong>) directly on their card to initiate a Webex call.</p>
-                    <p>We encourage you to visit the new <a href="https://aqualocator.github.io/set-webex-default.html" class="font-medium hover:underline" target="_blank">Set Up WebEx Calling link</a> to learn how to use this great feature!</p>
-                </blockquote>
-                <img src="2.png" alt="Image showing examples of employee 'cards' in the results area" class="mb-4 block rounded-lg border border-gray-300">
-            </section>
-            <hr>
+            <section id="find" class="bg-white p-6 md:p-8 rounded-2xl shadow-sm ring-1 ring-slate-200">
+                <h2 class="text-2xl font-bold text-slate-800 mb-2">📍 How to Find an Employee</h2>
+                <p class="text-slate-600 mb-5">Use the search and filter tools on the left of the app to find employees.</p>
 
-            <section>
-                <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">🖱️ Using the Action Buttons</h2>
-                <p class="text-gray-700 mb-4">There are two primary buttons you can click on an employee's card:</p>
+                <img src="1.png" alt="The left-hand search panel, showing the Search Bar, Department Filter, and Reset button"
+                    class="mb-6 block max-w-lg w-full rounded-xl ring-1 ring-slate-200 shadow-sm">
 
-                <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-5">
                     <div>
-                        <h3 class="text-lg font-semibold mb-2">LOCATE Button</h3>
-                        <p class="mb-3">Click the purple <strong class="py-0.5 px-2 rounded" style="background-color: #5d3587; color: white;">LOCATE</strong> button to open a pop-up window. This window will display a map showing that employee's specific office or cubicle location.</p>
-                        
-                        </div>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-1">1. Use the Search Bar</h3>
+                        <p class="text-slate-600 mb-2">Type directly into the search bar to find employees by:</p>
+                        <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-1 text-slate-600 list-disc list-inside pl-1">
+                            <li>Name (e.g., "John Davis")</li>
+                            <li>Job Title (e.g., "Engineer")</li>
+                            <li>Initials</li>
+                            <li>Email Address</li>
+                            <li>Department Name</li>
+                            <li>Responsibilities (e.g., "AquaNereda")</li>
+                        </ul>
+                    </div>
+
                     <div>
-                        <h3 class="text-lg font-semibold mb-2">GET TO KNOW ME Button</h3>
-                        <p class="mb-3">Click the red <strong class="py-0.5 px-2 rounded" style="background-color: #ee2741; color: white;">GET TO KNOW ME</strong> button to open a pop-up with additional "get to know me" information provided by that employee.</p>
-                         <p class="text-sm text-gray-600 italic mt-3"><strong>Note:</strong> This button will only appear if the employee has submitted "get to know me" information.</p>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-1">2. Filter by Department</h3>
+                        <p class="text-slate-600">Use the <strong>department dropdown</strong> to select a specific department and instantly narrow the list.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-1">3. Reset Your Search</h3>
+                        <p class="text-slate-600">Click the <span class="chip" style="background-color:#35a2c4;">RESET</span> button at any time to clear your search terms and filters, showing all employees again.</p>
                     </div>
                 </div>
             </section>
 
-            <hr>
-            
-            <section>
-                <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">How-To Video</h2>
-                <p class="text-gray-700 mb-4">Watch this short video for a complete walkthrough of all AQUALocator features.</p>
-                
-                <div class="relative h-0 overflow-hidden rounded-lg shadow-md" style="padding-bottom: 56.25%;">
-                    <iframe 
+            <section id="results" class="bg-white p-6 md:p-8 rounded-2xl shadow-sm ring-1 ring-slate-200">
+                <h2 class="text-2xl font-bold text-slate-800 mb-2">📇 Understanding the Results</h2>
+                <p class="text-slate-600 mb-4">Matching employees appear on the right side as "cards." Each card provides a quick overview — the employee's photo, name, title, extension, department, email, and key responsibilities.</p>
+
+                <div class="my-5 p-4 rounded-xl bg-green-50 ring-1 ring-green-200">
+                    <h4 class="font-bold text-green-800 text-lg mb-1">✨ New Feature: Webex Calling</h4>
+                    <p class="text-green-800 mb-2">You can now click an employee's 4-digit extension number (e.g., <strong class="font-mono">Ext: 1234</strong>) directly on their card to start a Webex call.</p>
+                    <p class="text-green-800">Visit the <a href="https://aqualocator.github.io/set-webex-default.html" class="font-semibold underline hover:no-underline" target="_blank">Set Up Webex Calling</a> guide to learn how to use this feature.</p>
+                </div>
+
+                <img src="2.png" alt="Example of an employee result card in the results area"
+                    class="mt-2 block w-full rounded-xl ring-1 ring-slate-200 shadow-sm">
+            </section>
+
+            <section id="buttons" class="bg-white p-6 md:p-8 rounded-2xl shadow-sm ring-1 ring-slate-200">
+                <h2 class="text-2xl font-bold text-slate-800 mb-2">🖱️ Using the Action Buttons</h2>
+                <p class="text-slate-600 mb-5">There are two primary buttons you can click on an employee's card:</p>
+
+                <div class="grid md:grid-cols-2 gap-5">
+                    <div class="p-5 rounded-xl bg-slate-50 ring-1 ring-slate-200">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">
+                            <span class="chip" style="background-color:#5d3587;">LOCATE</span>
+                        </h3>
+                        <p class="text-slate-600">Opens a pop-up window showing a map with that employee's specific office or cubicle location.</p>
+                    </div>
+                    <div class="p-5 rounded-xl bg-slate-50 ring-1 ring-slate-200">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">
+                            <span class="chip" style="background-color:#ee2741;">GET TO KNOW ME</span>
+                        </h3>
+                        <p class="text-slate-600 mb-3">Opens a pop-up with additional "get to know me" information provided by that employee.</p>
+                        <p class="text-sm text-slate-500 italic"><strong>Note:</strong> This button only appears if the employee has submitted "get to know me" information.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="video" class="bg-white p-6 md:p-8 rounded-2xl shadow-sm ring-1 ring-slate-200">
+                <h2 class="text-2xl font-bold text-slate-800 mb-2">🎬 How-To Video</h2>
+                <p class="text-slate-600 mb-4">Watch this short video for a complete walkthrough of all AQUALocator features.</p>
+
+                <div class="relative h-0 overflow-hidden rounded-xl shadow-md ring-1 ring-slate-200" style="padding-bottom: 56.25%;">
+                    <iframe
                         class="absolute top-0 left-0 w-full h-full"
-                        src="https://www.youtube.com/embed/9kf9oB1_TTc?si=uthYNZWgHZMZEP7k?vq=hd1080p" 
-                        title="YouTube video player" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        src="https://www.youtube.com/embed/9kf9oB1_TTc?si=uthYNZWgHZMZEP7k"
+                        title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowfullscreen>
                     </iframe>
                 </div>
 
-                <blockquote class="mt-3 p-3 bg-blue-50 border-l-4 border-blue-400 text-blue-800">
-                    <strong>Note:</strong> More questions? Email IT Helpdesk at <a href="mailto:ITHelpdesk@aqua-aerobic.com" class="font-medium hover:underline">ITHelpdesk@aqua-aerobic.com</a>
-                </blockquote>
+                <div class="mt-4 p-4 rounded-xl bg-blue-50 ring-1 ring-blue-200 text-blue-800">
+                    <strong>More questions?</strong> Email the IT Helpdesk at
+                    <a href="mailto:ITHelpdesk@aqua-aerobic.com" class="font-semibold underline hover:no-underline">ITHelpdesk@aqua-aerobic.com</a>
+                </div>
             </section>
 
-            <hr>
+            <section id="faq" class="bg-white p-6 md:p-8 rounded-2xl shadow-sm ring-1 ring-slate-200">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4">❓ Frequently Asked Questions</h2>
 
-            <section>
-                <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">Frequently Asked Questions (FAQ)</h2>
-                
-                <dl class="divide-y divide-gray-200">
-                    <div class="py-4">
-                        <dt class="font-semibold text-gray-800">Q: How do I update my own profile information or photo?</dt>
-                        <dd class="mt-1 text-gray-600">
-                            Click the <strong>"Update Profile"</strong> link located at the very top-left of the AQUALocator page (above the main header). This will take you to the profile update form.
-                            
-                            </dd>
-                    </div>
+                <div class="space-y-3">
+                    <details class="group rounded-xl ring-1 ring-slate-200 overflow-hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-4 font-semibold text-slate-800 hover:bg-slate-50 transition">
+                            How do I update my own profile information or photo?
+                            <span class="text-slate-400 group-open:rotate-180 transition-transform">▾</span>
+                        </summary>
+                        <div class="px-4 pb-4 text-slate-600">
+                            Click the <strong>"Update Profile"</strong> link at the top-right of the AQUALocator header. This takes you to the profile update form.
+                        </div>
+                    </details>
 
-                    <div class="py-4">
-                        <dt class="font-semibold text-gray-800">Q: How do I call someone using the locator?</dt>
-                        <dd class="mt-1 text-gray-600">
-                            You can click directly on an employee's 4-digit extension number (e.g., Ext: 1234) on their card to start a Webex call. Make sure you have visited the <a href="https://aqualocator.github.io/set-webex-default.html" class="text-blue-600 hover:underline" target="_blank">Set Up WebEx Calling link</a> to get set up.
-                        </dd>
-                    </div>
-                    <div class="py-4">
-                        <dt class="font-semibold text-gray-800">Q: Why is the "LOCATE" button gray and disabled?</dt>
-                        <dd class="mt-1 text-gray-600">
-                            A disabled <strong>LOCATE</strong> button means that a location map has not yet been assigned to that employee in the system.
-                        </d>
-                    </div>
+                    <details class="group rounded-xl ring-1 ring-slate-200 overflow-hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-4 font-semibold text-slate-800 hover:bg-slate-50 transition">
+                            How do I call someone using the locator?
+                            <span class="text-slate-400 group-open:rotate-180 transition-transform">▾</span>
+                        </summary>
+                        <div class="px-4 pb-4 text-slate-600">
+                            Click directly on an employee's 4-digit extension number (e.g., Ext: 1234) on their card to start a Webex call. Make sure you have visited the <a href="https://aqualocator.github.io/set-webex-default.html" class="text-[#1d8dbf] font-medium hover:underline" target="_blank">Set Up Webex Calling</a> guide first.
+                        </div>
+                    </details>
 
-                    <div class="py-4">
-                        <dt class="font-semibold text-gray-800">Q: Why is the "GET TO KNOW ME" button missing for some people?</dt>
-                        <dd class="mt-1 text-gray-600">
+                    <details class="group rounded-xl ring-1 ring-slate-200 overflow-hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-4 font-semibold text-slate-800 hover:bg-slate-50 transition">
+                            Why is the "LOCATE" button gray and disabled?
+                            <span class="text-slate-400 group-open:rotate-180 transition-transform">▾</span>
+                        </summary>
+                        <div class="px-4 pb-4 text-slate-600">
+                            A disabled <strong>LOCATE</strong> button means a location map has not yet been assigned to that employee in the system.
+                        </div>
+                    </details>
+
+                    <details class="group rounded-xl ring-1 ring-slate-200 overflow-hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-4 font-semibold text-slate-800 hover:bg-slate-50 transition">
+                            Why is the "GET TO KNOW ME" button missing for some people?
+                            <span class="text-slate-400 group-open:rotate-180 transition-transform">▾</span>
+                        </summary>
+                        <div class="px-4 pb-4 text-slate-600">
                             This button only appears if an employee has submitted "get to know me" information.
-                        </d>
-                    </div>
+                        </div>
+                    </details>
 
-                    <div class="py-4">
-                        <dt class="font-semibold text-gray-800">Q: I searched for someone, but no results appeared. What should I do?</dt>
-                        <dd class="mt-1 text-gray-600">
+                    <details class="group rounded-xl ring-1 ring-slate-200 overflow-hidden">
+                        <summary class="flex items-center justify-between cursor-pointer p-4 font-semibold text-slate-800 hover:bg-slate-50 transition">
+                            I searched for someone, but no results appeared. What should I do?
+                            <span class="text-slate-400 group-open:rotate-180 transition-transform">▾</span>
+                        </summary>
+                        <div class="px-4 pb-4 text-slate-600">
                             First, double-check your spelling. If you're still not finding them, try searching for just their last name. You can also click the <strong>RESET</strong> button to clear all filters and see the full list.
-                        </dd>
-                    </div>
-                </dl>
+                        </div>
+                    </details>
+                </div>
             </section>
 
         </main>
