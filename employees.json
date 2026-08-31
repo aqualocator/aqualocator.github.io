@@ -334,8 +334,8 @@
     "email": "JCampanaro@aqua-aerobic.com"
   },
   {
-    "name": "Kenton Campbell",
-    "First": "Kenton",
+    "name": "Kent Campbell",
+    "First": "Kent",
     "Last": "Campbell",
     "title": "Senior Electrical Engineer",
     "initials": "KC",
@@ -1194,6 +1194,15 @@
     "email": "RJittawa@aqua-aerobic.com"
   },
   {
+    "name": "Christian Johansen",
+    "First": "Christian",
+    "Last": "Johansen",
+    "title": "Service Coordinator",
+    "ext": "4119",
+    "dept": "Customer Service",
+    "email": "CJohansen@aqua-aerobic.com"
+  },
+  {
     "name": "Connor Johnson",
     "First": "Connor",
     "Last": "Johnson",
@@ -1588,6 +1597,15 @@
     "email": "mmanoharan@aqua-aerobic.com"
   },
   {
+    "name": "Matt Markley ",
+    "First": "Matt",
+    "Last": "Markley ",
+    "title": "PC/Network Technician",
+    "ext": "4598",
+    "dept": "Information Technology",
+    "email": "mmarkley@aqua-aerobic.com"
+  },
+  {
     "name": "Loryn Martin",
     "First": "Loryn",
     "Last": "Martin",
@@ -1980,6 +1998,15 @@
     "ext": "4444",
     "dept": "Applications Engineering",
     "email": "creyes@aqua-aerobic.com"
+  },
+  {
+    "name": "Jameson Roberts ",
+    "First": "Jameson",
+    "Last": "Roberts ",
+    "title": "Associate Application Engineer",
+    "ext": "4144",
+    "dept": "Applications Engineering",
+    "email": "jroberts@aqua-aerobic.com"
   },
   {
     "name": "Krista Robinson",
