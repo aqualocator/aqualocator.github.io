@@ -192,6 +192,15 @@
     "email": "KBeaird@aqua-aerobic.com"
   },
   {
+    "name": "Paul Bertsche",
+    "First": "Paul",
+    "Last": "Bertsche",
+    "title": "Field Service Apprentice",
+    "ext": "1360",
+    "dept": "Field Services",
+    "email": "PBertsche@aqua-aerobic.com"
+  },
+  {
     "name": "Riley Black",
     "First": "Riley",
     "Last": "Black",
@@ -522,6 +531,15 @@
     "email": "hdebruler@aqua-aerobic.com"
   },
   {
+    "name": "Joshua Dekeyser",
+    "First": "Joshua",
+    "Last": "Dekeyser",
+    "title": "Field Service Apprentice",
+    "ext": "1362",
+    "dept": "Field Services",
+    "email": "JDekeyser@aqua-aerobic.com"
+  },
+  {
     "name": "Noah Dellamater",
     "First": "Noah",
     "Last": "Dellamater",
@@ -752,6 +770,15 @@
     "email": "JGergets@aqua-aerobic.com"
   },
   {
+    "name": "Cody Gibson",
+    "First": "Cody",
+    "Last": "Gibson",
+    "title": "Field Service Apprentice",
+    "ext": "1362",
+    "dept": "Field Services",
+    "email": "CGibson@aqua-aerobic.com"
+  },
+  {
     "name": "Tim Gill",
     "First": "Tim",
     "Last": "Gill",
@@ -797,6 +824,15 @@
     "email": "SGreenlee@aqua-aerobic.com"
   },
   {
+    "name": "Ledger Groen",
+    "First": "Ledger",
+    "Last": "Groen",
+    "title": "Field Service Apprentice",
+    "ext": "1366",
+    "dept": "Field Services",
+    "email": "LGroen@aqua-aerobic.com"
+  },
+  {
     "name": "Alicia Groen",
     "First": "Alicia",
     "Last": "Groen",
@@ -805,15 +841,6 @@
     "ext": "4501",
     "dept": "Eng - Estimating",
     "email": "AGroen@aqua-aerobic.com"
-  },
-  {
-    "name": "Ledger Groen",
-    "First": "Ledger",
-    "Last": "Groen",
-    "title": "Shop Technician",
-    "ext": "4437",
-    "dept": "Manufacturing",
-    "email": "lgroen@aqua-aerobic.com"
   },
   {
     "name": "Chris Guntermann",
@@ -1724,6 +1751,15 @@
     "email": "MMilligan@aqua-aerobic.com"
   },
   {
+    "name": "Quentin Morehouse",
+    "First": "Quentin",
+    "Last": "Morehouse",
+    "title": "Field Service Apprentice",
+    "ext": "1364",
+    "dept": "Field Services",
+    "email": "QMorehouse@aqua-aerobic.com"
+  },
+  {
     "name": "Robert Morgan",
     "First": "Robert",
     "Last": "Morgan",
@@ -1880,6 +1916,13 @@
     "ext": "4435",
     "dept": "Eng - Electrical",
     "email": "npatel@aqua-aerobic.com"
+  },
+  {
+    "name": "Ryan Pesina",
+    "First": "Ryan",
+    "Last": "Pesina",
+    "ext": "1361",
+    "email": "RPesina@aqua-aerobic.com"
   },
   {
     "name": "Charlie Petrie",
@@ -2542,6 +2585,13 @@
     "ext": "4455",
     "dept": "Human Resources",
     "email": "GUstich@aqua-aerobic.com"
+  },
+  {
+    "name": "Cristian Valdez",
+    "First": "Cristian",
+    "Last": "Valdez",
+    "ext": "1363",
+    "email": "CValdez@aqua-aerobic.com"
   },
   {
     "name": "Georgia Van Laeke",
