@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.9] - 2026-09-14
+
+### Added
+- **Conference Room Directory & Locations link** (`index.html`) — New header navigation link (between Help and Set Up Webex) pointing to the facility floorplan PDF at `http://www.aqua-aerobic.net/files/aasi_facility_floorplan.pdf`. Opens in a new tab and includes a tooltip: "View the facility floorplan (PDF) with conference room locations."
+
 ## [3.8] - 2026-07-10
 
 ### Added
