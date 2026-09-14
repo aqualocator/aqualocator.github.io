@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - **Conference Room Directory & Locations link** (`index.html`) — New header navigation link (between Help and Set Up Webex) pointing to the facility floorplan PDF at `http://www.aqua-aerobic.net/files/aasi_facility_floorplan.pdf`. Opens in a new tab and includes a tooltip: "View the facility floorplan (PDF) with conference room locations."
 
+### Changed
+- Shortened the new nav link's visible text from "Conference Room Directory & Locations" to "Conference Rooms" to fit the header; the full description remains in the hover tooltip.
+
 ## [3.8] - 2026-07-10
 
 ### Added
