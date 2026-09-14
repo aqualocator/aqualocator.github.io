@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.9] - 2026-09-14
 
 ### Added
+- **Out of Office Report link** (`index.html`) — Highlighted card at the bottom of the "Find an employee" sidebar panel linking to the daily-updated report at `https://aquadashboard.github.io/`. Placed there so it stays visible on desktop (sticky panel) and appears at the top of the page on mobile. Opens in a new tab, shows an "Updated daily" note, and includes a tooltip.
 - **Conference Room Directory & Locations link** (`index.html`) — New header navigation link (between Help and Set Up Webex) pointing to the facility floorplan PDF at `http://www.aqua-aerobic.net/files/aasi_facility_floorplan.pdf`. Opens in a new tab and includes a tooltip: "View the facility floorplan (PDF) with conference room locations."
 
 ### Changed
