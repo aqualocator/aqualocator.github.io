@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <!-- version 3.7 (url search param support) -->
+    <!-- version 3.8 (layout improvements) -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AQUALocator - The Aqua Employee Directory & Location Finder</title>
@@ -280,6 +280,19 @@
                 transform: translateX(-50%) scale(1);
             }
         }
+
+        /* --- Mobile menu styles --- */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+
+        #mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -296,7 +309,9 @@
                     <p class="text-xs sm:text-sm text-gray-500 hidden sm:block">The Aqua employee directory &amp; location finder</p>
                 </div>
             </div>
-            <nav class="flex items-center gap-1 sm:gap-2 text-sm flex-shrink-0 -ml-2 sm:ml-0">
+
+            <!-- Desktop nav -->
+            <nav class="hidden sm:flex items-center gap-1 sm:gap-2 text-sm flex-shrink-0 -ml-2 sm:ml-0">
                 <a href="https://form.jotform.com/193454652984168" target="_blank"
                     class="px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition tooltip-bottom"
                     data-tooltip="Submit a request to update your profile details">Update&nbsp;Profile</a>
@@ -307,10 +322,31 @@
                     class="px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition tooltip-bottom"
                     data-tooltip="View the facility floorplan (PDF) with conference room locations">Conference&nbsp;Rooms</a>
                 <a href="set-webex-default.html"
-                    class="hidden md:inline-block px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition tooltip-bottom"
+                    class="px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition tooltip-bottom"
                     data-tooltip="Instructions for setting up Webex Calling default">Set&nbsp;Up&nbsp;Webex</a>
             </nav>
+
+            <!-- Mobile hamburger button -->
+            <button id="mobile-menu-btn" class="sm:hidden flex items-center justify-center p-2 rounded-md text-slate-600 hover:bg-slate-100 transition" aria-label="Toggle menu">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
         </div>
+
+        <!-- Mobile menu dropdown -->
+        <nav id="mobile-menu" class="sm:hidden bg-white border-t border-slate-200">
+            <div class="container mx-auto px-4 py-3 space-y-1">
+                <a href="https://form.jotform.com/193454652984168" target="_blank"
+                    class="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition">Update Profile</a>
+                <a href="help.html"
+                    class="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition">Help</a>
+                <a href="http://www.aqua-aerobic.net/files/aasi_facility_floorplan.pdf" target="_blank"
+                    class="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition">Conference Rooms</a>
+                <a href="set-webex-default.html"
+                    class="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition">Set Up Webex</a>
+            </div>
+        </nav>
     </header>
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 pb-10 max-w-6xl">
@@ -358,6 +394,9 @@
                                     class="btn-reset font-semibold px-4 py-2.5 rounded-lg flex-shrink-0"
                                     data-tooltip="Clear all search terms and reset filters">RESET</button>
                             </div>
+
+                            <!-- Search helper text -->
+                            <p class="text-xs text-slate-400 mt-1.5">Try last names, job titles, initials (for engineers), or responsibilities.</p>
                         </div>
 
                         <div>
@@ -384,8 +423,9 @@
             </aside>
 
             <main class="md:col-span-7 lg:col-span-8">
-                <div id="loading-overlay" class="hidden">
+                <div id="loading-overlay" class="hidden flex-col items-center gap-3">
                     <div class="loader"></div>
+                    <p class="text-sm text-slate-500 font-medium">Loading employee directory...</p>
                 </div>
                 <div id="results-count" class="text-sm font-medium text-slate-500 mb-3 hidden"></div>
                 <div id="results-container" class="space-y-4"></div>
@@ -396,7 +436,7 @@
                             d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
                     </svg>
                     <p class="text-slate-600 font-medium">No employees found matching your criteria.</p>
-                    <p class="text-slate-400 text-sm mt-1">Try a different spelling, a last name only, or press RESET.</p>
+                    <p class="text-slate-400 text-sm mt-1">Try a different spelling, search by last name only, or press RESET to clear filters.</p>
                 </div>
             </main>
         </div>
@@ -501,6 +541,10 @@
         const knowMeIframe = document.getElementById('know-me-iframe');
         const knowMeCloseBtn = document.getElementById('know-me-modal-close-btn');
 
+        // --- Mobile Menu Elements ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
         // --- Populate Departments (called after each Firebase snapshot) ---
         function populateDepartments(employees) {
             // Derive unique dept values from actual Firebase data
@@ -519,12 +563,30 @@
 
             const previousValue = deptSelect.value;
             deptSelect.innerHTML = '';
-            allOptions.forEach(dept => {
+
+            // Create optgroup for quick filters
+            const quickFiltersGroup = document.createElement('optgroup');
+            quickFiltersGroup.label = 'Quick Filters';
+            PINNED_DEPT_OPTIONS.forEach(dept => {
                 const option = document.createElement('option');
                 option.value = dept;
                 option.textContent = dept;
-                deptSelect.appendChild(option);
+                quickFiltersGroup.appendChild(option);
             });
+            deptSelect.appendChild(quickFiltersGroup);
+
+            // Create optgroup for departments
+            if (liveDepts.length > 0) {
+                const deptsGroup = document.createElement('optgroup');
+                deptsGroup.label = 'Departments';
+                liveDepts.filter(d => !pinnedSet.has(d)).forEach(dept => {
+                    const option = document.createElement('option');
+                    option.value = dept;
+                    option.textContent = dept;
+                    deptsGroup.appendChild(option);
+                });
+                deptSelect.appendChild(deptsGroup);
+            }
 
             // Restore previous selection if still valid, otherwise default to All Departments
             if (allOptions.includes(previousValue)) {
@@ -546,7 +608,7 @@
             noResultsMessage.classList.toggle('hidden', count > 0);
 
             if (count > 0) {
-                resultsCount.textContent = `Showing ${count} employee(s) matching your criteria.`;
+                resultsCount.textContent = `Showing ${count} of ${allEmployees.length} employee(s)`;
                 resultsCount.classList.remove('hidden');
             } else {
                 resultsCount.classList.add('hidden');
@@ -572,6 +634,9 @@
 
                 const showKnowMeButton = employee.FloorMap && employee.FloorMap.trim() !== '' && employee.FloorMap.toLowerCase() !== 'null';
 
+                // Department badge color based on department name hash
+                const deptColor = getDeptBadgeColor(employee.dept);
+
                 const card = `
                     <div class="employee-card flex flex-col sm:flex-row items-start sm:items-center bg-white p-4 sm:p-5 rounded-2xl shadow-sm ring-1 ring-slate-200">
                         <img
@@ -587,18 +652,27 @@
 
                             <div class="flex flex-wrap gap-2 mt-3 mb-2">
                                 <button
-                                    class="btn-locate text-sm font-semibold py-1.5 px-4 rounded-full"
+                                    class="btn-locate text-sm font-semibold py-1.5 px-4 rounded-full inline-flex items-center gap-1.5"
                                     data-employee-id="${employee.id}"
                                     type="button"
                                     ${!employee.url ? 'disabled title="Location URL missing"' : `data-tooltip="Show ${safeEmpName}'s office location on the map"`}
-                                >LOCATE</button>
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    LOCATE</button>
                                 ${showKnowMeButton ? `
                                 <button
-                                    class="btn-know-me text-sm font-semibold py-1.5 px-4 rounded-full"
+                                    class="btn-know-me text-sm font-semibold py-1.5 px-4 rounded-full inline-flex items-center gap-1.5"
                                     data-employee-id="${employee.id}"
                                     type="button"
                                     data-tooltip="View 'Get to Know Me' info for ${safeEmpName}"
-                                >GET TO KNOW ME</button>` : ''}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                    GET TO KNOW ME</button>` : ''}
                             </div>
 
                             ${employee.responsibilities ? `
@@ -606,18 +680,31 @@
                                 <p><strong class="font-medium text-slate-600">Responsibilities:</strong> ${employee.responsibilities}</p>
                             </div>` : ''}
 
-                            <div class="text-sm text-slate-600 space-y-0.5 mt-3 pt-3 border-t border-slate-100">
-                                <p><strong class="font-medium text-slate-700">Ext:</strong>
+                            <div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3 pt-3 border-t border-slate-100 text-sm text-slate-600">
+                                <span class="inline-flex items-center gap-1.5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                    </svg>
+                                    <strong class="font-medium text-slate-700">Ext:</strong>
                                     ${employee.ext ? `
                                         <a href="tel:${employee.ext}" class="hidden sm:inline text-[#1d8dbf] hover:underline font-medium" data-tooltip="Call ${safeEmpName} at extension ${employee.ext} via Webex">${employee.ext}</a>
                                         <span class="inline sm:hidden">${employee.ext}</span>
                                     ` : 'N/A'}
-                                </p>
-                                <p><strong class="font-medium text-slate-700">Dept:</strong> ${employee.dept || 'N/A'}</p>
-                                ${employee.email && employee.email.trim() !== '' ? `
-                                <a href="mailto:${employee.email.trim()}" class="text-[#1d8dbf] hover:underline break-words font-medium" data-tooltip="Send an email to ${safeEmpName}">${employee.email.trim()}</a>
-                                ` : '<p>N/A</p>'}
+                                </span>
+                                <span class="inline-flex items-center gap-1.5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                    </svg>
+                                    <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium ${deptColor}">${employee.dept || 'N/A'}</span>
+                                </span>
                             </div>
+                            ${employee.email && employee.email.trim() !== '' ? `
+                            <a href="mailto:${employee.email.trim()}" class="inline-flex items-center gap-1.5 mt-2 text-sm text-[#1d8dbf] hover:underline break-words font-medium" data-tooltip="Send an email to ${safeEmpName}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                ${employee.email.trim()}
+                            </a>` : ''}
                         </div>
                     </div>
                 `;
@@ -627,15 +714,40 @@
             resultsContainer.innerHTML = htmlContent;
 
             loadingOverlay.classList.add('hidden');
-            loadingOverlay.classList.remove('flex');
+            loadingOverlay.classList.remove('flex', 'flex-col');
             resultsContainer.classList.remove('hidden');
+        }
+
+        // Helper: Generate consistent badge color from department name
+        function getDeptBadgeColor(dept) {
+            if (!dept || dept.trim() === '') return 'bg-slate-100 text-slate-600';
+            
+            const colors = [
+                'bg-blue-100 text-blue-700',
+                'bg-green-100 text-green-700',
+                'bg-purple-100 text-purple-700',
+                'bg-orange-100 text-orange-700',
+                'bg-pink-100 text-pink-700',
+                'bg-teal-100 text-teal-700',
+                'bg-indigo-100 text-indigo-700',
+                'bg-yellow-100 text-yellow-700'
+            ];
+
+            // Simple hash to pick a color consistently
+            let hash = 0;
+            for (let i = 0; i < dept.length; i++) {
+                hash = ((hash << 5) - hash) + dept.charCodeAt(i);
+                hash = hash & hash; // Convert to 32-bit integer
+            }
+            
+            return colors[Math.abs(hash) % colors.length];
         }
 
         // --- Filter + Render ---
         function filterAndRender() {
             resultsContainer.classList.add('hidden');
             loadingOverlay.classList.remove('hidden');
-            loadingOverlay.classList.add('flex');
+            loadingOverlay.classList.add('flex', 'flex-col');
 
             clearTimeout(searchDebounceTimeout);
             searchDebounceTimeout = setTimeout(() => {
@@ -721,7 +833,7 @@
 
             resultsContainer.classList.add('hidden');
             loadingOverlay.classList.remove('hidden');
-            loadingOverlay.classList.add('flex');
+            loadingOverlay.classList.add('flex', 'flex-col');
 
             const collectionPath = `artifacts/${appId}/public/data/employees`;
             const q = collection(db, collectionPath);
@@ -752,7 +864,7 @@
             }, (error) => {
                 resultsContainer.innerHTML = `<div class="text-center p-4"><p class="text-red-600 font-semibold text-lg">We are having trouble loading the employee directory right now. Please try again later.</p><p class="text-sm text-gray-500 mt-2">Technical details: Could not fetch employee data. ${error.message}</p></div>`;
                 loadingOverlay.classList.add('hidden');
-                loadingOverlay.classList.remove('flex');
+                loadingOverlay.classList.remove('flex', 'flex-col');
                 resultsContainer.classList.remove('hidden');
                 allEmployees = [];
             });
@@ -847,6 +959,23 @@
                     if (!knowMeModalOverlay.classList.contains('hidden')) {
                         closeKnowMeModal();
                     }
+                    // Close mobile menu on Escape
+                    if (mobileMenu.classList.contains('open')) {
+                        toggleMobileMenu();
+                    }
+                }
+            });
+
+            // --- Mobile menu toggle ---
+            function toggleMobileMenu() {
+                mobileMenu.classList.toggle('open');
+            }
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target) && mobileMenu.classList.contains('open')) {
+                    toggleMobileMenu();
                 }
             });
 
