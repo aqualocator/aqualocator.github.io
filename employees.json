@@ -343,16 +343,6 @@
     "email": "JCampanaro@aqua-aerobic.com"
   },
   {
-    "name": "Kent Campbell",
-    "First": "Kent",
-    "Last": "Campbell",
-    "title": "Senior Electrical Engineer",
-    "initials": "KC",
-    "ext": "4454",
-    "dept": "Eng - Electrical",
-    "email": "KCampbell@aqua-aerobic.com"
-  },
-  {
     "name": " Jonah Carlson",
     "First": " Jonah",
     "Last": "Carlson",
@@ -408,16 +398,6 @@
     "ext": "4437",
     "dept": "Manufacturing",
     "email": "Jchandler@aqua-aerobic.com"
-  },
-  {
-    "name": "Darshil Choksi",
-    "First": "Darshil",
-    "Last": "Choksi",
-    "title": "Mechanical Designer",
-    "initials": "DCC",
-    "ext": "6208",
-    "dept": "Eng - Mechanical",
-    "email": "DChoksi@aqua-aerobic.com"
   },
   {
     "name": "Brad Christian",
@@ -550,15 +530,6 @@
     "email": "NDellamater@aqua-aerobic.com"
   },
   {
-    "name": "Kayla Donahoe",
-    "First": "Kayla",
-    "Last": "Donahoe",
-    "title": "Application Engineer",
-    "ext": "4821",
-    "dept": "Applications Engineering",
-    "email": "KDonahoe@aqua-aerobic.com"
-  },
-  {
     "name": "Paula Dorn",
     "First": "Paula",
     "Last": "Dorn",
@@ -576,6 +547,15 @@
     "ext": "4480",
     "dept": "Eng - Electrical",
     "email": "BDouglas@aqua-aerobic.com"
+  },
+  {
+    "name": "Eric Drager",
+    "First": "Eric",
+    "Last": "Drager",
+    "title": "Mechanical Designer",
+    "ext": "4063",
+    "dept": "Eng - Mechanical",
+    "email": "edrager@aqua-aerobic.com"
   },
   {
     "name": "Stephanie Duchow",
@@ -733,15 +713,6 @@
     "email": "jgable@aqua-aerobic.com"
   },
   {
-    "name": "Sophia Gall",
-    "First": "Sophia",
-    "Last": "Gall",
-    "title": "HR Intern",
-    "ext": "4063 ",
-    "dept": "Human Resources",
-    "email": "sgall@aqua-aerobic.com"
-  },
-  {
     "name": "Sarah Gamble",
     "First": "Sarah",
     "Last": "Gamble",
@@ -850,16 +821,6 @@
     "ext": "4501",
     "dept": "Eng - Estimating",
     "email": "AGroen@aqua-aerobic.com"
-  },
-  {
-    "name": "Chris Guntermann",
-    "First": "Chris",
-    "Last": "Guntermann",
-    "title": "Electrical Engineer",
-    "initials": "CTG",
-    "ext": "4475",
-    "dept": "Eng - Electrical",
-    "email": "CGuntermann@aqua-aerobic.com"
   },
   {
     "name": "Vedansh Gupta",
@@ -1221,15 +1182,6 @@
     "email": "LJarmolowicz@aqua-aerobic.com"
   },
   {
-    "name": "Michael Jenkins",
-    "First": "Michael",
-    "Last": "Jenkins",
-    "title": "Shop Technician",
-    "ext": "4437",
-    "dept": "Manufacturing",
-    "email": "  "
-  },
-  {
     "name": "Rungrod Jittawattanarat, Ph.D.",
     "First": "Rungrod",
     "Last": "Jittawattanarat",
@@ -1548,15 +1500,6 @@
     "ext": "4448",
     "dept": "Industrial Sales",
     "email": "WLenz@aqua-aerobic.com"
-  },
-  {
-    "name": "Annabella Leston",
-    "First": "Annabella",
-    "Last": "Leston",
-    "title": "Accounting Intern",
-    "ext": "6259",
-    "dept": "Accounting/Finance",
-    "email": "aleston@aqua-aerobic.com"
   },
   {
     "name": "Joshua Long",
@@ -1887,6 +1830,15 @@
     "ext": "4564",
     "dept": "Customer Service",
     "email": "NOsorio@aqua-aerobic.com"
+  },
+  {
+    "name": "Michael Oysti",
+    "First": "Michael",
+    "Last": "Oysti",
+    "title": "Mechanical Designer",
+    "ext": "4144",
+    "dept": "Eng - Mechanical",
+    "email": "moysti@aqua-aerobic.com"
   },
   {
     "name": "Justin Palmer",
@@ -2226,14 +2178,6 @@
     "email": "esanchez@aqua-aerobic.com"
   },
   {
-    "name": "Deja' Sandkam",
-    "First": "Deja'",
-    "Last": "Sandkam",
-    "title": "Administrative Assistant",
-    "dept": "AfterMarket Sales",
-    "email": "DSandkam@aqua-aerobic.com"
-  },
-  {
     "name": "Richard Santos",
     "First": "Richard",
     "Last": "Santos",
@@ -2428,15 +2372,6 @@
     "ext": "4593",
     "dept": "Information Technology",
     "email": "PStanek@aqua-aerobic.com"
-  },
-  {
-    "name": "Steve Stanish",
-    "First": "Steve",
-    "Last": "Stanish",
-    "title": "Regional Manager",
-    "ext": "4489",
-    "dept": "Domestic Sales-Midwest",
-    "email": "sstanish@aqua-aerobic.com"
   },
   {
     "name": "Ryan Steele",
@@ -2885,5 +2820,14 @@
     "ext": "4576",
     "dept": "Production Control",
     "email": "MZaphel@aqua-aerobic.com"
+  },
+  {
+    "name": "Sam Zillmer",
+    "First": "Sam",
+    "Last": "Zillmer",
+    "title": "Regional Manager - Midwest",
+    "ext": "4159",
+    "dept": "Domestic Sales-Midwest",
+    "email": "szillmer@aqua-aerobic.com"
   }
 ]
