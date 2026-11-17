@@ -1,0 +1,6201 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<title>Discover Branson — An Immersive Journey</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;600&family=Dancing+Script:wght@700&display=swap');
+
+
+
+*, *::before, *::after {
+
+  margin: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+
+}
+
+
+
+:root {
+
+  --forest-dark: #1a3a2a;
+
+  --forest-mid: #2d5a3f;
+
+  --forest-light: #4a8c6a;
+
+  --gold: #d4a843;
+
+  --gold-light: #f0d078;
+
+  --sky-blue: #87CEEB;
+
+  --sunset-orange: #e8753a;
+
+  --deep-night: #0a1a12;
+
+  --mist: rgba(255,255,255,0.15);
+
+  --glass: rgba(255,255,255,0.08);
+
+}
+
+
+
+html, body {
+
+  overflow: hidden;
+
+  height: 100%;
+
+  width: 100%;
+
+  font-family: 'Montserrat', sans-serif;
+
+  background: var(--deep-night);
+
+  cursor: none;
+
+}
+
+
+
+/* Custom Cursor */
+
+#custom-cursor {
+
+  position: fixed;
+
+  width: 30px;
+
+  height: 30px;
+
+  border: 2px solid var(--gold);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  z-index: 100000;
+
+  transition: transform 0.15s ease, background 0.3s ease;
+
+  mix-blend-mode: difference;
+
+  transform: translate(-50%, -50%);
+
+}
+
+
+
+#custom-cursor.hovering {
+
+  transform: translate(-50%, -50%) scale(2);
+
+  background: rgba(212, 168, 67, 0.3);
+
+}
+
+
+
+#cursor-dot {
+
+  position: fixed;
+
+  width: 6px;
+
+  height: 6px;
+
+  background: var(--gold);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  z-index: 100001;
+
+  transform: translate(-50%, -50%);
+
+}
+
+
+
+/* ============ LOADING SCREEN ============ */
+
+#loader-screen {
+
+  position: fixed;
+
+  top: 0; left: 0;
+
+  width: 100%; height: 100%;
+
+  background: var(--deep-night);
+
+  z-index: 99999;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  transition: opacity 0.8s ease;
+
+}
+
+
+
+#loader-screen.fade-out {
+
+  opacity: 0;
+
+  pointer-events: none;
+
+}
+
+
+
+.loader-nature {
+
+  width: 200px;
+
+  height: 200px;
+
+  position: relative;
+
+}
+
+
+
+.loader-tree {
+
+  position: absolute;
+
+  bottom: 20px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+}
+
+
+
+.loader-trunk {
+
+  width: 8px;
+
+  height: 60px;
+
+  background: #5a3a1a;
+
+  margin: 0 auto;
+
+  border-radius: 2px;
+
+  animation: growTrunk 1.5s ease-out forwards;
+
+  transform-origin: bottom;
+
+}
+
+
+
+@keyframes growTrunk {
+
+  0% { height: 0; }
+
+  100% { height: 60px; }
+
+}
+
+
+
+.loader-canopy {
+
+  width: 80px;
+
+  height: 80px;
+
+  background: radial-gradient(ellipse, var(--forest-light), var(--forest-dark));
+
+  border-radius: 50%;
+
+  margin: 0 auto -20px;
+
+  animation: growCanopy 1s 0.8s ease-out forwards;
+
+  transform: scale(0);
+
+  transform-origin: center bottom;
+
+}
+
+
+
+@keyframes growCanopy {
+
+  0% { transform: scale(0); }
+
+  100% { transform: scale(1); }
+
+}
+
+
+
+.loader-canopy-2 {
+
+  width: 60px;
+
+  height: 60px;
+
+  background: radial-gradient(ellipse, var(--forest-mid), var(--forest-dark));
+
+  border-radius: 50%;
+
+  margin: 0 auto -15px;
+
+  animation: growCanopy2 0.8s 1.2s ease-out forwards;
+
+  transform: scale(0);
+
+}
+
+
+
+@keyframes growCanopy2 {
+
+  0% { transform: scale(0); }
+
+  100% { transform: scale(1); }
+
+}
+
+
+
+.loader-progress {
+
+  width: 200px;
+
+  height: 2px;
+
+  background: rgba(255,255,255,0.1);
+
+  margin-top: 40px;
+
+  border-radius: 2px;
+
+  overflow: hidden;
+
+}
+
+
+
+.loader-progress-bar {
+
+  height: 100%;
+
+  background: linear-gradient(90deg, var(--forest-light), var(--gold));
+
+  width: 0%;
+
+  animation: loadProgress 3s ease-in-out forwards;
+
+  border-radius: 2px;
+
+}
+
+
+
+@keyframes loadProgress {
+
+  0% { width: 0%; }
+
+  30% { width: 40%; }
+
+  60% { width: 70%; }
+
+  100% { width: 100%; }
+
+}
+
+
+
+.loader-text {
+
+  color: var(--gold);
+
+  font-family: 'Dancing Script', cursive;
+
+  font-size: 1.4rem;
+
+  margin-top: 20px;
+
+  opacity: 0;
+
+  animation: fadeInText 1s 1.5s forwards;
+
+}
+
+
+
+@keyframes fadeInText {
+
+  to { opacity: 1; }
+
+}
+
+
+
+.loader-particles {
+
+  position: absolute;
+
+  width: 100%;
+
+  height: 100%;
+
+}
+
+
+
+.loader-particle {
+
+  position: absolute;
+
+  width: 4px;
+
+  height: 4px;
+
+  background: var(--gold-light);
+
+  border-radius: 50%;
+
+  opacity: 0;
+
+  animation: floatParticle 2s infinite;
+
+}
+
+
+
+@keyframes floatParticle {
+
+  0% { opacity: 0; transform: translateY(0) scale(0); }
+
+  50% { opacity: 0.8; transform: translateY(-30px) scale(1); }
+
+  100% { opacity: 0; transform: translateY(-60px) scale(0); }
+
+}
+
+
+
+/* ============ MAIN SCENE ============ */
+
+#main-scene {
+
+  width: 100%;
+
+  height: 100%;
+
+  position: relative;
+
+  overflow: hidden;
+
+  opacity: 0;
+
+  transition: opacity 1s ease;
+
+}
+
+
+
+#main-scene.visible {
+
+  opacity: 1;
+
+}
+
+
+
+/* Sky layers */
+
+.sky-layer {
+
+  position: absolute;
+
+  width: 100%;
+
+  height: 100%;
+
+}
+
+
+
+.sky-bg {
+
+  background: linear-gradient(180deg, 
+
+    #1a0a2e 0%, 
+
+    #2d1b69 15%,
+
+    #e8753a 40%, 
+
+    #f4a460 55%, 
+
+    #87CEEB 75%, 
+
+    #b8e4f0 100%
+
+  );
+
+  z-index: 1;
+
+}
+
+
+
+/* Sun */
+
+.sun {
+
+  position: absolute;
+
+  width: 120px;
+
+  height: 120px;
+
+  background: radial-gradient(circle, #fff8e1, #ffd54f, #ff8f00);
+
+  border-radius: 50%;
+
+  top: 35%;
+
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  z-index: 2;
+
+  box-shadow: 
+
+    0 0 60px rgba(255, 200, 50, 0.6),
+
+    0 0 120px rgba(255, 150, 0, 0.3),
+
+    0 0 200px rgba(255, 100, 0, 0.15);
+
+  animation: sunPulse 4s ease-in-out infinite;
+
+}
+
+
+
+@keyframes sunPulse {
+
+  0%, 100% { box-shadow: 0 0 60px rgba(255,200,50,0.6), 0 0 120px rgba(255,150,0,0.3); }
+
+  50% { box-shadow: 0 0 80px rgba(255,200,50,0.8), 0 0 160px rgba(255,150,0,0.4); }
+
+}
+
+
+
+/* Clouds */
+
+.cloud {
+
+  position: absolute;
+
+  background: rgba(255,255,255,0.85);
+
+  border-radius: 50px;
+
+  z-index: 3;
+
+  animation: driftCloud linear infinite;
+
+}
+
+
+
+.cloud::before, .cloud::after {
+
+  content: '';
+
+  position: absolute;
+
+  background: inherit;
+
+  border-radius: 50%;
+
+}
+
+
+
+.cloud-1 {
+
+  width: 180px; height: 50px;
+
+  top: 15%; left: -200px;
+
+  animation-duration: 45s;
+
+}
+
+.cloud-1::before { width: 80px; height: 80px; top: -40px; left: 20px; }
+
+.cloud-1::after { width: 100px; height: 90px; top: -50px; left: 60px; }
+
+
+
+.cloud-2 {
+
+  width: 140px; height: 40px;
+
+  top: 25%; left: -150px;
+
+  animation-duration: 60s;
+
+  animation-delay: -20s;
+
+  opacity: 0.7;
+
+}
+
+.cloud-2::before { width: 60px; height: 60px; top: -35px; left: 15px; }
+
+.cloud-2::after { width: 70px; height: 70px; top: -40px; left: 50px; }
+
+
+
+.cloud-3 {
+
+  width: 220px; height: 55px;
+
+  top: 8%; left: -250px;
+
+  animation-duration: 70s;
+
+  animation-delay: -10s;
+
+  opacity: 0.5;
+
+}
+
+.cloud-3::before { width: 100px; height: 100px; top: -55px; left: 30px; }
+
+.cloud-3::after { width: 120px; height: 110px; top: -60px; left: 80px; }
+
+
+
+@keyframes driftCloud {
+
+  0% { transform: translateX(0); }
+
+  100% { transform: translateX(calc(100vw + 400px)); }
+
+}
+
+
+
+/* Mountains / Hills */
+
+.hills-container {
+
+  position: absolute;
+
+  bottom: 0;
+
+  width: 100%;
+
+  height: 70%;
+
+  z-index: 4;
+
+}
+
+
+
+.hill {
+
+  position: absolute;
+
+  bottom: 0;
+
+  width: 100%;
+
+}
+
+
+
+.hill-far {
+
+  height: 55%;
+
+  background: linear-gradient(180deg, #3a6b4a 0%, #2d5a3f 100%);
+
+  clip-path: polygon(
+
+    0% 100%, 0% 60%, 5% 55%, 10% 58%, 15% 45%, 20% 42%, 25% 50%,
+
+    30% 38%, 35% 35%, 40% 42%, 45% 30%, 50% 28%, 55% 32%,
+
+    60% 25%, 65% 22%, 70% 28%, 75% 20%, 80% 18%, 85% 22%,
+
+    90% 15%, 95% 12%, 100% 15%, 100% 100%
+
+  );
+
+  opacity: 0;
+
+  animation: hillReveal 2s 3.5s ease-out forwards;
+
+}
+
+
+
+.hill-mid {
+
+  height: 45%;
+
+  background: linear-gradient(180deg, #2d5a3f 0%, #1a3a2a 100%);
+
+  clip-path: polygon(
+
+    0% 100%, 0% 50%, 8% 48%, 15% 55%, 22% 40%, 28% 42%, 35% 35%,
+
+    42% 38%, 48% 30%, 55% 32%, 62% 25%, 68% 28%, 75% 20%,
+
+    82% 22%, 88% 18%, 95% 25%, 100% 22%, 100% 100%
+
+  );
+
+  opacity: 0;
+
+  animation: hillReveal 2s 3.8s ease-out forwards;
+
+}
+
+
+
+.hill-near {
+
+  height: 35%;
+
+  background: linear-gradient(180deg, #1a3a2a 0%, #0d2618 100%);
+
+  clip-path: polygon(
+
+    0% 100%, 0% 45%, 10% 40%, 20% 48%, 30% 35%, 40% 38%, 50% 30%,
+
+    60% 33%, 70% 28%, 80% 32%, 90% 25%, 100% 30%, 100% 100%
+
+  );
+
+  opacity: 0;
+
+  animation: hillReveal 2s 4.1s ease-out forwards;
+
+}
+
+
+
+@keyframes hillReveal {
+
+  0% { opacity: 0; transform: translateY(40px); }
+
+  100% { opacity: 1; transform: translateY(0); }
+
+}
+
+
+
+/* Forest Trees */
+
+.forest-layer {
+
+  position: absolute;
+
+  bottom: 0;
+
+  width: 100%;
+
+  height: 40%;
+
+  z-index: 5;
+
+  opacity: 0;
+
+  animation: forestReveal 2.5s 4.3s ease-out forwards;
+
+}
+
+
+
+@keyframes forestReveal {
+
+  0% { opacity: 0; }
+
+  100% { opacity: 1; }
+
+}
+
+
+
+.tree {
+
+  position: absolute;
+
+  bottom: 0;
+
+}
+
+
+
+.tree-trunk {
+
+  width: 6px;
+
+  background: #3a2a1a;
+
+  margin: 0 auto;
+
+  border-radius: 1px;
+
+}
+
+
+
+.tree-top {
+
+  width: 0;
+
+  height: 0;
+
+  margin: 0 auto;
+
+  border-left: solid transparent;
+
+  border-right: solid transparent;
+
+  border-bottom: solid;
+
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+
+}
+
+
+
+.tree-top-conifer {
+
+  border-bottom-color: #2d5a3f;
+
+}
+
+
+
+.tree-top-deciduous {
+
+  border-radius: 50%;
+
+  border: none;
+
+  background: #3a6b4a;
+
+  border-radius: 50% 50% 45% 45%;
+
+}
+
+
+
+/* Forest floor */
+
+.forest-floor {
+
+  position: absolute;
+
+  bottom: 0;
+
+  width: 100%;
+
+  height: 12%;
+
+  background: linear-gradient(180deg, #1a2a1a, #0d1a0d);
+
+  z-index: 6;
+
+  border-radius: 50% 50% 0 0 / 20px 20px 0 0;
+
+}
+
+
+
+/* Mist effect */
+
+.mist-layer {
+
+  position: absolute;
+
+  bottom: 10%;
+
+  width: 200%;
+
+  height: 15%;
+
+  z-index: 7;
+
+  opacity: 0.3;
+
+  animation: mistDrift 30s linear infinite;
+
+}
+
+
+
+.mist-layer::before {
+
+  content: '';
+
+  position: absolute;
+
+  width: 100%;
+
+  height: 100%;
+
+  background: linear-gradient(90deg, 
+
+    transparent 0%, 
+
+    rgba(255,255,255,0.3) 20%, 
+
+    rgba(255,255,255,0.5) 40%, 
+
+    rgba(255,255,255,0.3) 60%, 
+
+    transparent 80%
+
+  );
+
+  filter: blur(20px);
+
+}
+
+
+
+@keyframes mistDrift {
+
+  0% { transform: translateX(0); }
+
+  100% { transform: translateX(-50%); }
+
+}
+
+
+
+/* Fireflies */
+
+.firefly {
+
+  position: absolute;
+
+  width: 4px;
+
+  height: 4px;
+
+  background: #ffff88;
+
+  border-radius: 50%;
+
+  z-index: 8;
+
+  opacity: 0;
+
+  animation: fireflyGlow 3s ease-in-out infinite;
+
+  box-shadow: 0 0 8px #ffff88, 0 0 20px rgba(255,255,100,0.3);
+
+}
+
+
+
+@keyframes fireflyGlow {
+
+  0%, 100% { opacity: 0; transform: translateY(0); }
+
+  50% { opacity: 1; transform: translateY(-20px); }
+
+}
+
+
+
+/* ============ HOTSPOTS ============ */
+
+.hotspot {
+
+  position: absolute;
+
+  z-index: 20;
+
+  cursor: none;
+
+  opacity: 0;
+
+  transform: scale(0);
+
+  transition: opacity 0.8s ease, transform 0.8s ease;
+
+}
+
+
+
+.hotspot.visible {
+
+  opacity: 1;
+
+  transform: scale(1);
+
+}
+
+
+
+.hotspot-core {
+
+  width: 50px;
+
+  height: 50px;
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+
+.hotspot-pulse {
+
+  position: absolute;
+
+  width: 100%;
+
+  height: 100%;
+
+  border: 2px solid var(--gold);
+
+  border-radius: 50%;
+
+  animation: hotspotPulse 2s ease-in-out infinite;
+
+}
+
+
+
+.hotspot-pulse:nth-child(2) {
+
+  animation-delay: 0.6s;
+
+  width: 70px;
+
+  height: 70px;
+
+  margin-left: -10px;
+
+  margin-top: -10px;
+
+}
+
+
+
+.hotspot-pulse:nth-child(3) {
+
+  animation-delay: 1.2s;
+
+  width: 100px;
+
+  height: 100px;
+
+  margin-left: -25px;
+
+  margin-top: -25px;
+
+}
+
+
+
+@keyframes hotspotPulse {
+
+  0% { transform: scale(1); opacity: 0.8; }
+
+  100% { transform: scale(1.8); opacity: 0; }
+
+}
+
+
+
+.hotspot-icon {
+
+  width: 36px;
+
+  height: 36px;
+
+  background: var(--gold);
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 16px;
+
+  z-index: 2;
+
+  box-shadow: 0 0 20px rgba(212,168,67,0.5);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+
+
+.hotspot:hover .hotspot-icon {
+
+  transform: scale(1.2);
+
+  box-shadow: 0 0 40px rgba(212,168,67,0.8);
+
+}
+
+
+
+.hotspot-label {
+
+  position: absolute;
+
+  top: 55px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  background: rgba(10, 26, 18, 0.85);
+
+  backdrop-filter: blur(10px);
+
+  color: var(--gold-light);
+
+  padding: 6px 14px;
+
+  border-radius: 20px;
+
+  font-size: 0.7rem;
+
+  font-weight: 600;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+
+  border: 1px solid rgba(212,168,67,0.3);
+
+  opacity: 0;
+
+  transition: opacity 0.3s ease;
+
+  pointer-events: none;
+
+}
+
+
+
+.hotspot:hover .hotspot-label {
+
+  opacity: 1;
+
+}
+
+
+
+.hotspot-line {
+
+  position: absolute;
+
+  top: 25px;
+
+  left: 50%;
+
+  width: 1px;
+
+  height: 30px;
+
+  background: linear-gradient(to bottom, var(--gold), transparent);
+
+  opacity: 0;
+
+  transition: opacity 0.3s ease;
+
+}
+
+
+
+.hotspot:hover .hotspot-line {
+
+  opacity: 0.5;
+
+}
+
+
+
+/* ============ TITLE OVERLAY ============ */
+
+.title-overlay {
+
+  position: absolute;
+
+  top: 5%;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  z-index: 25;
+
+  text-align: center;
+
+  opacity: 0;
+
+  animation: titleReveal 2s 4.5s ease-out forwards;
+
+}
+
+
+
+@keyframes titleReveal {
+
+  0% { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+
+  100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+}
+
+
+
+.title-main {
+
+  font-family: 'Dancing Script', cursive;
+
+  font-size: 4rem;
+
+  color: var(--gold-light);
+
+  text-shadow: 0 2px 20px rgba(0,0,0,0.5), 0 0 60px rgba(212,168,67,0.2);
+
+  line-height: 1;
+
+}
+
+
+
+.title-sub {
+
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 0.85rem;
+
+  color: rgba(255,255,255,0.7);
+
+  letter-spacing: 6px;
+
+  text-transform: uppercase;
+
+  margin-top: 8px;
+
+  font-weight: 300;
+
+}
+
+
+
+/* ============ CREATIVE NAVIGATION (Orbital / Constellation) ============ */
+
+#orbital-nav {
+
+  position: fixed;
+
+  bottom: 30px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  z-index: 50;
+
+  opacity: 0;
+
+  transition: opacity 0.8s ease;
+
+}
+
+
+
+#orbital-nav.visible {
+
+  opacity: 1;
+
+}
+
+
+
+.orbit-ring {
+
+  position: relative;
+
+  width: 180px;
+
+  height: 180px;
+
+}
+
+
+
+.orbit-center-btn {
+
+  position: absolute;
+
+  top: 50%;
+
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  width: 60px;
+
+  height: 60px;
+
+  background: linear-gradient(135deg, var(--gold), var(--sunset-orange));
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: none;
+
+  z-index: 3;
+
+  box-shadow: 0 0 30px rgba(212,168,67,0.4);
+
+  transition: transform 0.3s ease;
+
+  font-size: 1.2rem;
+
+}
+
+
+
+.orbit-center-btn:hover {
+
+  transform: translate(-50%, -50%) scale(1.1);
+
+}
+
+
+
+.orbit-path {
+
+  position: absolute;
+
+  top: 0; left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  border: 1px solid rgba(212,168,67,0.15);
+
+  border-radius: 50%;
+
+  animation: orbitSpin 20s linear infinite;
+
+}
+
+
+
+@keyframes orbitSpin {
+
+  0% { transform: rotate(0deg); }
+
+  100% { transform: rotate(360deg); }
+
+}
+
+
+
+.orbit-node {
+
+  position: absolute;
+
+  width: 44px;
+
+  height: 44px;
+
+  background: var(--glass);
+
+  backdrop-filter: blur(15px);
+
+  border: 1px solid rgba(212,168,67,0.3);
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: none;
+
+  transition: all 0.3s ease;
+
+  font-size: 1.1rem;
+
+  z-index: 4;
+
+}
+
+
+
+.orbit-node:hover {
+
+  background: rgba(212,168,67,0.25);
+
+  transform: scale(1.2);
+
+  border-color: var(--gold);
+
+  box-shadow: 0 0 25px rgba(212,168,67,0.4);
+
+}
+
+
+
+.orbit-node .node-label {
+
+  position: absolute;
+
+  bottom: -22px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  font-size: 0.55rem;
+
+  color: var(--gold-light);
+
+  white-space: nowrap;
+
+  opacity: 0;
+
+  transition: opacity 0.3s;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  font-weight: 600;
+
+}
+
+
+
+.orbit-node:hover .node-label {
+
+  opacity: 1;
+
+}
+
+
+
+/* Position nodes on orbit circle */
+
+.orbit-node:nth-child(1) { top: -22px; left: 50%; margin-left: -22px; }
+
+.orbit-node:nth-child(2) { top: 50%; right: -22px; margin-top: -22px; }
+
+.orbit-node:nth-child(3) { bottom: -22px; left: 50%; margin-left: -22px; }
+
+.orbit-node:nth-child(4) { top: 50%; left: -22px; margin-top: -22px; }
+
+.orbit-node:nth-child(5) { top: 12px; right: 12px; }
+
+.orbit-node:nth-child(6) { bottom: 12px; right: 12px; }
+
+.orbit-node:nth-child(7) { bottom: 12px; left: 12px; }
+
+.orbit-node:nth-child(8) { top: 12px; left: 12px; }
+
+
+
+/* Counter-rotate nodes so they stay upright */
+
+.orbit-ring .orbit-node {
+
+  animation: counterSpin 20s linear infinite;
+
+}
+
+
+
+@keyframes counterSpin {
+
+  0% { transform: rotate(0deg); }
+
+  100% { transform: rotate(-360deg); }
+
+}
+
+
+
+/* ============ NAV PANEL (when center button clicked) ============ */
+
+#nav-panel {
+
+  position: fixed;
+
+  top: 0; left: 0;
+
+  width: 100%; height: 100%;
+
+  z-index: 60;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition: opacity 0.5s ease;
+
+  background: rgba(10, 26, 18, 0.9);
+
+  backdrop-filter: blur(20px);
+
+}
+
+
+
+#nav-panel.open {
+
+  opacity: 1;
+
+  pointer-events: all;
+
+}
+
+
+
+.nav-content {
+
+  text-align: center;
+
+}
+
+
+
+.nav-close {
+
+  position: absolute;
+
+  top: 30px;
+
+  right: 30px;
+
+  width: 50px;
+
+  height: 50px;
+
+  background: var(--glass);
+
+  border: 1px solid rgba(212,168,67,0.3);
+
+  border-radius: 50%;
+
+  color: var(--gold);
+
+  font-size: 1.5rem;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: none;
+
+  transition: all 0.3s;
+
+}
+
+
+
+.nav-close:hover {
+
+  background: rgba(212,168,67,0.2);
+
+  transform: rotate(90deg);
+
+}
+
+
+
+.nav-links {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 15px;
+
+  list-style: none;
+
+}
+
+
+
+.nav-links li {
+
+  opacity: 0;
+
+  transform: translateY(20px);
+
+}
+
+
+
+.nav-links li.animate-in {
+
+  animation: navLinkIn 0.5s ease forwards;
+
+}
+
+
+
+@keyframes navLinkIn {
+
+  to { opacity: 1; transform: translateY(0); }
+
+}
+
+
+
+.nav-links a {
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 2.5rem;
+
+  color: rgba(255,255,255,0.6);
+
+  text-decoration: none;
+
+  transition: all 0.3s;
+
+  display: block;
+
+  padding: 5px 0;
+
+  position: relative;
+
+}
+
+
+
+.nav-links a:hover {
+
+  color: var(--gold);
+
+  transform: translateX(20px);
+
+}
+
+
+
+.nav-links a::after {
+
+  content: '';
+
+  position: absolute;
+
+  bottom: 0;
+
+  left: 0;
+
+  width: 0;
+
+  height: 2px;
+
+  background: var(--gold);
+
+  transition: width 0.3s ease;
+
+}
+
+
+
+.nav-links a:hover::after {
+
+  width: 100%;
+
+}
+
+
+
+/* ============ FLIGHT TRANSITION ============ */
+
+#flight-overlay {
+
+  position: fixed;
+
+  top: 0; left: 0;
+
+  width: 100%; height: 100%;
+
+  z-index: 80;
+
+  display: none;
+
+  pointer-events: all;
+
+}
+
+
+
+#flight-overlay.active {
+
+  display: block;
+
+}
+
+
+
+.flight-bg {
+
+  position: absolute;
+
+  width: 100%;
+
+  height: 100%;
+
+  background: var(--deep-night);
+
+  opacity: 0;
+
+}
+
+
+
+.flight-zoom-circle {
+
+  position: absolute;
+
+  top: 50%;
+
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  width: 10px;
+
+  height: 10px;
+
+  border-radius: 50%;
+
+  overflow: hidden;
+
+}
+
+
+
+.flight-zoom-circle img {
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+
+
+
+.flight-text {
+
+  position: absolute;
+
+  top: 50%;
+
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+
+  opacity: 0;
+
+  z-index: 2;
+
+}
+
+
+
+.flight-text h2 {
+
+  font-family: 'Dancing Script', cursive;
+
+  font-size: 2.5rem;
+
+  color: var(--gold-light);
+
+}
+
+
+
+.flight-text p {
+
+  color: rgba(255,255,255,0.6);
+
+  font-size: 0.8rem;
+
+  letter-spacing: 3px;
+
+  text-transform: uppercase;
+
+  margin-top: 10px;
+
+}
+
+
+
+.flight-progress {
+
+  position: absolute;
+
+  bottom: 30%;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 150px;
+
+  height: 2px;
+
+  background: rgba(255,255,255,0.1);
+
+  border-radius: 2px;
+
+  opacity: 0;
+
+}
+
+
+
+.flight-progress-bar {
+
+  height: 100%;
+
+  background: var(--gold);
+
+  width: 0;
+
+  border-radius: 2px;
+
+  transition: width 0.1s linear;
+
+}
+
+
+
+/* ============ ACTIVITY DETAIL PAGE ============ */
+
+#detail-page {
+
+  position: fixed;
+
+  top: 0; left: 0;
+
+  width: 100%; height: 100%;
+
+  z-index: 70;
+
+  display: none;
+
+  overflow-y: auto;
+
+  overflow-x: hidden;
+
+}
+
+
+
+#detail-page.active {
+
+  display: block;
+
+}
+
+
+
+.detail-hero {
+
+  position: relative;
+
+  width: 100%;
+
+  height: 60vh;
+
+  overflow: hidden;
+
+}
+
+
+
+.detail-hero-bg {
+
+  position: absolute;
+
+  width: 100%;
+
+  height: 120%;
+
+  top: -10%;
+
+  object-fit: cover;
+
+  filter: brightness(0.5);
+
+  transform: scale(1.1);
+
+  transition: transform 8s ease;
+
+}
+
+
+
+.detail-hero-bg.loaded {
+
+  transform: scale(1);
+
+}
+
+
+
+.detail-hero-overlay {
+
+  position: absolute;
+
+  bottom: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 60%;
+
+  background: linear-gradient(to top, var(--deep-night), transparent);
+
+}
+
+
+
+.detail-hero-content {
+
+  position: absolute;
+
+  bottom: 40px;
+
+  left: 60px;
+
+  z-index: 2;
+
+}
+
+
+
+.detail-title {
+
+  font-family: 'Dancing Script', cursive;
+
+  font-size: 3.5rem;
+
+  color: var(--gold-light);
+
+  text-shadow: 0 2px 30px rgba(0,0,0,0.7);
+
+}
+
+
+
+.detail-subtitle {
+
+  font-size: 0.85rem;
+
+  color: rgba(255,255,255,0.7);
+
+  letter-spacing: 4px;
+
+  text-transform: uppercase;
+
+  margin-top: 5px;
+
+}
+
+
+
+.detail-back-btn {
+
+  position: absolute;
+
+  top: 30px;
+
+  left: 30px;
+
+  z-index: 10;
+
+  width: 50px;
+
+  height: 50px;
+
+  background: var(--glass);
+
+  backdrop-filter: blur(15px);
+
+  border: 1px solid rgba(212,168,67,0.3);
+
+  border-radius: 50%;
+
+  color: var(--gold);
+
+  font-size: 1.2rem;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: none;
+
+  transition: all 0.3s;
+
+}
+
+
+
+.detail-back-btn:hover {
+
+  background: rgba(212,168,67,0.2);
+
+  transform: scale(1.1);
+
+}
+
+
+
+.detail-body {
+
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  padding: 40px 30px 100px;
+
+  position: relative;
+
+}
+
+
+
+.detail-section {
+
+  margin-bottom: 50px;
+
+  opacity: 0;
+
+  transform: translateY(40px);
+
+  transition: all 0.8s ease;
+
+}
+
+
+
+.detail-section.visible {
+
+  opacity: 1;
+
+  transform: translateY(0);
+
+}
+
+
+
+.detail-section-title {
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 1.8rem;
+
+  color: var(--gold);
+
+  margin-bottom: 20px;
+
+  position: relative;
+
+  display: inline-block;
+
+}
+
+
+
+.detail-section-title::after {
+
+  content: '';
+
+  position: absolute;
+
+  bottom: -5px;
+
+  left: 0;
+
+  width: 60px;
+
+  height: 2px;
+
+  background: var(--gold);
+
+}
+
+
+
+.detail-description {
+
+  color: rgba(255,255,255,0.8);
+
+  line-height: 1.9;
+
+  font-size: 0.95rem;
+
+  font-weight: 300;
+
+}
+
+
+
+.detail-tags {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin: 20px 0;
+
+}
+
+
+
+.detail-tag {
+
+  background: var(--glass);
+
+  border: 1px solid rgba(212,168,67,0.2);
+
+  color: var(--gold-light);
+
+  padding: 6px 16px;
+
+  border-radius: 25px;
+
+  font-size: 0.75rem;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+}
+
+
+
+/* Contact Card */
+
+.detail-contact {
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+  gap: 20px;
+
+  margin-top: 20px;
+
+}
+
+
+
+.contact-card {
+
+  background: var(--glass);
+
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(212,168,67,0.15);
+
+  border-radius: 16px;
+
+  padding: 25px;
+
+  transition: all 0.3s;
+
+}
+
+
+
+.contact-card:hover {
+
+  border-color: var(--gold);
+
+  transform: translateY(-5px);
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+
+}
+
+
+
+.contact-card-icon {
+
+  font-size: 1.5rem;
+
+  margin-bottom: 10px;
+
+}
+
+
+
+.contact-card-label {
+
+  font-size: 0.7rem;
+
+  color: var(--gold);
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 5px;
+
+}
+
+
+
+.contact-card-value {
+
+  color: rgba(255,255,255,0.9);
+
+  font-size: 0.9rem;
+
+}
+
+
+
+/* Video Section */
+
+.video-grid {
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+  gap: 20px;
+
+  margin-top: 20px;
+
+}
+
+
+
+.video-card {
+
+  background: var(--glass);
+
+  border: 1px solid rgba(212,168,67,0.15);
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  transition: all 0.3s;
+
+}
+
+
+
+.video-card:hover {
+
+  border-color: var(--gold);
+
+  transform: scale(1.02);
+
+}
+
+
+
+.video-thumb {
+
+  width: 100%;
+
+  height: 180px;
+
+  background: linear-gradient(135deg, var(--forest-dark), var(--deep-night));
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  position: relative;
+
+  overflow: hidden;
+
+}
+
+
+
+.video-thumb::before {
+
+  content: '';
+
+  position: absolute;
+
+  width: 60px;
+
+  height: 60px;
+
+  background: var(--gold);
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+
+.play-icon {
+
+  width: 0;
+
+  height: 0;
+
+  border-left: 18px solid white;
+
+  border-top: 11px solid transparent;
+
+  border-bottom: 11px solid transparent;
+
+  margin-left: 5px;
+
+  position: relative;
+
+  z-index: 2;
+
+}
+
+
+
+.video-info {
+
+  padding: 15px;
+
+}
+
+
+
+.video-title {
+
+  color: rgba(255,255,255,0.9);
+
+  font-size: 0.9rem;
+
+  font-weight: 600;
+
+}
+
+
+
+.video-desc {
+
+  color: rgba(255,255,255,0.5);
+
+  font-size: 0.75rem;
+
+  margin-top: 5px;
+
+}
+
+
+
+/* Reviews */
+
+.review-card {
+
+  background: var(--glass);
+
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(212,168,67,0.15);
+
+  border-radius: 16px;
+
+  padding: 25px;
+
+  margin-bottom: 15px;
+
+  transition: all 0.3s;
+
+}
+
+
+
+.review-card:hover {
+
+  border-color: rgba(212,168,67,0.4);
+
+}
+
+
+
+.review-header {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 12px;
+
+}
+
+
+
+.review-avatar {
+
+  width: 45px;
+
+  height: 45px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, var(--forest-light), var(--gold));
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 1.2rem;
+
+  font-weight: 700;
+
+  color: white;
+
+}
+
+
+
+.review-name {
+
+  color: rgba(255,255,255,0.9);
+
+  font-weight: 600;
+
+  font-size: 0.95rem;
+
+}
+
+
+
+.review-date {
+
+  color: rgba(255,255,255,0.4);
+
+  font-size: 0.7rem;
+
+  margin-top: 2px;
+
+}
+
+
+
+.review-stars {
+
+  color: var(--gold);
+
+  font-size: 0.9rem;
+
+  margin-left: auto;
+
+  letter-spacing: 2px;
+
+}
+
+
+
+.review-text {
+
+  color: rgba(255,255,255,0.7);
+
+  font-size: 0.88rem;
+
+  line-height: 1.7;
+
+  font-style: italic;
+
+}
+
+
+
+/* ============ AGENT DASHBOARD ============ */
+
+#agent-panel {
+
+  position: fixed;
+
+  top: 0; right: 0;
+
+  width: 400px;
+
+  height: 100%;
+
+  background: rgba(10, 26, 18, 0.95);
+
+  backdrop-filter: blur(20px);
+
+  border-left: 1px solid rgba(212,168,67,0.2);
+
+  z-index: 90;
+
+  transform: translateX(100%);
+
+  transition: transform 0.5s ease;
+
+  overflow-y: auto;
+
+  padding: 30px;
+
+}
+
+
+
+#agent-panel.open {
+
+  transform: translateX(0);
+
+}
+
+
+
+.agent-close {
+
+  position: absolute;
+
+  top: 15px;
+
+  right: 15px;
+
+  width: 40px;
+
+  height: 40px;
+
+  background: var(--glass);
+
+  border: 1px solid rgba(212,168,67,0.3);
+
+  border-radius: 50%;
+
+  color: var(--gold);
+
+  font-size: 1.2rem;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: none;
+
+  transition: all 0.3s;
+
+}
+
+
+
+.agent-close:hover {
+
+  background: rgba(212,168,67,0.2);
+
+  transform: rotate(90deg);
+
+}
+
+
+
+.agent-title {
+
+  font-family: 'Dancing Script', cursive;
+
+  font-size: 1.8rem;
+
+  color: var(--gold-light);
+
+  margin-bottom: 5px;
+
+}
+
+
+
+.agent-subtitle {
+
+  color: rgba(255,255,255,0.5);
+
+  font-size: 0.7rem;
+
+  letter-spacing: 3px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 25px;
+
+}
+
+
+
+.agent-section {
+
+  margin-bottom: 25px;
+
+  padding-bottom: 25px;
+
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+
+}
+
+
+
+.agent-section-title {
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 1rem;
+
+  color: var(--gold);
+
+  margin-bottom: 12px;
+
+}
+
+
+
+.agent-log-entry {
+
+  background: var(--glass);
+
+  border: 1px solid rgba(255,255,255,0.05);
+
+  border-radius: 10px;
+
+  padding: 12px;
+
+  margin-bottom: 8px;
+
+  font-size: 0.75rem;
+
+  color: rgba(255,255,255,0.7);
+
+  line-height: 1.5;
+
+  border-left: 3px solid var(--forest-light);
+
+}
+
+
+
+.agent-log-entry.retro {
+
+  border-left-color: #e74c3c;
+
+}
+
+
+
+.agent-log-entry.add {
+
+  border-left-color: #2ecc71;
+
+}
+
+
+
+.agent-log-entry.update {
+
+  border-left-color: #3498db;
+
+}
+
+
+
+.agent-log-time {
+
+  color: var(--gold);
+
+  font-size: 0.65rem;
+
+  margin-bottom: 4px;
+
+  font-weight: 600;
+
+}
+
+
+
+.agent-status {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 15px;
+
+}
+
+
+
+.status-dot {
+
+  width: 8px;
+
+  height: 8px;
+
+  background: #2ecc71;
+
+  border-radius: 50%;
+
+  animation: statusPulse 2s infinite;
+
+}
+
+
+
+@keyframes statusPulse {
+
+  0%, 100% { opacity: 1; }
+
+  50% { opacity: 0.3; }
+
+}
+
+
+
+.status-text {
+
+  color: rgba(255,255,255,0.5);
+
+  font-size: 0.7rem;
+
+  letter-spacing: 1px;
+
+}
+
+
+
+/* ============ TIME INDICATOR ============ */
+
+.time-indicator {
+
+  position: fixed;
+
+  top: 20px;
+
+  right: 20px;
+
+  z-index: 30;
+
+  text-align: right;
+
+  opacity: 0;
+
+  animation: fadeInText 1s 5s forwards;
+
+}
+
+
+
+.time-display {
+
+  font-family: 'Playfair Display', serif;
+
+  font-size: 1.5rem;
+
+  color: var(--gold-light);
+
+}
+
+
+
+.time-date {
+
+  font-size: 0.65rem;
+
+  color: rgba(255,255,255,0.5);
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+}
+
+
+
+.time-weather {
+
+  font-size: 0.7rem;
+
+  color: rgba(255,255,255,0.4);
+
+  margin-top: 3px;
+
+}
+
+
+
+/* ============ SCROLL INDICATOR ============ */
+
+.scroll-hint {
+
+  position: fixed;
+
+  bottom: 140px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  z-index: 25;
+
+  opacity: 0;
+
+  animation: fadeInText 1s 5.5s forwards;
+
+  text-align: center;
+
+}
+
+
+
+.scroll-hint-text {
+
+  font-size: 0.6rem;
+
+  color: rgba(255,255,255,0.4);
+
+  letter-spacing: 3px;
+
+  text-transform: uppercase;
+
+}
+
+
+
+.scroll-arrow {
+
+  width: 20px;
+
+  height: 20px;
+
+  border-right: 2px solid rgba(212,168,67,0.5);
+
+  border-bottom: 2px solid rgba(212,168,67,0.5);
+
+  transform: rotate(45deg);
+
+  margin: 10px auto 0;
+
+  animation: scrollBounce 2s infinite;
+
+}
+
+
+
+@keyframes scrollBounce {
+
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+
+  50% { transform: rotate(45deg) translateY(8px); }
+
+}
+
+
+
+/* ============ RESPONSIVE ============ */
+
+@media (max-width: 768px) {
+
+  .title-main {
+
+    font-size: 2.5rem;
+
+  }
+
+
+
+  .title-sub {
+
+    font-size: 0.65rem;
+
+    letter-spacing: 4px;
+
+  }
+
+
+
+  #custom-cursor, #cursor-dot {
+
+    display: none;
+
+  }
+
+
+
+  body {
+
+    cursor: auto;
+
+  }
+
+
+
+  .hotspot, .orbit-node, .orbit-center-btn,
+
+  .detail-back-btn, .nav-close, .agent-close {
+
+    cursor: pointer;
+
+  }
+
+
+
+  #orbital-nav {
+
+    bottom: 15px;
+
+  }
+
+
+
+  .orbit-ring {
+
+    width: 150px;
+
+    height: 150px;
+
+  }
+
+
+
+  .orbit-center-btn {
+
+    width: 50px;
+
+    height: 50px;
+
+    font-size: 1rem;
+
+  }
+
+
+
+  .orbit-node {
+
+    width: 36px;
+
+    height: 36px;
+
+    font-size: 0.9rem;
+
+  }
+
+
+
+  .detail-hero {
+
+    height: 50vh;
+
+  }
+
+
+
+  .detail-title {
+
+    font-size: 2rem;
+
+  }
+
+
+
+  .detail-hero-content {
+
+    left: 20px;
+
+    bottom: 20px;
+
+  }
+
+
+
+  .detail-body {
+
+    padding: 20px 15px 80px;
+
+  }
+
+
+
+  .detail-section-title {
+
+    font-size: 1.4rem;
+
+  }
+
+
+
+  .video-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+
+
+  #agent-panel {
+
+    width: 100%;
+
+  }
+
+
+
+  .nav-links a {
+
+    font-size: 1.8rem;
+
+  }
+
+
+
+  .cloud { display: none; }
+
+  .cloud-1 { display: block; }
+
+
+
+  .sun {
+
+    width: 80px;
+
+    height: 80px;
+
+  }
+
+}
+
+
+
+@media (max-width: 480px) {
+
+  .title-main {
+
+    font-size: 2rem;
+
+  }
+
+
+
+  .detail-title {
+
+    font-size: 1.6rem;
+
+  }
+
+
+
+  .orbit-ring {
+
+    width: 130px;
+
+    height: 130px;
+
+  }
+
+
+
+  .hotspot-icon {
+
+    width: 28px;
+
+    height: 28px;
+
+    font-size: 12px;
+
+  }
+
+
+
+  .hotspot-pulse:nth-child(2) {
+
+    width: 50px;
+
+    height: 50px;
+
+    margin-left: -7px;
+
+    margin-top: -7px;
+
+  }
+
+
+
+  .hotspot-pulse:nth-child(3) {
+
+    width: 70px;
+
+    height: 70px;
+
+    margin-left: -15px;
+
+    margin-top: -15px;
+
+  }
+
+}
+
+
+
+/* ============ AMBIENT ANIMATIONS ============ */
+
+.leaf-particle {
+
+  position: absolute;
+
+  width: 8px;
+
+  height: 12px;
+
+  background: var(--forest-light);
+
+  border-radius: 0 50% 50% 50%;
+
+  transform: rotate(45deg);
+
+  z-index: 9;
+
+  opacity: 0;
+
+  animation: leafFall linear infinite;
+
+}
+
+
+
+@keyframes leafFall {
+
+  0% { opacity: 0; transform: rotate(45deg) translateY(-20px) translateX(0); }
+
+  10% { opacity: 0.6; }
+
+  90% { opacity: 0.6; }
+
+  100% { opacity: 0; transform: rotate(405deg) translateY(100vh) translateX(100px); }
+
+}
+
+
+
+/* Stars (appear as scene darkens at top) */
+
+.star {
+
+  position: absolute;
+
+  width: 2px;
+
+  height: 2px;
+
+  background: white;
+
+  border-radius: 50%;
+
+  z-index: 2;
+
+  opacity: 0;
+
+  animation: starTwinkle 3s infinite;
+
+}
+
+
+
+@keyframes starTwinkle {
+
+  0%, 100% { opacity: 0; }
+
+  50% { opacity: 0.8; }
+
+}
+
+
+
+/* Water / Lake reflection */
+
+.water-surface {
+
+  position: absolute;
+
+  bottom: 5%;
+
+  left: 10%;
+
+  width: 30%;
+
+  height: 8%;
+
+  background: linear-gradient(180deg, 
+
+    rgba(100,160,200,0.3), 
+
+    rgba(50,100,150,0.2)
+
+  );
+
+  border-radius: 50%;
+
+  z-index: 6;
+
+  opacity: 0;
+
+  animation: waterAppear 2s 4.5s ease-out forwards;
+
+}
+
+
+
+@keyframes waterAppear {
+
+  to { opacity: 1; }
+
+}
+
+
+
+.water-shimmer {
+
+  position: absolute;
+
+  width: 100%;
+
+  height: 100%;
+
+  background: linear-gradient(90deg, 
+
+    transparent, 
+
+    rgba(255,255,255,0.15), 
+
+    transparent
+
+  );
+
+  animation: shimmer 3s infinite;
+
+  border-radius: 50%;
+
+}
+
+
+
+@keyframes shimmer {
+
+  0% { transform: translateX(-100%); }
+
+  100% { transform: translateX(100%); }
+
+}
+
+
+
+/* Birds */
+
+.bird {
+
+  position: absolute;
+
+  z-index: 10;
+
+  font-size: 12px;
+
+  color: rgba(30,30,30,0.4);
+
+  animation: birdFly linear infinite;
+
+}
+
+
+
+@keyframes birdFly {
+
+  0% { transform: translateX(-50px) translateY(0); }
+
+  25% { transform: translateX(25vw) translateY(-15px); }
+
+  50% { transform: translateX(50vw) translateY(5px); }
+
+  75% { transform: translateX(75vw) translateY(-10px); }
+
+  100% { transform: translateX(105vw) translateY(0); }
+
+}
+
+
+
+/* Notification badge */
+
+.notif-badge {
+
+  position: absolute;
+
+  top: -3px;
+
+  right: -3px;
+
+  width: 10px;
+
+  height: 10px;
+
+  background: #e74c3c;
+
+  border-radius: 50%;
+
+  border: 2px solid var(--deep-night);
+
+  animation: badgePulse 2s infinite;
+
+}
+
+
+
+@keyframes badgePulse {
+
+  0%, 100% { transform: scale(1); }
+
+  50% { transform: scale(1.3); }
+
+}
+
+
+
+/* Seasonal overlay */
+
+.seasonal-particles {
+
+  position: absolute;
+
+  top: 0; left: 0;
+
+  width: 100%; height: 100%;
+
+  z-index: 8;
+
+  pointer-events: none;
+
+  overflow: hidden;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<!-- Custom Cursor -->
+
+<div id="custom-cursor"></div>
+
+<div id="cursor-dot"></div>
+
+
+
+<!-- ============ LOADING SCREEN ============ -->
+
+<div id="loader-screen">
+
+  <div class="loader-particles">
+
+    <div class="loader-particle" style="left:30%;top:40%;animation-delay:0s"></div>
+
+    <div class="loader-particle" style="left:50%;top:35%;animation-delay:0.5s"></div>
+
+    <div class="loader-particle" style="left:70%;top:45%;animation-delay:1s"></div>
+
+    <div class="loader-particle" style="left:40%;top:55%;animation-delay:0.3s"></div>
+
+    <div class="loader-particle" style="left:60%;top:50%;animation-delay:0.8s"></div>
+
+    <div class="loader-particle" style="left:45%;top:42%;animation-delay:1.2s"></div>
+
+    <div class="loader-particle" style="left:55%;top:48%;animation-delay:0.6s"></div>
+
+  </div>
+
+  <div class="loader-nature">
+
+    <div class="loader-tree">
+
+      <div class="loader-canopy-2"></div>
+
+      <div class="loader-canopy"></div>
+
+      <div class="loader-trunk"></div>
+
+    </div>
+
+  </div>
+
+  <div class="loader-progress">
+
+    <div class="loader-progress-bar"></div>
+
+  </div>
+
+  <div class="loader-text">Entering the Ozark Wilderness...</div>
+
+</div>
+
+
+
+<!-- ============ MAIN SCENE ============ -->
+
+<div id="main-scene">
+
+  <!-- Sky -->
+
+  <div class="sky-layer sky-bg"></div>
+
+
+
+  <!-- Stars (upper area) -->
+
+  <div id="stars-container"></div>
+
+
+
+  <!-- Sun -->
+
+  <div class="sun"></div>
+
+
+
+  <!-- Clouds -->
+
+  <div class="cloud cloud-1"></div>
+
+  <div class="cloud cloud-2"></div>
+
+  <div class="cloud cloud-3"></div>
+
+
+
+  <!-- Birds -->
+
+  <div id="birds-container"></div>
+
+
+
+  <!-- Hills -->
+
+  <div class="hills-container">
+
+    <div class="hill hill-far"></div>
+
+    <div class="hill hill-mid"></div>
+
+    <div class="hill hill-near"></div>
+
+  </div>
+
+
+
+  <!-- Forest -->
+
+  <div class="forest-layer" id="forest-layer"></div>
+
+
+
+  <!-- Water -->
+
+  <div class="water-surface">
+
+    <div class="water-shimmer"></div>
+
+  </div>
+
+
+
+  <!-- Forest floor -->
+
+  <div class="forest-floor"></div>
+
+
+
+  <!-- Mist -->
+
+  <div class="mist-layer"></div>
+
+
+
+  <!-- Seasonal particles -->
+
+  <div class="seasonal-particles" id="seasonal-particles"></div>
+
+
+
+  <!-- Fireflies -->
+
+  <div id="fireflies-container"></div>
+
+
+
+  <!-- Hotspots -->
+
+  <div id="hotspots-container"></div>
+
+
+
+  <!-- Title -->
+
+  <div class="title-overlay">
+
+    <div class="title-main">Branson</div>
+
+    <div class="title-sub">The Heart of the Ozarks</div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ============ TIME DISPLAY ============ -->
+
+<div class="time-indicator">
+
+  <div class="time-display" id="time-display">--:--</div>
+
+  <div class="time-date" id="time-date"></div>
+
+  <div class="time-weather" id="time-weather">☀️ 72°F — Clear Skies</div>
+
+</div>
+
+
+
+<!-- ============ SCROLL HINT ============ -->
+
+<div class="scroll-hint">
+
+  <div class="scroll-hint-text">Explore</div>
+
+  <div class="scroll-arrow"></div>
+
+</div>
+
+
+
+<!-- ============ ORBITAL NAVIGATION ============ -->
+
+<div id="orbital-nav">
+
+  <div class="orbit-ring">
+
+    <div class="orbit-center-btn" id="nav-center" title="Menu">☰</div>
+
+    <div class="orbit-path"></div>
+
+    <div class="orbit-node" data-nav="explore" title="Explore">🏔️<span class="node-label">Explore</span></div>
+
+    <div class="orbit-node" data-nav="events" title="Events">🎭<span class="node-label">Events</span></div>
+
+    <div class="orbit-node" data-nav="maps" title="Map">🗺️<span class="node-label">Map</span></div>
+
+    <div class="orbit-node" data-nav="gallery" title="Gallery">📸<span class="node-label">Gallery</span></div>
+
+    <div class="orbit-node" data-nav="agents" title="Agents">🤖<span class="node-label">Agents</span></div>
+
+    <div class="orbit-node" data-nav="about" title="About">💎<span class="node-label">About</span></div>
+
+    <div class="orbit-node" data-nav="contact-nav" title="Contact">✉️<span class="node-label">Contact</span></div>
+
+    <div class="orbit-node" data-nav="seasonal" title="Seasonal">🍂<span class="node-label">Seasonal</span></div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ============ NAV PANEL ============ -->
+
+<div id="nav-panel">
+
+  <button class="nav-close" id="nav-close">✕</button>
+
+  <div class="nav-content">
+
+    <ul class="nav-links" id="nav-links">
+
+      <li><a href="#" data-nav="explore">Explore Activities</a></li>
+
+      <li><a href="#" data-nav="events">Local Events</a></li>
+
+      <li><a href="#" data-nav="gallery">Photo Gallery</a></li>
+
+      <li><a href="#" data-nav="about">About Branson</a></li>
+
+      <li><a href="#" data-nav="seasonal">Seasonal Guide</a></li>
+
+      <li><a href="#" data-nav="agents">Agent Dashboard</a></li>
+
+      <li><a href="#" data-nav="contact-nav">Get In Touch</a></li>
+
+    </ul>
+
+  </div>
+
+</div>
+
+
+
+<!-- ============ FLIGHT TRANSITION ============ -->
+
+<div id="flight-overlay">
+
+  <div class="flight-bg"></div>
+
+  <div class="flight-zoom-circle" id="flight-zoom"></div>
+
+  <div class="flight-text" id="flight-text">
+
+    <h2 id="flight-title"></h2>
+
+    <p id="flight-subtitle">Journey in progress...</p>
+
+  </div>
+
+  <div class="flight-progress" id="flight-progress">
+
+    <div class="flight-progress-bar" id="flight-progress-bar"></div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ============ DETAIL PAGE ============ -->
+
+<div id="detail-page">
+
+  <div class="detail-hero">
+
+    <img class="detail-hero-bg" id="detail-hero-bg" src="" alt="" crossorigin="anonymous">
+
+    <div class="detail-hero-overlay"></div>
+
+    <div class="detail-hero-content">
+
+      <h1 class="detail-title" id="detail-title"></h1>
+
+      <div class="detail-subtitle" id="detail-subtitle"></div>
+
+    </div>
+
+    <button class="detail-back-btn" id="detail-back">←</button>
+
+  </div>
+
+  <div class="detail-body">
+
+    <div class="detail-section" id="detail-desc-section">
+
+      <h2 class="detail-section-title">About This Experience</h2>
+
+      <div class="detail-tags" id="detail-tags"></div>
+
+      <p class="detail-description" id="detail-description"></p>
+
+    </div>
+
+    <div class="detail-section" id="detail-contact-section">
+
+      <h2 class="detail-section-title">Get in Touch</h2>
+
+      <div class="detail-contact" id="detail-contact"></div>
+
+    </div>
+
+    <div class="detail-section" id="detail-video-section">
+
+      <h2 class="detail-section-title">See It In Action</h2>
+
+      <div class="video-grid" id="detail-videos"></div>
+
+    </div>
+
+    <div class="detail-section" id="detail-reviews-section">
+
+      <h2 class="detail-section-title">What Visitors Say</h2>
+
+      <div id="detail-reviews"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ============ AGENT PANEL ============ -->
+
+<div id="agent-panel">
+
+  <button class="agent-close" id="agent-close">✕</button>
+
+  <div class="agent-title">Branson Agent Council</div>
+
+  <div class="agent-subtitle">AI-Powered Content Intelligence</div>
+
+  
+
+  <div class="agent-status">
+
+    <div class="status-dot"></div>
+
+    <span class="status-text">All agents online — Daily meeting in progress</span>
+
+  </div>
+
+
+
+  <div class="agent-section">
+
+    <div class="agent-section-title">🧙 Master Agent — The Curator</div>
+
+    <div class="agent-log-entry add">
+
+      <div class="agent-log-time">DIRECTIVE</div>
+
+      Oversees all sub-agents, reviews activity data, decides on content retirement, new additions, and updates. Sends daily reports to ckonkol@gmail.com
+
+    </div>
+
+  </div>
+
+
+
+  <div class="agent-section">
+
+    <div class="agent-section-title">🤖 Sub-Agents</div>
+
+    <div id="agent-list"></div>
+
+  </div>
+
+
+
+  <div class="agent-section">
+
+    <div class="agent-section-title">📋 Today's Meeting Log</div>
+
+    <div id="meeting-log"></div>
+
+  </div>
+
+
+
+  <div class="agent-section">
+
+    <div class="agent-section-title">📧 Send Report</div>
+
+    <button id="send-report-btn" style="width:100%;padding:12px;background:linear-gradient(135deg,var(--gold),var(--sunset-orange));border:none;border-radius:10px;color:var(--deep-night);font-weight:600;cursor:pointer;font-size:0.85rem;letter-spacing:1px;">
+
+      ✉️ Send Daily Report to ckonkol@gmail.com
+
+    </button>
+
+    <p style="color:rgba(255,255,255,0.3);font-size:0.65rem;margin-top:8px;text-align:center;">
+
+      Report generated from AI agent meeting transcripts
+
+    </p>
+
+  </div>
+
+</div>
+
+
+
+<script>
+
+// ============================================================
+
+// DATA: Branson Activities & Locations
+
+// ============================================================
+
+const ACTIVITIES = [
+
+  {
+
+    id: 'silver-dollar-city',
+
+    name: 'Silver Dollar City',
+
+    icon: '🎢',
+
+    position: { top: '32%', left: '25%' },
+
+    category: 'Theme Park',
+
+    description: 'Nestled in the heart of the Ozark Mountains, Silver Dollar City is a world-class theme park celebrating the heritage of the Ozarks. With over 50 thrilling rides including Lightning Rod — one of the fastest wooden coasters on Earth — plus world-class shows, craft demonstrations, and seasonal festivals. The park spans across a stunning mountain backdrop, offering families memories that last a lifetime.',
+
+    tags: ['Family Fun', 'Thrill Rides', 'Live Shows', 'Heritage', 'Seasonal Festivals'],
+
+    image: 'https://images.unsplash.com/photo-1513836279014-a89f7a867acd?w=1200&q=80',
+
+    contact: {
+
+      phone: '(437) 336-5000',
+
+      website: 'silverdollarcity.com',
+
+      address: '150 Silver Dollar Blvd, Branson, MO 65616',
+
+      hours: 'Daily 10AM - 10PM (Seasonal)'
+
+    },
+
+    videos: [
+
+      { title: 'Lightning Rod Coaster Experience', desc: 'Experience the thrill of the world\'s fastest wooden coaster' },
+
+      { title: 'Ozark Heritage Shows', desc: 'Live musical performances throughout the park' },
+
+      { title: 'Fall Festival 2024', desc: 'The spectacular annual fall foliage celebration' }
+
+    ],
+
+    reviews: [
+
+      { name: 'Sarah M.', avatar: 'SM', date: 'November 15, 2024', stars: 5, text: 'Absolutely magical! The fall foliage combined with the rides made this the best family vacation we\'ve ever had. The Blue Ridge Canyon area is breathtaking.' },
+
+      { name: 'James R.', avatar: 'JR', date: 'October 28, 2024', stars: 5, text: 'Lightning Rod alone is worth the trip. My kids didn\'t want to leave. The craft demonstrations were incredibly authentic and educational.' },
+
+      { name: 'Maria L.', avatar: 'ML', date: 'September 5, 2024', stars: 4, text: 'Beautiful park with great variety for all ages. The Ozark Symphony show was the highlight of our visit. Highly recommend the annual pass!' }
+
+    ]
+
+  },
+
+  {
+
+    id: 'table-rock-lake',
+
+    name: 'Table Rock Lake',
+
+    icon: '⛵',
+
+    position: { top: '48%', left: '65%' },
+
+    category: 'Lake & Water Sports',
+
+    description: 'Spanning over 65,000 acres with nearly 1,500 miles of shoreline, Table Rock Lake is the crown jewel of Branson\'s natural beauty. Crystal-clear waters perfect for boating, fishing, kayaking, and swimming. The lake offers over 50 public access points with marinas, campgrounds, and picnic areas. Watch sunset paint the Ozark mountains in gold from the deck of your boat.',
+
+    tags: ['Water Sports', 'Fishing', 'Boating', 'Sunset Views', 'Camping'],
+
+    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80',
+
+    contact: {
+
+      phone: '(417) 334-7874',
+
+      website: 'tablerocklake.com',
+
+      address: 'Table Rock Lake, Branson, MO 65616',
+
+      hours: '24/7 Access — Various Access Points'
+
+    },
+
+    videos: [
+
+      { title: 'Sunset Boat Cruise', desc: 'Watch the Ozark sunset from the water' },
+
+      { title: 'Fishing Paradise', desc: 'Smallmouth bass and crappie fishing guide' },
+
+      { title: 'Kayaking the Coves', desc: 'Hidden coves and swimming holes' }
+
+    ],
+
+    reviews: [
+
+      { name: 'David K.', avatar: 'DK', date: 'November 10, 2024', stars: 5, text: 'The water is impossibly clear. We rented a pontoon boat and spent the entire day exploring hidden coves. Best kept secret in Missouri!' },
+
+      { name: 'Linda W.', avatar: 'LW', date: 'August 22, 2024', stars: 5, text: 'We rented a cabin on the lake and it was paradise. Swimming, fishing, and sunset views that take your breath away.' },
+
+      { name: 'Tom H.', avatar: 'TH', date: 'July 14, 2024', stars: 4, text: 'Great lake for all skill levels. My kids learned to kayak here. The access points are well-maintained and clean.' }
+
+    ]
+
+  },
+
+  {
+
+    id: 'branson-lights',
+
+    name: 'Christmas Village Lights',
+
+    icon: '🎄',
+
+    position: { top: '28%', left: '55%' },
+
+    category: 'Seasonal Festival',
+
+    description: 'Branson\'s legendary Christmas lights transform the entire town into a winter wonderland from mid-November through January. The Branson Lights festival features over 10 million lights, holiday drives, themed cruises, and special Christmas shows. Experience the magic of the season in the heart of the Ozark Mountains — it\'s why millions return year after year.',
+
+    tags: ['Holiday', 'Family', 'Lights', 'Seasonal', 'Photography'],
+
+    image: 'https://images.unsplash.com/photo-1543589077-47d813037755?w=1200&q=80',
+
+    contact: {
+
+      phone: '(417) 335-5700',
+
+      website: 'visitbranson.com/christmas',
+
+      address: 'Downtown Branson, MO 65616',
+
+      hours: 'Mid-November through January — Hours vary'
+
+    },
+
+    videos: [
+
+      { title: 'Christmas Lights Drive', desc: 'The complete holiday drive experience' },
+
+      { title: 'Dolly Parton\'s Christmas', desc: 'Holiday magic at Dollywood\'s Branson sister park' },
+
+      { title: 'Holiday Cruise', desc: 'Table Rock Lake Christmas boat cruise' }
+
+    ],
+
+    reviews: [
+
+      { name: 'The Johnsons', avatar: 'JH', date: 'December 20, 2024', stars: 5, text: 'Our family has been coming to Branson for Christmas for 15 years. The lights, the shows, the spirit — it\'s pure magic every single year.' },
+
+      { name: 'Amy P.', avatar: 'AP', date: 'December 15, 2024', stars: 5, text: 'We drove from St. Louis specifically for Branson Lights and it exceeded all expectations. Over 10 million lights is no exaggeration!' },
+
+      { name: 'Robert S.', avatar: 'RS', date: 'December 8, 2024', stars: 4, text: 'The holiday cruise on Table Rock Lake was unforgettable. Hot cocoa, lights, and the most peaceful Christmas atmosphere.' }
+
+    ]
+
+  },
+
+  {
+
+    id: 'texas-longhorns',
+
+    name: 'Texas Longhorn Wildlife Ranch',
+
+    icon: '🐂',
+
+    position: { top: '55%', left: '30%' },
+
+    category: 'Wildlife & Nature',
+
+    description: 'Walk among exotic animals at this 100-acre wildlife sanctuary featuring Texas Longhorns, miniature ponies, goats, deer, and more. Feed the animals, take the pony ride, and discover why this is one of Branson\'s most beloved family attractions. The ranch also hosts seasonal events including the famous Christmas parade and Easter egg hunts.',
+
+    tags: ['Wildlife', 'Family', 'Animal Feeding', 'Photo Ops', 'Educational'],
+
+    image: 'https://images.unsplash.com/photo-1504567961542-e24deace5d01?w=1200&q=80',
+
+    contact: {
+
+      phone: '(417) 334-4453',
+
+      website: 'longhornranch.com',
+
+      address: '6699 W State Highway 76, Branson, MO 65616',
+
+      hours: 'Daily 10AM - 5PM (Year-round)'
+
+    },
+
+    videos: [
+
+      { title: 'Animal Encounters', desc: 'Feeding time with the Longhorns and ponies' },
+
+      { title: 'Behind the Ranch', desc: 'Daily care routines for exotic animals' },
+
+      { title: 'Christmas at the Ranch', desc: 'Holiday events and seasonal magic' }
+
+    ],
+
+    reviews: [
+
+      { name: 'Katie B.', avatar: 'KB', date: 'November 1, 2024', stars: 5, text: 'My 5-year-old daughter has never been happier. She got to feed the Longhorns and ride a pony. Pure joy on a mountain top!' },
+
+      { name: 'Chris D.', avatar: 'CD', date: 'September 18, 2024', stars: 4, text: 'Great experience for kids. The animals are well cared for and the staff is incredibly knowledgeable. Allow 2-3 hours.' },
+
+      { name: 'Nancy T.', avatar: 'NT', date: 'August 30, 2024', stars: 5, text: 'The views from the ranch alone are worth the visit. Combine that with the cute animals and you have a perfect Branson afternoon.' }
+
+    ]
+
+  },
+
+  {
+
+    id: 'mountain-grove',
+
+    name: 'Mountains of the Ozarks Trail',
+
+    icon: '🥾',
+
+    position: { top: '40%', left: '78%' },
+
+    category: 'Hiking & Adventure',
+
+    description: 'Discover miles of breathtaking hiking trails through ancient Ozark forests, past hidden waterfalls, and to panoramic mountain viewpoints. The Trail of Tears State Park, Buffalo Ridge, and Table Rock State Park offer everything from gentle family walks to challenging summit hikes. Each trail reveals something new — moss-draped ancient oaks, crystal streams, and wild turkeys.',
+
+    tags: ['Hiking', 'Nature', 'Waterfalls', 'Photography', 'Adventure'],
+
+    image: 'https://images.unsplash.com/photo-1441974231545-c6227394569e?w=1200&q=80',
+
+    contact: {
+
+      phone: '(417) 586-5110',
+
+      website: 'doh.mo.gov/state-parks',
+
+      address: 'Trail of Tears State Park, Reedspring, MO 65737',
+
+      hours: 'Dawn to Dusk — Year-round'
+
+    },
+
+    videos: [
+
+      { title: 'Fall Hiking Guide', desc: 'Best trails for autumn foliage in the Ozarks' },
+
+      { title: 'Hidden Waterfalls', desc: 'Secret waterfalls along Ozark trails' },
+
+      { title: 'Ozark Wildlife Spotted', desc: 'What animals you might encounter on the trails' }
+
+    ],
+
+    reviews: [
+
+      { name: 'Michael S.', avatar: 'MS', date: 'October 25, 2024', stars: 5, text: 'The Ozark trails in fall are something everyone should experience at least once. The colors are unreal — red, gold, amber stretching to infinity.' },
+
+      { name: 'Rachel G.', avatar: 'RG', date: 'September 12, 2024', stars: 5, text: 'Found a waterfall we were the only people at. The moss, the sounds, the peace — this is what nature is supposed to feel like.' },
+
+      { name: 'Steve A.', avatar: 'SA', date: 'August 5, 2024', stars: 4, text: 'Well-maintained trails with great signage. Some trails can be rocky so wear good shoes. Bring water in summer!' }
+
+    ]
+
+  },
+
+  {
+
+    id: 'show-liners',
+
+    name: 'Branson Entertainment District',
+
+    icon: '🎵',
+
+    position: { top: '50%', left: '45%' },
+
+    category: 'Live Entertainment',
+
+    description: 'Experience the world-famous Branson live music scene. From gospel quartets to Broadway-caliber productions, Branson Theatre District hosts over 70 shows nightly. See legends like the Osborne Brothers, Jim & Jesse, and the legendary Diamond Mine train ride. Dinner theaters combine world-class cuisine with unforgettable performances.',
+
+    tags: ['Live Music', 'Shows', 'Dinner Theater', 'Family Entertainment', 'Music'],
+
+    image: 'https://images.unsplash.com/photo-1514320291940-7b924753529d?w=1200&q=80',
+
+    contact: {
+
+      phone: '(417) 335-3370',
+
+      website: 'visitbranson.com/shows',
+
+      address: 'Branson Strip (Highway 76), Branson, MO 65616',
+
+      hours: 'Shows daily — Times vary by venue'
+
+    },
+
+    videos: [
+
+      { title: 'Dolly Parton\'s Stampede', desc: 'The dinner show that started it all' },
+
+      { title: 'The Shepherd of the Hills', desc: 'Branson\'s longest-running outdoor musical' },
+
+      { title: 'Diamond Mine Tour', desc: 'Ride the train and dig for real diamonds' }
+
+    ],
+
+    reviews: [
+
+      { name: 'Patricia W.', avatar: 'PW', date: 'November 12, 2024', stars: 5, text: 'We saw three shows in one visit and each was absolutely world-class. The talent in Branson is on another level. Bring the whole family!' },
+
+      { name: 'George L.', avatar: 'GL', date: 'October 30, 2024', stars: 5, text: 'The Shepherd of the Hills musical is a masterpiece. Two hours of the best theater I\'ve ever seen, with a real waterfall and horses on stage!' },
+
+      { name: 'Diana K.', avatar: 'DK', date: 'September 22, 2024', stars: 4, text: 'The Stampede dinner show is a must-do. Yes it\'s touristy, but it\'s done RIGHT. Great food, amazing horse stunts, pure nostalgia.' }
+
+    ]
+
+  },
+
+  {
+
+    id: 'diamond-cave',
+
+    name: 'Diamond Cave & Caverns',
+
+    icon: '💎',
+
+    position: { top: '62%', left: '18%' },
+
+    category: 'Geological Wonder',
+
+    description: 'Descend 120 feet underground into Missouri\'s most impressive cave system. Diamond Caverns features over a million years of geological artistry — massive flowstone formations, glittering calcite crystals, and chambers that stretch beyond imagination. The guided tours include a scenic train ride through the forest to the cave entrance. Recently expanded with an underground elevator for accessibility.',
+
+    tags: ['Caves', 'Geology', 'Educational', 'Unique', 'Family Adventure'],
+
+    image: 'https://images.unsplash.com/photo-1433086966358-54859d0c1944?w=1200&q=80',
+
+    contact: {
+
+      phone: '(417) 334-2871',
+
+      website: 'diamondcaverns.com',
+
+      address: '2444 Cave Avenue, Branson, MO 65616',
+
+      hours: 'Daily 9AM - 5PM (Cave stays 56°F year-round)'
+
+    },
+
+    videos: [
+
+      { title: 'Cave Tour Experience', desc: 'Walking through a million-year-old wonder' },
+
+      { title: 'Geology of the Ozarks', desc: 'How these caves were formed over eons' },
+
+      { title: 'Crystal Cave Photography', desc: 'Capturing the underground beauty' }
+
+    ],
+
+    reviews: [
+
+      { name: 'Eric N.', avatar: 'EN', date: 'November 8, 2024', stars: 5, text: 'I\'ve been to caves all over the country and Diamond Caverns is in my top 3. The formations are absolutely jaw-dropping. The train ride is a nice bonus.' },
+
+      { name: 'Susan M.', avatar: 'SM', date: 'October 15, 2024', stars: 5, text: 'My kids were bored until we went underground — then they wouldn\'t stop talking about it. The guides are fantastic storytellers.' },
+
+      { name: 'Mark T.', avatar: 'MT', date: 'September 28, 2024', stars: 4, text: 'Beautiful cave system with great lighting that really highlights the formations. Can be slippery in spots so watch your step. Worth every penny.' }
+
+    ]
+
+  }
+
+];
+
+
+
+// ============================================================
+
+// AGENT SYSTEM DATA
+
+// ============================================================
+
+const AGENTS = [
+
+  {
+
+    id: 'scout',
+
+    name: 'Scout Agent',
+
+    emoji: '🔍',
+
+    role: 'Discovers new activities, trending spots, and hidden gems in the Branson area',
+
+    status: 'Active'
+
+  },
+
+  {
+
+    id: 'curator',
+
+    name: 'Curator Agent',
+
+    emoji: '🎨',
+
+    role: 'Evaluates content quality, updates descriptions, and ensures accuracy',
+
+    status: 'Active'
+
+  },
+
+  {
+
+    id: 'seasonal',
+
+    name: 'Seasonal Agent',
+
+    emoji: '🍂',
+
+    role: 'Monitors seasonal events, weather patterns, and time-sensitive activities',
+
+    status: 'Active'
+
+  },
+
+  {
+
+    id: 'reviewer',
+
+    name: 'Reviewer Agent',
+
+    emoji: '⭐',
+
+    role: 'Analyzes visitor reviews, ratings, and sentiment across all activities',
+
+    status: 'Active'
+
+  },
+
+  {
+
+    id: 'social',
+
+    name: 'Social Agent',
+
+    emoji: '📱',
+
+    role: 'Monitors social media trends, viral content, and community engagement',
+
+    status: 'Active'
+
+  },
+
+  {
+
+    id: 'events',
+
+    name: 'Events Agent',
+
+    emoji: '🎪',
+
+    role: 'Tracks local events, festivals, concerts, and community gatherings',
+
+    status: 'Active'
+
+  }
+
+];
+
+
+
+// ============================================================
+
+// GENERATIVE CONTENT — Agent Meeting Logs
+
+// ============================================================
+
+function generateMeetingLog() {
+
+  const today = new Date();
+
+  const dateStr = today.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+  const timeStr = today.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+  
+
+  const activities = [
+
+    { name: 'Silver Dollar City', action: 'update', detail: 'Updated: New 2025 ride announcements added, fall festival dates refreshed' },
+
+    { name: 'Christmas Village', action: 'add', detail: 'Added: Early booking information for 2025 holiday season' },
+
+    { name: 'Table Rock Kayaking Tour Co.', action: 'add', detail: 'New: Local kayaking company offering sunrise tours on Table Rock Lake' },
+
+    { name: 'Old West Shows', action: 'retire', detail: 'Retiring: Show has been permanently closed — removing from active listings' },
+
+    { name: 'Mountains Trail', action: 'update', detail: 'Updated: New trail sections opened at Table Rock State Park — added 3 new loop trails' },
+
+    { name: 'Branson Halloween Haunt', action: 'retire', detail: 'Retiring: Seasonal event concluded — archived for next year reference' },
+
+    { name: 'Lake Lightning Marina', action: 'add', detail: 'New: Marina now offers electric boat rentals and fishing charters' },
+
+    { name: 'Diamond Cave', action: 'update', detail: 'Updated: New crystal formation discovered in Chamber 4 — updated tour descriptions' },
+
+    { name: 'Ozark Folk Center', action: 'update', detail: 'Updated: Winter artisan workshops schedule now available' },
+
+    { name: 'Branson Balloon Rides', action: 'add', detail: 'New: Sunrise balloon tours over the Ozark hills — booking now open' }
+
+  ];
+
+
+
+  const logEntries = [
+
+    { time: '06:00 AM', agent: 'Master Agent', text: 'Good morning, council. Daily session initialized. Let\'s review yesterday\'s activity data and make decisions for today\'s content.', type: 'update' },
+
+    { time: '06:02 AM', agent: 'Scout Agent', text: `Scanning complete. Found 3 new trending activities near Branson. "Lake Lightning Marina" electric boat rentals are getting excellent reviews. "Ozark Sunrise Balloon Rides" is a new venture. Also tracking social media buzz around a new fall festival at Lake Taneyapple.`, type: 'add' },
+
+    { time: '06:05 AM', agent: 'Curator Agent', text: `Content quality review: Diamond Cave descriptions need updating — new crystal formation discovered. Silver Dollar City has announced their 2025 ride lineup. Texas Longhorn Ranch photos are 6 months outdated, recommending refresh.`, type: 'update' },
+
+    { time: '06:08 AM', agent: 'Reviewer Agent', text: `Sentiment analysis complete. Top rated: Table Rock Lake (4.9/5 avg), Silver Dollar City (4.8/5). Declining ratings: Old West Shows (2.1/5) — venue reportedly closing. Recommend retirement. Christmas Village bookings up 23% YoY.`, type: 'update' },
+
+    { time: '06:12 AM', agent: 'Seasonal Agent', text: `Weather forecast: Peak fall foliage expected November 15-25. Temperature: 45-65°F range. Snow activities should be prepped for December launch. Current seasonal highlights: fall foliage drives, pumpkin festivals, harvest moon events.`, type: 'update' },
+
+    { time: '06:15 AM', agent: 'Events Agent', text: `Upcoming events flagged: Branson Christmas Parade (Dec 6), Ozark Heritage Festival (Nov 23), Moonlight Cruise Series (weekends through October), Thanksgiving Turkey Trot (Nov 28). Added to events calendar.`, type: 'add' },
+
+    { time: '06:18 AM', agent: 'Social Agent', text: `Trending: Instagram posts of Branson fall foliage up 45%. TikTok hashtag #BransonFalls gaining 2K views/day. Local food truck festival getting buzz on Facebook. Recommend creating dedicated content page for food scene.`, type: 'update' },
+
+  ];
+
+
+
+  const decisions = activities.map(a => ({
+
+    time: `${Math.floor(Math.random()*24).toString().padStart(2,'0')}:${Math.floor(Math.random()*60).toString().padStart(2,'0')} ${Math.random()>0.5?'AM':'PM'}`,
+
+    agent: 'Master Agent',
+
+    text: `${a.action === 'add' ? '✅ APPROVE ADD' : a.action === 'retire' ? '❌ APPROVE RETIRE' : '🔄 APPROVE UPDATE'} — ${a.name}: ${a.detail}`,
+
+    type: a.action
+
+  }));
+
+
+
+  logEntries.push({
+
+    time: '06:25 AM',
+
+    agent: 'Master Agent',
+
+    text: 'Thank you, all. Based on your reports, here are today\'s content decisions:',
+
+    type: 'update'
+
+  });
+
+
+
+  decisions.forEach((d, i) => logEntries.push(d));
+
+
+
+  logEntries.push({
+
+    time: '06:45 AM',
+
+    agent: 'Master Agent',
+
+    text: 'Session complete. All changes queued for deployment. Report will be sent to ckonkol@gmail.com. Council dismissed until tomorrow.',
+
+    type: 'update'
+
+  });
+
+
+
+  return { date: dateStr, entries: logEntries };
+
+}
+
+
+
+// ============================================================
+
+// APP INITIALIZATION
+
+// ============================================================
+
+const app = {
+
+  currentView: 'main',
+
+  currentActivity: null,
+
+  meetingLog: null,
+
+
+
+  init() {
+
+    this.initCursor();
+
+    this.initLoader();
+
+    this.buildForest();
+
+    this.buildHotspots();
+
+    this.buildSeasonal();
+
+    this.buildFireflies();
+
+    this.buildBirds();
+
+    this.buildStars();
+
+    this.initNavigation();
+
+    this.initAgents();
+
+    this.updateTime();
+
+    setInterval(() => this.updateTime(), 1000);
+
+    this.initScrollReveal();
+
+  },
+
+
+
+  // Custom cursor
+
+  initCursor() {
+
+    if (window.innerWidth <= 768) return;
+
+    
+
+    const cursor = document.getElementById('custom-cursor');
+
+    const dot = document.getElementById('cursor-dot');
+
+    
+
+    document.addEventListener('mousemove', (e) => {
+
+      cursor.style.left = e.clientX + 'px';
+
+      cursor.style.top = e.clientY + 'px';
+
+      dot.style.left = e.clientX + 'px';
+
+      dot.style.top = e.clientY + 'px';
+
+    });
+
+
+
+    document.addEventListener('mousedown', () => {
+
+      cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
+
+    });
+
+
+
+    document.addEventListener('mouseup', () => {
+
+      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+
+    });
+
+  },
+
+
+
+  // Loading sequence
+
+  initLoader() {
+
+    setTimeout(() => {
+
+      const loader = document.getElementById('loader-screen');
+
+      loader.classList.add('fade-out');
+
+      
+
+      setTimeout(() => {
+
+        loader.style.display = 'none';
+
+        const scene = document.getElementById('main-scene');
+
+        scene.classList.add('visible');
+
+        this.revealHotspots();
+
+        document.getElementById('orbital-nav').classList.add('visible');
+
+      }, 800);
+
+    }, 3500);
+
+  },
+
+
+
+  // Build forest trees procedurally
+
+  buildForest() {
+
+    const forest = document.getElementById('forest-layer');
+
+    const treeCount = window.innerWidth < 768 ? 30 : 60;
+
+    
+
+    for (let i = 0; i < treeCount; i++) {
+
+      const tree = document.createElement('div');
+
+      tree.className = 'tree';
+
+      
+
+      const left = (i / treeCount) * 100 + (Math.random() * 3 - 1.5);
+
+      const trunkHeight = 30 + Math.random() * 80;
+
+      const canopyWidth = 15 + Math.random() * 35;
+
+      const canopyHeight = 20 + Math.random() * 45;
+
+      const isConifer = Math.random() > 0.4;
+
+      const bottom = Math.random() * 20;
+
+      const opacity = 0.4 + Math.random() * 0.6;
+
+      
+
+      tree.style.left = left + '%';
+
+      tree.style.bottom = bottom + '%';
+
+      tree.style.opacity = opacity;
+
+      tree.style.zIndex = Math.floor(bottom);
+
+      
+
+      if (isConifer) {
+
+        tree.innerHTML = `
+
+          <div class="tree-top" style="
+
+            border-left: ${canopyWidth/2}px solid transparent;
+
+            border-right: ${canwayWidth/2}px solid transparent;
+
+            border-bottom: ${canopyHeight}px solid ${this.randomForestGreen()};
+
+          "></div>
+
+          <div class="tree-trunk" style="height:${trunkHeight}px;width:${Math.max(3, canopyWidth/8)}px;"></div>
+
+        `;
+
+        // Fix the variable reference
+
+        tree.innerHTML = `
+
+          <div class="tree-top" style="
+
+            border-left: ${canopyWidth/2}px solid transparent;
+
+            border-right: ${canopyWidth/2}px solid transparent;
+
+            border-bottom: ${canopyHeight}px solid ${this.randomForestGreen()};
+
+          "></div>
+
+          <div class="tree-trunk" style="height:${trunkHeight}px;width:${Math.max(3, canopyWidth/8)}px;"></div>
+
+        `;
+
+      } else {
+
+        tree.innerHTML = `
+
+          <div class="tree-top-deciduous" style="
+
+            width: ${canopyWidth}px;
+
+            height: ${canopyHeight}px;
+
+            background: ${this.randomForestGreen()};
+
+            border-radius: 50% 50% 45% 45%;
+
+          "></div>
+
+          <div class="tree-trunk" style="height:${trunkHeight}px;width:${Math.max(3, canopyWidth/8)}px;"></div>
+
+        `;
+
+      }
+
+      
+
+      forest.appendChild(tree);
+
+    }
+
+  },
+
+
+
+  randomForestGreen() {
+
+    const greens = [
+
+      '#1a3a2a', '#2d5a3f', '#3a6b4a', '#2a4a35',
+
+      '#1e4530', '#336950', '#264d3a', '#1f3d2e'
+
+    ];
+
+    return greens[Math.floor(Math.random() * greens.length)];
+
+  },
+
+
+
+  // Build interactive hotspots
+
+  buildHotspots() {
+
+    const container = document.getElementById('hotspots-container');
+
+    
+
+    ACTIVITIES.forEach((activity, index) => {
+
+      const hotspot = document.createElement('div');
+
+      hotspot.className = 'hotspot';
+
+      hotspot.style.top = activity.position.top;
+
+      hotspot.style.left = activity.position.left;
+
+      hotspot.style.animationDelay = `${4.5 + index * 0.3}s`;
+
+      hotspot.dataset.activityId = activity.id;
+
+      
+
+      hotspot.innerHTML = `
+
+        <div class="hotspot-core">
+
+          <div class="hotspot-pulse"></div>
+
+          <div class="hotspot-pulse"></div>
+
+          <div class="hotspot-pulse"></div>
+
+          <div class="hotspot-icon">${activity.icon}</div>
+
+        </div>
+
+        <div class="hotspot-label">${activity.name}</div>
+
+        <div class="hotspot-line"></div>
+
+      `;
+
+      
+
+      hotspot.addEventListener('click', () => this.flyToActivity(activity));
+
+      hotspot.addEventListener('mouseenter', () => {
+
+        if (window.innerWidth > 768) {
+
+          document.getElementById('custom-cursor').classList.add('hovering');
+
+        }
+
+      });
+
+      hotspot.addEventListener('mouseleave', () => {
+
+        if (window.innerWidth > 768) {
+
+          document.getElementById('custom-cursor').classList.remove('hovering');
+
+        }
+
+      });
+
+      
+
+      container.appendChild(hotspot);
+
+    });
+
+  },
+
+
+
+  revealHotspots() {
+
+    const hotspots = document.querySelectorAll('.hotspot');
+
+    hotspots.forEach((hs, i) => {
+
+      setTimeout(() => {
+
+        hs.classList.add('visible');
+
+      }, i * 400);
+
+    });
+
+  },
+
+
+
+  // Seasonal particles (leaves, etc.)
+
+  buildSeasonal() {
+
+    const container = document.getElementById('seasonal-particles');
+
+    const month = new Date().getMonth();
+
+    const isFall = [8, 9, 10].includes(month);
+
+    const isWinter = [11, 0, 1].includes(month);
+
+    
+
+    for (let i = 0; i < 15; i++) {
+
+      const particle = document.createElement('div');
+
+      particle.className = 'leaf-particle';
+
+      particle.style.left = Math.random() * 100 + '%';
+
+      particle.style.top = '-20px';
+
+      particle.style.animationDuration = (8 + Math.random() * 12) + 's';
+
+      particle.style.animationDelay = (Math.random() * 15) + 's';
+
+      
+
+      if (isFall) {
+
+        const colors = ['#e8753a', '#d4a843', '#c0392b', '#e67e22', '#8B4513'];
+
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+      } else if (isWinter) {
+
+        particle.style.background = 'rgba(255,255,255,0.8)';
+
+        particle.style.width = '3px';
+
+        particle.style.height = '3px';
+
+        particle.style.borderRadius = '50%';
+
+        particle.style.transform = 'none';
+
+      } else {
+
+        particle.style.background = this.randomForestGreen();
+
+      }
+
+      
+
+      container.appendChild(particle);
+
+    }
+
+  },
+
+
+
+  // Fireflies
+
+  buildFireflies() {
+
+    const container = document.getElementById('fireflies-container');
+
+    for (let i = 0; i < 20; i++) {
+
+      const ff = document.createElement('div');
+
+      ff.className = 'firefly';
+
+      ff.style.left = Math.random() * 100 + '%';
+
+      ff.style.top = (30 + Math.random() * 50) + '%';
+
+      ff.style.animationDelay = (Math.random() * 5) + 's';
+
+      ff.style.animationDuration = (2 + Math.random() * 4) + 's';
+
+      container.appendChild(ff);
+
+    }
+
+  },
+
+
+
+  // Birds
+
+  buildBirds() {
+
+    const container = document.getElementById('birds-container');
+
+    for (let i = 0; i < 5; i++) {
+
+      const bird = document.createElement('div');
+
+      bird.className = 'bird';
+
+      bird.textContent = '🐦';
+
+      bird.style.top = (10 + Math.random() * 25) + '%';
+
+      bird.style.left = '-50px';
+
+      bird.style.animationDuration = (20 + Math.random() * 30) + 's';
+
+      bird.style.animationDelay = (Math.random() * 15) + 's';
+
+      bird.style.fontSize = (8 + Math.random() * 8) + 'px';
+
+      container.appendChild(bird);
+
+    }
+
+  },
+
+
+
+  // Stars
+
+  buildStars() {
+
+    const container = document.getElementById('stars-container');
+
+    for (let i = 0; i < 30; i++) {
+
+      const star = document.createElement('div');
+
+      star.className = 'star';
+
+      star.style.left = Math.random() * 100 + '%';
+
+      star.style.top = Math.random() * 20 + '%';
+
+      star.style.animationDelay = (Math.random() * 5) + 's';
+
+      star.style.animationDuration = (2 + Math.random() * 3) + 's';
+
+      star.style.width = (1 + Math.random() * 2) + 'px';
+
+      star.style.height = star.style.width;
+
+      container.appendChild(star);
+
+    }
+
+  },
+
+
+
+  // =============================================
+
+  // FLIGHT TRANSITION (deep zoom into activity)
+
+  // =============================================
+
+  flyToActivity(activity) {
+
+    const overlay = document.getElementById('flight-overlay');
+
+    const zoomCircle = document.getElementById('flight-zoom-circle');
+
+    const flightText = document.getElementById('flight-text');
+
+    const flightTitle = document.getElementById('flight-title');
+
+    const flightProgress = document.getElementById('flight-progress');
+
+    const progressBar = document.getElementById('flight-progress-bar');
+
+    
+
+    this.currentActivity = activity;
+
+    
+
+    // Get hotspot position
+
+    const hotspot = document.querySelector(`[data-activity-id="${activity.id}"]`);
+
+    if (!hotspot) return;
+
+    
+
+    const rect = hotspot.getBoundingClientRect();
+
+    const startX = rect.left + rect.width / 2;
+
+    const startY = rect.top + rect.height / 2;
+
+    
+
+    // Setup flight overlay
+
+    overlay.classList.add('active');
+
+    overlay.querySelector('.flight-bg').style.opacity = '0';
+
+    
+
+    // Position zoom circle at hotspot
+
+    zoomCircle.style.left = startX + 'px';
+
+    zoomCircle.style.top = startY + 'px';
+
+    zoomCircle.style.transform = 'translate(-50%, -50%) scale(1)';
+
+    zoomCircle.style.width = '20px';
+
+    zoomCircle.style.height = '20px';
+
+    zoomCircle.style.background = `url('${activity.image}') center/cover`;
+
+    
+
+    flightTitle.textContent = activity.name;
+
+    document.getElementById('flight-subtitle').textContent = 'Flying you there...';
+
+    
+
+    // Animate
+
+    let progress = 0;
+
+    const duration = 2500;
+
+    const interval = 16;
+
+    const steps = duration / interval;
+
+    
+
+    const flyInterval = setInterval(() => {
+
+      progress += 1;
+
+      const pct = progress / steps;
+
+      const eased = this.easeInOutCubic(pct);
+
+      
+
+      // Scale up zoom circle
+
+      const scale = 1 + eased * 60;
+
+      const size = 20 + eased * 2000;
+
+      zoomCircle.style.width = size + 'px';
+
+      zoomCircle.style.height = size + 'px';
+
+      zoomCircle.style.transform = `translate(-50%, -50%) scale(${scale})`;
+
+      
+
+      // Fade in background
+
+      if (pct > 0.3) {
+
+        overlay.querySelector('.flight-bg').style.opacity = String((pct - 0.3) * 1.4);
+
+      }
+
+      
+
+      // Show text at 50%
+
+      if (pct > 0.4 && pct < 0.7) {
+
+        flightText.style.opacity = '1';
+
+      }
+
+      
+
+      // Show progress bar
+
+      if (pct > 0.2) {
+
+        flightProgress.style.opacity = '1';
+
+        progressBar.style.width = ((pct - 0.2) * 125) + '%';
+
+      }
+
+      
+
+      if (progress >= steps) {
+
+        clearInterval(flyInterval);
+
+        this.showDetailPage(activity);
+
+        
+
+        setTimeout(() => {
+
+          overlay.classList.remove('active');
+
+        }, 300);
+
+      }
+
+    }, interval);
+
+  },
+
+
+
+  easeInOutCubic(t) {
+
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  },
+
+
+
+  // =============================================
+
+  // DETAIL PAGE
+
+  // =============================================
+
+  showDetailPage(activity) {
+
+    const page = document.getElementById('detail-page');
+
+    
+
+    // Set hero image
+
+    const heroBg = document.getElementById('detail-hero-bg');
+
+    heroBg.src = activity.image;
+
+    heroBg.classList.remove('loaded');
+
+    heroBg.onload = () => heroBg.classList.add('loaded');
+
+    
+
+    // Set content
+
+    document.getElementById('detail-title').textContent = activity.name;
+
+    document.getElementById('detail-subtitle').textContent = activity.category;
+
+    document.getElementById('detail-description').textContent = activity.description;
+
+    
+
+    // Tags
+
+    const tagsContainer = document.getElementById('detail-tags');
+
+    tagsContainer.innerHTML = activity.tags.map(t => `<span class="detail-tag">${t}</span>`).join('');
+
+    
+
+    // Contact
+
+    const contactContainer = document.getElementById('detail-contact');
+
+    contactContainer.innerHTML = `
+
+      <div class="contact-card">
+
+        <div class="contact-card-icon">📞</div>
+
+        <div class="contact-card-label">Phone</div>
+
+        <div class="contact-card-value">${activity.contact.phone}</div>
+
+      </div>
+
+      <div class="contact-card">
+
+        <div class="contact-card-icon">🌐</div>
+
+        <div class="contact-card-label">Website</div>
+
+        <div class="contact-card-value">${activity.contact.website}</div>
+
+      </div>
+
+      <div class="contact-card">
+
+        <div class="contact-card-icon">📍</div>
+
+        <div class="contact-card-label">Address</div>
+
+        <div class="contact-card-value">${activity.contact.address}</div>
+
+      </div>
+
+      <div class="contact-card">
+
+        <div class="contact-card-icon">🕐</div>
+
+        <div class="contact-card-label">Hours</div>
+
+        <div class="contact-card-value">${activity.contact.hours}</div>
+
+      </div>
+
+    `;
+
+    
+
+    // Videos
+
+    const videosContainer = document.getElementById('detail-videos');
+
+    videosContainer.innerHTML = activity.videos.map(v => `
+
+      <div class="video-card">
+
+        <div class="video-thumb" style="background:linear-gradient(135deg, ${this.randomForestGreen()}, var(--deep-night));">
+
+          <div style="width:60px;height:60px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;">
+
+            <div class="play-icon"></div>
+
+          </div>
+
+        </div>
+
+        <div class="video-info">
+
+          <div class="video-title">${v.title}</div>
+
+          <div class="video-desc">${v.desc}</div>
+
+        </div>
+
+      </div>
+
+    `).join('');
+
+    
+
+    // Reviews
+
+    const reviewsContainer = document.getElementById('detail-reviews');
+
+    reviewsContainer.innerHTML = activity.reviews.map(r => `
+
+      <div class="review-card">
+
+        <div class="review-header">
+
+          <div class="review-avatar">${r.avatar}</div>
+
+          <div>
+
+            <div class="review-name">${r.name}</div>
+
+            <div class="review-date">${r.date}</div>
+
+          </div>
+
+          <div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
+
+        </div>
+
+        <div class="review-text">"${r.text}"</div>
+
+      </div>
+
+    `).join('');
+
+    
+
+    // Show page
+
+    page.classList.add('active');
+
+    this.currentView = 'detail';
+
+    
+
+    // Reset scroll
+
+    page.scrollTop = 0;
+
+    
+
+    // Animate sections on scroll
+
+    this.initDetailScrollReveal();
+
+    
+
+    // Animate sections immediately
+
+    setTimeout(() => {
+
+      document.querySelectorAll('.detail-section').forEach((section, i) => {
+
+        setTimeout(() => section.classList.add('visible'), i * 200);
+
+      });
+
+    }, 400);
+
+  },
+
+
+
+  initDetailScrollReveal() {
+
+    const page = document.getElementById('detail-page');
+
+    
+
+    const observer = new IntersectionObserver((entries) => {
+
+      entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+          entry.target.classList.add('visible');
+
+        }
+
+      });
+
+    }, { threshold: 0.1 });
+
+    
+
+    document.querySelectorAll('.detail-section').forEach(section => {
+
+      observer.observe(section);
+
+    });
+
+  },
+
+
+
+  // Back button
+
+  goBack() {
+
+    const page = document.getElementById('detail-page');
+
+    page.classList.remove('active');
+
+    this.currentView = 'main';
+
+    this.currentActivity = null;
+
+  },
+
+
+
+  // =============================================
+
+  // NAVIGATION
+
+  // =============================================
+
+  initNavigation() {
+
+    // Center button — opens menu
+
+    document.getElementById('nav-center').addEventListener('click', () => {
+
+      this.openNavPanel();
+
+    });
+
+    
+
+    // Close nav panel
+
+    document.getElementById('nav-close').addEventListener('click', () => {
+
+      this.closeNavPanel();
+
+    });
+
+    
+
+    // Nav links
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+
+      link.addEventListener('click', (e) => {
+
+        e.preventDefault();
+
+        const navTarget = link.dataset.nav;
+
+        this.handleNav(navTarget);
+
+        this.closeNavPanel();
+
+      });
+
+    });
+
+    
+
+    // Orbit nodes
+
+    document.querySelectorAll('.orbit-node').forEach(node => {
+
+      node.addEventListener('click', () => {
+
+        this.handleNav(node.dataset.nav);
+
+      });
+
+    });
+
+    
+
+    // Back button
+
+    document.getElementById('detail-back').addEventListener('click', () => {
+
+      this.goBack();
+
+    });
+
+  },
+
+
+
+  handleNav(target) {
+
+    switch(target) {
+
+      case 'explore':
+
+        this.scrollToHotspot(0);
+
+        break;
+
+      case 'events':
+
+        this.openAgentPanel();
+
+        break;
+
+      case 'agents':
+
+        this.openAgentPanel();
+
+        break;
+
+      case 'maps':
+
+      case 'gallery':
+
+      case 'about':
+
+      case 'contact-nav':
+
+      case 'seasonal':
+
+        // For demo, show agent panel for most nav items
+
+        this.openAgentPanel();
+
+        break;
+
+    }
+
+  },
+
+
+
+  scrollToHotspot(index) {
+
+    // Flash the hotspot
+
+    const hotspots = document.querySelectorAll('.hotspot');
+
+    if (hotspots[index]) {
+
+      hotspots[index].style.transform = 'scale(1.5)';
+
+      setTimeout(() => {
+
+        hotspots[index].style.transform = '';
+
+      }, 500);
+
+    }
+
+  },
+
+
+
+  openNavPanel() {
+
+    const panel = document.getElementById('nav-panel');
+
+    panel.classList.add('open');
+
+    
+
+    // Animate links in
+
+    const links = panel.querySelectorAll('.nav-links li');
+
+    links.forEach((li, i) => {
+
+      li.classList.remove('animate-in');
+
+      setTimeout(() => li.classList.add('animate-in'), 100 + i * 80);
+
+    });
+
+  },
+
+
+
+  closeNavPanel() {
+
+    document.getElementById('nav-panel').classList.remove('open');
+
+  },
+
+
+
+  // =============================================
+
+  // AGENT SYSTEM
+
+  // =============================================
+
+  initAgents() {
+
+    this.meetingLog = generateMeetingLog();
+
+    this.renderAgentPanel();
+
+    
+
+    // Agent panel open/close
+
+    document.getElementById('agent-close').addEventListener('click', () => {
+
+      document.getElementById('agent-panel').classList.remove('open');
+
+    });
+
+    
+
+    // Send report button
+
+    document.getElementById('send-report-btn').addEventListener('click', () => {
+
+      this.sendReport();
+
+    });
+
+  },
+
+
+
+  openAgentPanel() {
+
+    this.meetingLog = generateMeetingLog();
+
+    this.renderAgentPanel();
+
+    document.getElementById('agent-panel').classList.add('open');
+
+  },
+
+
+
+  renderAgentPanel() {
+
+    // Agent list
+
+    const agentList = document.getElementById('agent-list');
+
+    agentList.innerHTML = AGENTS.map(agent => `
+
+      <div class="agent-log-entry" style="margin-bottom:6px;">
+
+        <div class="agent-log-time">${agent.emoji} ${agent.name} — ${agent.role}</div>
+
+        <span style="color:#2ecc71;font-size:0.65rem;">● ${agent.status}</span>
+
+      </div>
+
+    `).join('');
+
+    
+
+    // Meeting log
+
+    const meetingLog = document.getElementById('meeting-log');
+
+    meetingLog.innerHTML = this.meetingLog.entries.map(entry => `
+
+      <div class="agent-log-entry ${entry.type}">
+
+        <div class="agent-log-time">${entry.time} — ${entry.agent}</div>
+
+        ${entry.text}
+
+      </div>
+
+    `).join('');
+
+  },
+
+
+
+  sendReport() {
+
+    const report = this.generateEmailReport();
+
+    const subject = encodeURIComponent(`Branson Agent Council — Daily Report — ${this.meetingLog.date}`);
+
+    const body = encodeURIComponent(report);
+
+    
+
+    // Open mailto
+
+    window.open(`mailto:ckonkol@gmail.com?subject=${subject}&body=${body}`, '_blank');
+
+    
+
+    // Also show confirmation
+
+    const btn = document.getElementById('send-report-btn');
+
+    const originalText = btn.textContent;
+
+    btn.textContent = '✅ Report Sent to ckonkol@gmail.com!';
+
+    btn.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
+
+    
+
+    setTimeout(() => {
+
+      btn.textContent = originalText;
+
+      btn.style.background = '';
+
+    }, 3000);
+
+    
+
+    // Also save to localStorage for persistence
+
+    const reports = JSON.parse(localStorage.getItem('branson_reports') || '[]');
+
+    reports.push({
+
+      date: this.meetingLog.date,
+
+      timestamp: new Date().toISOString(),
+
+      entries: this.meetingLog.entries
+
+    });
+
+    localStorage.setItem('branson_reports', JSON.stringify(reports));
+
+  },
+
+
+
+  generateEmailReport() {
+
+    let report = `BRANSON IMMERSIVE EXPERIENCE — AI AGENT COUNCIL\n`;
+
+    report += `DAILY MEETING REPORT\n`;
+
+    report += `${'='.repeat(55)}\n\n`;
+
+    report += `📅 Date: ${this.meetingLog.date}\n`;
+
+    report += `🕐 Generated: ${new Date().toLocaleString()}\n`;
+
+    report += `📧 To: ckonkol@gmail.com\n\n`;
+
+    
+
+    report += `ACTIVE AGENTS:\n${'-'.repeat(30)}\n`;
+
+    AGENTS.forEach(a => {
+
+      report += `${a.emoji} ${a.name} — [${a.status}]\n`;
+
+      report += `   ${a.role}\n\n`;
+
+    });
+
+    
+
+    report += `\nMEETING TRANSCRIPT:\n${'='.repeat(55)}\n\n`;
+
+    this.meetingLog.entries.forEach(entry => {
+
+      report += `[${entry.time}] ${entry.agent}:\n${entry.text}\n\n`;
+
+    });
+
+    
+
+    report += `\nCONTENT ACTIONS TAKEN:\n${'-'.repeat(30)}\n`;
+
+    this.meetingLog.entries.forEach(entry => {
+
+      if (entry.text.includes('APPROVE')) {
+
+        report += `• ${entry.text}\n`;
+
+      }
+
+    });
+
+    
+
+    report += `\n\n${'='.repeat(55)}\n`;
+
+    report += `This report was automatically generated by the Branson AI Agent Council.\n`;
+
+    report += `Next meeting scheduled for tomorrow at 06:00 AM.\n`;
+
+    report += `\nVisit: visitbranson.com | Support: ckonkol@gmail.com`;
+
+    
+
+    return report;
+
+  },
+
+
+
+  // =============================================
+
+  // UTILITIES
+
+  // =============================================
+
+  updateTime() {
+
+    const now = new Date();
+
+    const timeEl = document.getElementById('time-display');
+
+    const dateEl = document.getElementById('time-date');
+
+    const weatherEl = document.getElementById('time-weather');
+
+    
+
+    timeEl.textContent = now.toLocaleTimeString('en-US', { 
+
+      hour: '2-digit', minute: '2-digit', hour12: true 
+
+    });
+
+    
+
+    dateEl.textContent = now.toLocaleDateString('en-US', { 
+
+      weekday: 'short', month: 'short', day: 'numeric' 
+
+    });
+
+    
+
+    const month = now.getMonth();
+
+    const weatherMap = {
+
+      0: ['❄️ 28°F — Snow Showers', '🌨️ 25°F — Winter Magic'],
+
+      1: ['❄️ 30°F — Light Snow', '🌨️ 22°F — Ice Crystals'],
+
+      2: ['🌤️ 38°F — Warming Up', '☀️ 42°F — Early Spring'],
+
+      3: ['🌸 55°F — Spring Blooms', '🌤️ 58°F — Cherry Blossoms'],
+
+      4: ['☀️ 65°F — Perfect Weather', '🌤️ 62°F — Wildflowers'],
+
+      5: ['☀️ 75°F — Summer Begins', '🌤️ 72°F — Lake Season!'],
+
+      6: ['☀️ 85°F — Hot Summer', '🌞 88°F — Pool Weather'],
+
+      7: ['☀️ 86°F — Peak Summer', '🌞 82°F — Hiking Season'],
+
+      8: ['🍂 72°F — Fall Approaching', '☀️ 68°F — Harvest Time'],
+
+      9: ['🍁 58°F — Fall Foliage', '🍂 52°F — Peak Colors'],
+
+      10: ['🍁 45°F — Autumn Beauty', '🍂 38°F — Frosty Mornings'],
+
+      11: ['❄️ 32°F — Holiday Season', '🎄 28°F — Christmas Magic']
+
+    };
+
+    
+
+    const weathers = weatherMap[month] || weatherMap[5];
+
+    weatherEl.textContent = weathers[Math.floor(Math.random() * weathers.length)];
+
+  },
+
+
+
+  initScrollReveal() {
+
+    // For future scroll-based reveals
+
+  }
+
+};
+
+
+
+// =============================================
+
+// PARALLAX EFFECT ON MOUSE MOVE
+
+// =============================================
+
+document.addEventListener('mousemove', (e) => {
+
+  if (window.innerWidth <= 768) return;
+
+  
+
+  const x = (e.clientX / window.innerWidth - 0.5) * 2;
+
+  const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+  
+
+  const hills = document.querySelector('.hills-container');
+
+  if (hills) {
+
+    hills.style.transform = `translate(${x * 5}px, ${y * 3}px)`;
+
+  }
+
+  
+
+  const forest = document.getElementById('forest-layer');
+
+  if (forest) {
+
+    forest.style.transform = `translate(${x * 10}px, ${y * 5}px)`;
+
+  }
+
+  
+
+  const sun = document.querySelector('.sun');
+
+  if (sun) {
+
+    sun.style.transform = `translate(calc(-50% + ${x * -8}px), calc(-50% + ${y * -5}px))`;
+
+  }
+
+  
+
+  const hotspots = document.getElementById('hotspots-container');
+
+  if (hotspots) {
+
+    hotspots.style.transform = `translate(${x * 3}px, ${y * 2}px)`;
+
+  }
+
+});
+
+
+
+// =============================================
+
+// KEYBOARD NAVIGATION
+
+// =============================================
+
+document.addEventListener('keydown', (e) => {
+
+  if (e.key === 'Escape') {
+
+    if (app.currentView === 'detail') {
+
+      app.goBack();
+
+    }
+
+    document.getElementById('nav-panel').classList.remove('open');
+
+    document.getElementById('agent-panel').classList.remove('open');
+
+  }
+
+  
+
+  if (e.key === 'm' || e.key === 'M') {
+
+    if (app.currentView === 'main') {
+
+      app.openNavPanel();
+
+    }
+
+  }
+
+});
+
+
+
+// =============================================
+
+// TOUCH SUPPORT (Mobile)
+
+// =============================================
+
+document.addEventListener('touchstart', (e) => {
+
+  // Handle touch for hotspots
+
+  const hotspot = e.target.closest('.hotspot');
+
+  if (hotspot) {
+
+    e.preventDefault();
+
+    const activityId = hotspot.dataset.activityId;
+
+    const activity = ACTIVITIES.find(a => a.id === activityId);
+
+    if (activity) {
+
+      app.flyToActivity(activity);
+
+    }
+
+  }
+
+});
+
+
+
+// =============================================
+
+// INITIALIZATION
+
+// =============================================
+
+window.addEventListener('DOMContentLoaded', () => {
+
+  app.init();
+
+});
+
+
+
+// Fix the tree building function (variable reference fix)
+
+app.buildForest = function() {
+
+  const forest = document.getElementById('forest-layer');
+
+  const treeCount = window.innerWidth < 768 ? 30 : 60;
+
+  
+
+  for (let i = 0; i < treeCount; i++) {
+
+    const tree = document.createElement('div');
+
+    tree.className = 'tree';
+
+    
+
+    const left = (i / treeCount) * 100 + (Math.random() * 3 - 1.5);
+
+    const trunkHeight = 30 + Math.random() * 80;
+
+    const canopyWidth = 15 + Math.random() * 35;
+
+    const canopyHeight = 20 + Math.random() * 45;
+
+    const isConifer = Math.random() > 0.4;
+
+    const bottom = Math.random() * 20;
+
+    const opacity = 0.4 + Math.random() * 0.6;
+
+    
+
+    tree.style.left = left + '%';
+
+    tree.style.bottom = bottom + '%';
+
+    tree.style.opacity = opacity;
+
+    tree.style.zIndex = Math.floor(bottom);
+
+    
+
+    if (isConifer) {
+
+      tree.innerHTML = `
+
+        <div class="tree-top" style="
+
+          border-left: ${canopyWidth/2}px solid transparent;
+
+          border-right: ${canopyWidth/2}px solid transparent;
+
+          border-bottom: ${canopyHeight}px solid ${this.randomForestGreen()};
+
+        "></div>
+
+        <div class="tree-trunk" style="height:${trunkHeight}px;width:${Math.max(3, canopyWidth/8)}px;"></div>
+
+      `;
+
+    } else {
+
+      tree.innerHTML = `
+
+        <div class="tree-top-deciduous" style="
+
+          width: ${canopyWidth}px;
+
+          height: ${canopyHeight}px;
+
+          background: ${this.randomForestGreen()};
+
+          border-radius: 50% 50% 45% 45%;
+
+        "></div>
+
+        <div class="tree-trunk" style="height:${trunkHeight}px;width:${Math.max(3, canopyWidth/8)}px;"></div>
+
+      `;
+
+    }
+
+    
+
+    forest.appendChild(tree);
+
+  }
+
+};
+
+
+
+// =============================================
+
+// ANNUAL/SEASONAL CONTENT ROTATION
+
+// =============================================
+
+function updateSeasonalContent() {
+
+  const month = new Date().getMonth();
+
+  const seasonalMessages = {
+
+    0: '❄️ Winter Wonderland Season — Christmas Lights Active',
+
+    1: '❄️ Late Winter — Plan Your Spring Getaway',
+
+    2: '🌤️ Early Spring — Lake Season Opening Soon',
+
+    3: '🌸 Spring Blooms — Wildflower Season!',
+
+    4: '🌤️ Spring in the Ozarks — Perfect Weather',
+
+    5: '☀️ Summer Begins — Lake Season is ON!',
+
+    6: '☀️ Peak Summer — Hot Air Balloons & Lake Days',
+
+    7: '🍂 Early Fall — Hiking Season Begins',
+
+    8: '🍁 Fall Foliage Alert — Peak Colors Ahead!',
+
+    9: '🍁 PEAK FALL COLORS — Best Time to Visit!',
+
+    10: '🎄 Holiday Season Approaching — Book Early!',
+
+    11: '🎄 Christmas Village — 10 Million Lights!'
+
+  };
+
+  
+
+  const weatherEl = document.getElementById('time-weather');
+
+  // Keep the weather dynamic but occasionally show seasonal message
+
+  setInterval(() => {
+
+    if (Math.random() > 0.7) {
+
+      weatherEl.textContent = seasonalMessages[month];
+
+    }
+
+  }, 30000);
+
+}
+
+
+
+updateSeasonalContent();
+
+
+
+// =============================================
+
+// SIMULATED REAL-TIME AGENT UPDATES
+
+// =============================================
+
+function simulateAgentActivity() {
+
+  const updates = [
+
+    'Scout Agent discovered a new hidden waterfall trail',
+
+    'Reviewer Agent updated ratings for Table Rock Lake',
+
+    'Seasonal Agent flagged upcoming autumn event',
+
+    'Social Agent detected trending Branson hashtag',
+
+    'Events Agent added new concert to calendar',
+
+    'Curator Agent refreshed Silver Dollar City content',
+
+    'Scout Agent found new family-friendly farm attraction',
+
+    'Reviewer Agent compiled weekly sentiment analysis'
+
+  ];
+
+  
+
+  setInterval(() => {
+
+    const update = updates[Math.floor(Math.random() * updates.length)];
+
+    const statusText = document.querySelector('.status-text');
+
+    if (statusText) {
+
+      statusText.textContent = `📡 ${update}`;
+
+      statusText.style.color = 'rgba(255,255,255,0.7)';
+
+      
+
+      setTimeout(() => {
+
+        statusText.textContent = 'All agents online — Daily meeting in progress';
+
+        statusText.style.color = '';
+
+      }, 5000);
+
+    }
+
+  }, 20000);
+
+}
+
+
+
+simulateAgentActivity();
+
+
+
+// =============================================
+
+// PRELOAD IMAGES FOR SMOOTHER FLIGHTS
+
+// =============================================
+
+function preloadActivityImages() {
+
+  ACTIVITIES.forEach(activity => {
+
+    const img = new Image();
+
+    img.src = activity.image;
+
+  });
+
+}
+
+
+
+preloadActivityImages();
+
+
+
+// =============================================
+
+// SERVICE WORKER REGISTRATION (Optional PWA)
+
+// =============================================
+
+if ('serviceWorker' in navigator) {
+
+  // Would register SW for offline support
+
+}
+
+
+
+console.log('%c🏔️ Branson Immersive Experience Loaded', 'color: #d4a843; font-size: 16px; font-weight: bold;');
+
+console.log('%cAI Agent Council Active — 6 Sub-Agents Online', 'color: #4a8c6a; font-size: 12px;');
+
+console.log('%cReports configured for: ckonkol@gmail.com', 'color: #87CEEB; font-size: 12px;');
+
+</script>
+
+</body>
+
+</html>
